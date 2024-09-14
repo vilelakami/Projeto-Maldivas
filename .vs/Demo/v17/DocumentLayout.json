@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Flavinn\\OneDrive\\Documentos\\allegro\\Demo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6B1B3A5F-D803-4392-8E30-89100B417100}|Demo\\Demo.vcxproj|C:\\Users\\Flavinn\\OneDrive\\Documentos\\allegro\\Demo\\Demo\\Demo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6B1B3A5F-D803-4392-8E30-89100B417100}|Demo\\Demo.vcxproj|solutionrelative:Demo\\Demo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Demo.cpp",
+              "DocumentMoniker": "C:\\Users\\Flavinn\\OneDrive\\Documentos\\allegro\\Demo\\Demo\\Demo.cpp",
+              "RelativeDocumentMoniker": "Demo\\Demo.cpp",
+              "ToolTip": "C:\\Users\\Flavinn\\OneDrive\\Documentos\\allegro\\Demo\\Demo\\Demo.cpp",
+              "RelativeToolTip": "Demo\\Demo.cpp",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-14T17:27:08.715Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
