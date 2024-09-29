@@ -52,7 +52,7 @@ int main()
     //crio o display
     tela_inicial = al_create_display(720, 400);
     //carrego a imagem
-    fundofase1 = al_load_bitmap("fase1.bmp");
+    fundofase1 = al_load_bitmap("BG-1.PNG");
 
 
     //verifica se a tela inicial foi criada, se não retorna erro e -1
