@@ -6,6 +6,8 @@
 //incluindo biblioteca pra desenhar coisas
 #include "allegro5/allegro_primitives.h"
 
+
+
 int main()
 {
     //aqui eu inicializo o programa
@@ -32,7 +34,7 @@ int main()
     //criando um ponteiro pra criar um display
     ALLEGRO_DISPLAY* tela_inicial;
     //crio o display
-    tela_inicial = al_create_display(720, 400);
+    tela_inicial = al_create_display(920, 800);
     
    // al_set_window_title(ALLEGRO_DISPLAY * display, "Chernobyl Game");
 
@@ -100,6 +102,28 @@ int main()
             //verifica se é a tecla DOWN, add +10 no Y
             else if (evento.keyboard.keycode == ALLEGRO_KEY_S)
                 y = y + 10.0;
+
+            // Define a cor de fundo da janela (preto)
+            al_clear_to_color(al_map_rgb(0, 0, 0));
+
+            // Desenha um retângulo com cantos arredondados (x1, y1, x2, y2, raio_x, raio_y, cor)
+            al_draw_filled_rounded_rectangle(50, 300, 570, 380, 10, 10, al_map_rgb(245, 245, 220));
+            // Retângulo da caixa de diálogo
+
+            // Desenha a "fala" da caixa de diálogo (triângulo)
+            al_draw_filled_triangle(690, 400, 720, 370, 690, 650, al_map_rgb(245, 245, 220));
+            // Triângulo para a fala
+
+            // Desenha a linha da fala
+            al_draw_line(300, 400, 190, 370, al_map_rgb(245, 245, 220), 1.0);
+            // Linha da fala
+
+            // Atualiza a tela para exibir a caixa de diálogo
+            al_flip_display();
+
+            // Espera por 5 segundos
+            al_rest(105.0);
+
         }
 
         //preencho de branco apenas o DISPLAY
@@ -112,11 +136,27 @@ int main()
         al_flip_display();
 
     }
+
+    
+
+
+
     //destruindo eventos
     al_destroy_event_queue(fila_eventos);
     //destruindo display
     al_destroy_display(tela_inicial);
 
+
+
+
     return 0;
+
+
 }
+
+
+
+
+
+
 
