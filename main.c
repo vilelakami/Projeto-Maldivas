@@ -7,14 +7,19 @@
     #include "allegro5/allegro_primitives.h"
     //incluindo biblioteca de imagem
     #include "allegro5/allegro_image.h"
+    // incluindo biblioteca de fontes
+    #include "allegro5/allegro_ttf.h"
+    #include "allegro5/allegro_font.h"
 
     //criando struct e enumerando telas
     typedef enum {
-        MENU,
+        PROLOGO,
         FASE_1,
         FASE_2,
         FASE_3,
-        FASE_4
+        FASE_4,
+        GAMEOVER,
+        FINAL1
     }Fases;
 
     int main()
@@ -45,54 +50,75 @@
             fprintf(stderr, "ERRO ao criar imagem");
             return -1;
         }
+
+        //inicializo ttf addon
+        if (!al_init_ttf_addon() || !al_init_font_addon()) {
+            fprintf(stderr, "ERRO ao criar fontes");
+            return -1;
+        }
+
         //criando um ponteiro pra criar um display
         ALLEGRO_DISPLAY* tela_inicial;
-        //criando um ponteiro pra imagem de fundo da fase 1
+        //criando um ponteiro pra imagem de fundo 
         ALLEGRO_BITMAP* fundofase1;
 
         ALLEGRO_BITMAP* fundofase2;
 
         ALLEGRO_BITMAP* fundofase3;
 
+        ALLEGRO_BITMAP* fundomenu;
+
+        ALLEGRO_BITMAP* fundoGO;
+
+        ALLEGRO_BITMAP* fundofinal;
+
+        ALLEGRO_BITMAP* fundofase4;
+
+        ALLEGRO_FONT* fontes;
+
         //crio o display
         tela_inicial = al_create_display(720, 400);
-        //carrego a imagem
-        fundofase1 = al_load_bitmap("BG-1.PNG");
+       
+        //carrego as imagems dos backgrounds
+        fundofase1 = al_load_bitmap("fundoUm.PNG");
 
-        fundofase2 = al_load_bitmap("BG-2.PNG");
+        fundofase2 = al_load_bitmap("fundoDoiss.PNG");
 
-        fundofase3 = al_load_bitmap("BG-4.PNG");
+        fundofase3 = al_load_bitmap("fundoTres.P    NG");
 
+        fundomenu = al_load_bitmap("menu.PNG");
 
+        fontes = al_load_ttf_font("SpicyRice.ofl", 12, 0);
+
+      
         //verifica se a tela inicial foi criada, se não retorna erro e -1
         if (!tela_inicial) {
             fprintf(stderr, "erro ao criar display");
             return -1;
         }
         //verifico se o fundo foi carregado, se não ele me retorna -1
-        if (!fundofase1) {
-            fprintf(stderr, "erro ao criar fundo da fase 1");
+        if (!fundofase1 || !fundofase2 || !fundofase3 || !fundoGO || !fundofinal || !fundofase4) {
+            fprintf(stderr, "erro ao criar fundo");
             return -1;
         }
-        if (!fundofase2) {
-            fprintf(stderr, "erro ao criar fundo da fase 2");
-            return -1;
+        if (!fontes) {
+            fprintf(stderr, "erro ao criar fontes");
         }
-
-        if (!fundofase3) {
-            fprintf(stderr, "erro ao criar fundo da fase 3");
-            return -1;
-        }
-        //deixo o display em branco
+        //deixo o display em brancoA
         ALLEGRO_COLOR cor_fundo = al_map_rgb(255, 255, 255);
         //deixando o circulo preto
         ALLEGRO_COLOR cor_circle = al_map_rgb(0, 0, 0);
-
+        ALLEGRO_COLOR cor_rect = al_map_rgb(255, 255, 0);
+        ALLEGRO_COLOR cor_startgame = al_map_rgb(0, 0, 0);
+        
 
         //preencho de branco apenas o DISPLAY
         al_clear_to_color(cor_fundo);
+
+        
         //pintando o circulo
         al_clear_to_color(cor_circle);
+        
 
         //criando uma fila de eventos pra usar o botão ESC
         ALLEGRO_EVENT_QUEUE* fila_eventos = al_create_event_queue();
@@ -113,12 +139,23 @@
         float y = 200;
         float raio = 20;
 
-        //declaro fases e dou o nome de tela atual do jogo, a primeira tela sempre será o MENU
-        Fases tela_do_jogo = MENU;
+        //declaro fases e dou o nome de tela atual do jogo, a primeira tela sempre será o PROLOGO
+        Fases tela_do_jogo = PROLOGO;
 
         //declarando uma variavel booleana como falsa
         bool sair = false;
 
+        al_draw_scaled_bitmap(fundomenu,
+            0, 0,
+            al_get_bitmap_width(fundomenu), al_get_bitmap_height(fundomenu),
+            0, 0,
+            720, 400,
+            0);
+
+        al_draw_filled_rectangle(100, 100, 100, 100, cor_rect);
+        al_draw_text(fontes, cor_startgame, 360, 165, ALLEGRO_ALIGN_CENTRE, "START GAME");
+        
+        al_flip_display();
         //enquanto a tecla ESC nao for clicada:
         while (!sair) {
 
@@ -132,33 +169,11 @@
                 //verifica se a tecla é a tecla ESC
                 if (tecla.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                     sair = true;
-                //verifica se a tecla é a right, add 10 no x
-                else if (tecla.keyboard.keycode == ALLEGRO_KEY_D) {
-                    //verificando se o circulo encosta na borda, pra ele não sair da    tela
-                    if (x + raio < 720)
-                        x = x + 10.0;
-                }
-
-                //verifica se a tecla é o left, add -10 no x
-                else if (tecla.keyboard.keycode == ALLEGRO_KEY_A) {
-                    if (x - raio > 0)
-                        x = x - 10.0;
-                }
-
-                //verifica se é a tecla UP, add -10 no Y
-                else if (tecla.keyboard.keycode == ALLEGRO_KEY_W) {
-                    if (y - raio > 0)
-                        y = y - 10.0;
-                }
-                //verifica se é a tecla DOWN, add +10 no Y
-                else if (tecla.keyboard.keycode == ALLEGRO_KEY_S) {
-                    if (y + raio < 400)
-                        y = y + 10.0;
-                }
+               
                 //verifica se enter foi clicado
                 else if (tecla.keyboard.keycode == ALLEGRO_KEY_ENTER) {
                     //verifica se a tela atual é menu, se for e o enter for clicado, ele vai pra próx tela, fase 1
-                    if (tela_do_jogo == MENU)
+                    if (tela_do_jogo == PROLOGO)
                         tela_do_jogo = FASE_1;
                     //mesma coisa, mas agr verifica se está na tela fase 1
                     else if (tela_do_jogo == FASE_1)
@@ -170,6 +185,7 @@
 
                     else if (tela_do_jogo == FASE_3)
                         tela_do_jogo = FASE_4;
+
                 }
 
             }
@@ -179,7 +195,7 @@
 
             //verificando quais foram as telas escolhidas para desenhar o fundo
             switch (tela_do_jogo) {
-            case MENU:
+            case PROLOGO:
                 al_clear_to_color(al_map_rgb(0, 0, 255));
                 break;
             case FASE_1: 
@@ -189,16 +205,31 @@
                     0, 0,
                     720, 400, 
                     0); 
+                //verifica se a tecla é a right, add 10 no x
+             if (tecla.keyboard.keycode == ALLEGRO_KEY_D) {
+                //verificando se o circulo encosta na borda, pra ele não sair da    tela
+                if (x + raio < 650)
+                    x = x + 10.0;
+            }
+
+            //verifica se a tecla é o left, add -10 no x
+            else if (tecla.keyboard.keycode == ALLEGRO_KEY_A) {
+                if (x - raio > 40)
+                    x = x - 10.0;
+            }
+
+            //verifica se é a tecla UP, add -10 no Y
+            else if (tecla.keyboard.keycode == ALLEGRO_KEY_W) {
+                if (y - raio > 0)
+                    y = y - 10.0;
+            }
+            //verifica se é a tecla DOWN, add +10 no Y
+            else if (tecla.keyboard.keycode == ALLEGRO_KEY_S) {
+                if (y + raio < 400)
+                    y = y + 10.0;
+            }
                 break;
             case FASE_2:
-                al_draw_scaled_bitmap(fundofase3,
-                    0, 0,
-                    al_get_bitmap_width(fundofase3), al_get_bitmap_height(fundofase3),
-                    0, 0,
-                    720, 400,
-                    0);
-                break;
-            case FASE_3:
                 al_draw_scaled_bitmap(fundofase2,
                     0, 0,
                     al_get_bitmap_width(fundofase2), al_get_bitmap_height(fundofase2),
@@ -206,8 +237,22 @@
                     720, 400,
                     0);
                 break;
+            case FASE_3:
+                al_clear_to_color(al_map_rgb(0, 0, 0));
+                al_draw_scaled_bitmap(fundofase3,
+                    0, 0,
+                    al_get_bitmap_width(fundofase3), al_get_bitmap_height(fundofase3),
+                    0, 0,
+                    720, 400,
+                    0);
+                break;
             case FASE_4:
                 al_clear_to_color(al_map_rgb(0, 120, 255));
+                break;
+            case GAMEOVER:
+                break;
+            case FINAL1:
+                break;
             }
 
             //desenha o circulo por cima do display
