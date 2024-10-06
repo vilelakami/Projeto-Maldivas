@@ -38,7 +38,7 @@ int main()
     //load icon da janela
     ALLEGRO_BITMAP* icon = al_load_bitmap("icon.bmp");
     //load sprite personagem principal
-    ALLEGRO_BITMAP* protagonista = al_load_bitmap("cientista.png");
+    ALLEGRO_BITMAP* protagonista = al_load_bitmap("scientist.png");
     //load bg 
     ALLEGRO_BITMAP* bg = al_load_bitmap("BG-1.png");
 
@@ -73,8 +73,8 @@ int main()
 
     //criando movimentação do sprite
     float frame = 0.f;
-    int pos_x = 0;
-    int pos_y = 0;
+    int pos_x = 80;
+    int pos_y = 320;
     //qual imagem ele desenha 
     int frame_atual_y = 0;
 
@@ -117,26 +117,26 @@ int main()
             //verifica se a tecla é a tecla ESC
             if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                 sair = true;
-            //verifica se a tecla é a right, add 10 no x
+            //verifica se a tecla é a right, add 20 no x
             else if (evento.keyboard.keycode == ALLEGRO_KEY_D) {
 
                 pos_x += 20;
-                frame_atual_y = 240;
+                frame_atual_y = 104;
             }
-            //verifica se a tecla é o left, add -10 no x
+            //verifica se a tecla é o left, add -20 no x
             else if (evento.keyboard.keycode == ALLEGRO_KEY_A) {
                 pos_x -= 20;
-                frame_atual_y = 200;
+                frame_atual_y = 52;
             }
-            //verifica se é a tecla UP, add -10 no Y
+            //verifica se é a tecla UP, add -20 no Y
             else if (evento.keyboard.keycode == ALLEGRO_KEY_W) {
                 pos_y -= 20;
-                frame_atual_y = 280;
+                frame_atual_y = 156;
             }
-            //verifica se é a tecla DOWN, add +10 no Y
+            //verifica se é a tecla DOWN, add +20 no Y
             else if (evento.keyboard.keycode == ALLEGRO_KEY_S) {
                 pos_y += 20;
-                frame_atual_y = 160;
+                frame_atual_y = 0;
             }
         }
 
@@ -147,7 +147,7 @@ int main()
         al_draw_bitmap(bg, 0, 0, 0);
 
         //desenhando o sprite do personagem - next frame 240
-        al_draw_bitmap_region(protagonista, 40 * (int)frame, frame_atual_y, 40 , 40, pos_x, pos_y, 0);
+        al_draw_bitmap_region(protagonista, 34 * (int)frame, frame_atual_y, 34 , 52, pos_x, pos_y, 0);
         
         
 
@@ -155,6 +155,8 @@ int main()
         al_flip_display();
 
     }
+    //destruindo bg
+    al_destroy_bitmap(bg);
     //destruindo o sprite
     al_destroy_bitmap(protagonista);
     //destruindo eventos
