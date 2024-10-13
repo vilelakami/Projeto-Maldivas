@@ -1,2 +1,2 @@
 ﻿  main.c
-  PI-2.vcxproj -> C:\Users\Gabriel\Source\Repos\Projeto-Maldivas\x64\Debug\PI-2.exe
+C:\Users\Flavinn\source\repos\Projeto-Maldivas\main.c(9,10): error C1083: Não é possível abrir arquivo incluir: 'allegro5/allegro_mouse.h': No such file or directory
