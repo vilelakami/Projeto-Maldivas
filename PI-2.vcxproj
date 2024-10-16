@@ -19,9 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="colission.c" />
     <ClCompile Include="event_handling.c" />
     <ClCompile Include="game_logic.c" />
@@ -44,6 +41,9 @@
     <ClInclude Include="rendering.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="ui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
