@@ -1,6 +1,7 @@
 // event_handling.c
 #include "event_handling.h"
 #include <stdio.h>
+#include "displays.h"
 
 void init_game_input(GameInput* input) {
     input->sair = false;
@@ -51,7 +52,15 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, Player* player, Projec
     }
     else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
         input->teclas[evento.keyboard.keycode] = true;
-
+        if (input->estado == MENU) 
+            input->estado = PROLOGO;
+        if (input->estado == PROLOGO) 
+            input->estado = FASE_1;
+        if (input->estado = FASE_1)
+            input->estado = FASE_2;
+        if (input->estado = FASE_2)
+            input->estado = FASE_3;
+        
         if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
             input->sair = true;
         }

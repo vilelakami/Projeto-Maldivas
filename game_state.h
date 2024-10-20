@@ -8,3 +8,4 @@ typedef enum {
 } GameState;
 
 #endif
+

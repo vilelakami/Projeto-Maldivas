@@ -1,2 +1,4 @@
-﻿  main.c
-  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro\Projeto-Maldivas\x64\Debug\PI-2.exe
+﻿  event_handling.c
+  main.c
+  Gerando Código...
+LINK : fatal error LNK1104: não é possível abrir o arquivo 'C:\Users\Flavinn\source\repos\Projeto-Maldivas\packages\Allegro.5.2.9\build\native\v143\x64\lib\allegro-debug.lib'
