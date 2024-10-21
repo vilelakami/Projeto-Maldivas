@@ -1,0 +1,483 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.41.34120.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/ui.c"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "8c402036c8ff1be25b992c5cce373e487831258c58d8ab0579b27b2f06f25385"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/ui.h"
+          },
+          "hashes": {
+            "sha-256": "3bf3a64a6e5d472063ea7dbd30d892fa32cba2b32a094cd3746020d908318433"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/allegro5.h"
+          },
+          "hashes": {
+            "sha-256": "a6358cade9802bc7abe67e10ddc6a845b7ea71a81782cea6b93c91794812be6e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/allegro.h"
+          },
+          "hashes": {
+            "sha-256": "5482af567a317ad0dcd9767b83374e45790ca6df47e58402ebe669133bdecd97"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/base.h"
+          },
+          "hashes": {
+            "sha-256": "8de04d78d78c5cdb64e8fa128f5f40bf10bb6a6e4e2317df29b9b5e545ccdea8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/internal/alconfig.h"
+          },
+          "hashes": {
+            "sha-256": "6cb004d2629293e70cd41677eb09562c447bf6293f8d8050f494bf21c774d89a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/platform/alplatf.h"
+          },
+          "hashes": {
+            "sha-256": "472a55bf01f9134ce9c46c1a930c0715c02f4ff57524d1eae44bafd5cae87e8d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/platform/almsvc.h"
+          },
+          "hashes": {
+            "sha-256": "29343262c5016696444e80a7f10c7efbb39fc4a7095d65ee7f154e415118508b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/platform/astdint.h"
+          },
+          "hashes": {
+            "sha-256": "8470f64bbaf7372ac533de7e77dfb097923e9264edc2253b9369c964314a6373"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/platform/astdbool.h"
+          },
+          "hashes": {
+            "sha-256": "baed7f348156e09f328c1f8382461d68985775d0e3552858a38d7e2d61e492d0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/altime.h"
+          },
+          "hashes": {
+            "sha-256": "b4305e54882a22fb5944176734fc34001ab204a673b9124669307038e73e25a2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/bitmap.h"
+          },
+          "hashes": {
+            "sha-256": "f999b8f6dccfba8ea3efded2d0ffefc1cf15c73e9f8d8e490daf64a9a8b97f8b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/color.h"
+          },
+          "hashes": {
+            "sha-256": "a38955b72b4dfd534acab70da0cbe3d7a009ae2a9652ec41c4311035e2035b84"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/bitmap_draw.h"
+          },
+          "hashes": {
+            "sha-256": "b6e553e094879b7b1405d21307eea3f7c475c47b325617e02374264e6b10fdf6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/bitmap_io.h"
+          },
+          "hashes": {
+            "sha-256": "d898d8cc9f436c9ac933cfcab47f6f3c0aac9cfb6b57ec0aa418aee1eb3c8e10"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/file.h"
+          },
+          "hashes": {
+            "sha-256": "cb6d940d4409430438e7d654bb551e665a87b8d7f1da9233c3d341c56e806cf1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/path.h"
+          },
+          "hashes": {
+            "sha-256": "6295038c485e11365484709c0ba9d931087f2c4b43a953aad9c392f5273c6445"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/utf8.h"
+          },
+          "hashes": {
+            "sha-256": "18dc0333aebbfa24f0aaa11de85664e0dbf6f65f90af687a12a022f148a1f106"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/bitmap_lock.h"
+          },
+          "hashes": {
+            "sha-256": "43a5d2e454aa9777401c9cbb367aa7afe66c849da46ac50b6cb9c2bbaa88fa51"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/blender.h"
+          },
+          "hashes": {
+            "sha-256": "26adc8ffc3155bfa58da719cf189e808baed0aa55e4a204a454aaf04d9dc5b11"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/clipboard.h"
+          },
+          "hashes": {
+            "sha-256": "643f12fc9303405d97a5a3a260281af50f9f70c50fde52d21b10d1756e30b3c9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/display.h"
+          },
+          "hashes": {
+            "sha-256": "1ce3e78285faff3f1fad2d60d94c529051b709cd8633132150c40dc960b22e71"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/events.h"
+          },
+          "hashes": {
+            "sha-256": "805c3f648ab24f260e9235d39214ba74b9cedc8b9d699f4ba569d4bd1b7c9cc2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/config.h"
+          },
+          "hashes": {
+            "sha-256": "46069d52b16cb9c281115fba1daf1f02dd92cad1ddc80258780c3d64fbb8f0d1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/cpu.h"
+          },
+          "hashes": {
+            "sha-256": "5c1b9df1a98d9ede2a7190aa45a3d669612a68908c240d119fa9ec1025bbdeb6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/debug.h"
+          },
+          "hashes": {
+            "sha-256": "35c09be301ad99b41f3fbec542913da0c5b1024f97be367d8f936c8fec394bff"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/drawing.h"
+          },
+          "hashes": {
+            "sha-256": "b74eef6814e92c96dc508adbadc882002fd3627a4ba46771f51befd800ff5e1f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/error.h"
+          },
+          "hashes": {
+            "sha-256": "c64dbe09fc808e5f32ab7fb51def2aef11387b164da25db69d336c35e4f5dbc7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/fixed.h"
+          },
+          "hashes": {
+            "sha-256": "8efc9eb106e3c87fbc7679d8a8a2405cb4d754e49e685a49f140e4cbcaf7a9da"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/fmaths.h"
+          },
+          "hashes": {
+            "sha-256": "2d5edf69052b9c8d0e59c4a38cd978171d617c512341b9ab74fc92a81964addd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/inline/fmaths.inl"
+          },
+          "hashes": {
+            "sha-256": "16bea0d49552678c8ceeaa29f979994251c7098840a75efcb6fea7ec1e75bd67"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/fshook.h"
+          },
+          "hashes": {
+            "sha-256": "bca64bda15486701d3e7b94dc773c4c106d524046edc7d43c53b0e35b81d6c23"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/fullscreen_mode.h"
+          },
+          "hashes": {
+            "sha-256": "d991360173e9d2e0f4142858b085b7883b583e491245f5e9b0a26e9bb38f9f3c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/haptic.h"
+          },
+          "hashes": {
+            "sha-256": "f132cc69697934ea300f15d93d4c9fa73d787f37adf86941cb59961c2a22f370"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/joystick.h"
+          },
+          "hashes": {
+            "sha-256": "7b3cf9a464628aa5eb4e020e497672b8cc0d2b1cc5d8c5047a81c744658a1959"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/keyboard.h"
+          },
+          "hashes": {
+            "sha-256": "89d9ed2e7873a9ef21773ca80fb550285e272b4548af9795784b6959a26957f2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/keycodes.h"
+          },
+          "hashes": {
+            "sha-256": "919c32763c403a3c707ba8c06ee4102dbe5e321304e516eed40b945c4ed6dfaa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/mouse.h"
+          },
+          "hashes": {
+            "sha-256": "792b4c10d0ee77ef3ddc63e31c60ec1608d8cd41eab5342f613c39f3cf8c18f5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/touch_input.h"
+          },
+          "hashes": {
+            "sha-256": "7473e68a0bdfcb5df2f7074a25c2af6c588356e8360ab176bf3dac1d1f64fa9e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/memory.h"
+          },
+          "hashes": {
+            "sha-256": "94a45e04567800e5e97d4130d53e1190e63b0fa4e95a1ad78d494a236a0134c7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/monitor.h"
+          },
+          "hashes": {
+            "sha-256": "f58206810cd0cf6a599221efa2dbcfce9345a0a7a75520e5c4d2541349841e2a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/mouse_cursor.h"
+          },
+          "hashes": {
+            "sha-256": "ca320a8271e2e278714b14f7b5bb83d0313e7f3bf13b37d6ae9d967a7d57e51e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/render_state.h"
+          },
+          "hashes": {
+            "sha-256": "bacf008957b4ee5aac335635bb7babeee1f45cda462f504f52663fe661000492"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/shader.h"
+          },
+          "hashes": {
+            "sha-256": "a4499b99960a4fbc611e48c0e8feba295d216f207be410c08cb1b0a332ef14fc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/transformations.h"
+          },
+          "hashes": {
+            "sha-256": "a76ca356645b271c9f61211376353de3f4e7f28f05b264357fa1cff85c7498b8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/system.h"
+          },
+          "hashes": {
+            "sha-256": "5fa7ec184ba8ac7bd1988bad7834cdf9e54c69c2b34eb0af9fb12bb5605ffb42"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/threads.h"
+          },
+          "hashes": {
+            "sha-256": "914ad4f971209ab3af25054631921680ea7016baad2939bad3934826bb1e35ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/timer.h"
+          },
+          "hashes": {
+            "sha-256": "0fe6d8ba2174abec539eed2c625b85f4fd1f383ba448448d6b81d80457b1b9df"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/tls.h"
+          },
+          "hashes": {
+            "sha-256": "296a6a7ce213aa947d2c8140e88fac5d8eb12b4d3c93f29017245bf39b3333d0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/alcompat.h"
+          },
+          "hashes": {
+            "sha-256": "35af6ace4e4f2a4cfc97322b593a8f2841de8a734b4432221b4a079679258bc4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/platform/alwin.h"
+          },
+          "hashes": {
+            "sha-256": "5c2ef7eb246a9d499b7ea309b54eea4d725579d08af7c86dbcc0f063f12a30d1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/allegro_primitives.h"
+          },
+          "hashes": {
+            "sha-256": "396a91c19e374c30b95808764754785d92a4efe30406a0aabc4992b0f2820e84"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/packages/allegro.5.2.9/build/native/include/allegro5/allegro_font.h"
+          },
+          "hashes": {
+            "sha-256": "1979661444a5ae8696147aa916421ef503857b1b97d87b497503904a582459ce"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/game_state.h"
+          },
+          "hashes": {
+            "sha-256": "54bc2c4ea0a5e31494057ef18586d690da7585caeb4b6a0206a4917bed0a995f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/player.h"
+          },
+          "hashes": {
+            "sha-256": "d51fe93cc3f1e4669da854f6717de7d9f03794ecf1fa4e8fa53de972bb7e21ed"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/projectile.h"
+          },
+          "hashes": {
+            "sha-256": "11d045f1c96b78cd6043ea93c03e4c8510c3adc861afb29f8c15a2f0a21ae401"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/flavinn/source/repos/projeto-maldivas/rect.h"
+          },
+          "hashes": {
+            "sha-256": "3469b3208c3264d076887575e9a9465f6f6bdd91c4c92aa92053a351dead238c"
+          }
+        }
+      ]
+    }
+  ]
+}

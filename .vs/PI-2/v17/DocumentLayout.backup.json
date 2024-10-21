@@ -10,7 +10,7 @@
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
-      "VerticalTabListWidth": 100,
+      "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
           "DockedWidth": 200,
@@ -24,9 +24,9 @@
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "C:\\Users\\Flavinn\\source\\repos\\Projeto-Maldivas\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-10-05T23:16:27.569Z",
+              "WhenOpened": "2024-10-09T15:21:10.485Z",
               "EditorCaption": ""
             }
           ]
