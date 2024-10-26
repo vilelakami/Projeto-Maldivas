@@ -5,7 +5,7 @@
 typedef enum {
     PLAYING,
     GAME_OVER
-} GameState;
+} GameState ;
 
 #endif
 
