@@ -8,6 +8,7 @@
 // Estrutura para armazenar todos os recursos do jogo
 typedef struct {
     ALLEGRO_BITMAP* icon;
+    ALLEGRO_BITMAP* menu_image; // Novo campo para a imagem do menu
     ALLEGRO_FONT* font;
     // Adicione outros recursos aqui se necessário
 } Resources;

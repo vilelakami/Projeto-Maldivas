@@ -11,7 +11,6 @@
 #include "ui.h"
 #include "game_state.h"
 #include "rect.h"
-#include "displays.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -114,19 +113,24 @@ int main() {
     Rect continuar_botao = { BOTAO_CONTINUAR_X1, BOTAO_CONTINUAR_Y1, BOTAO_CONTINUAR_X2, BOTAO_CONTINUAR_Y2 };
     Rect sair_botao = { BOTAO_SAIR_X1, BOTAO_SAIR_Y1, BOTAO_SAIR_X2, BOTAO_SAIR_Y2 };
 
+    // Definir o botão "Start"
+    Rect start_button = {
+        SCREEN_WIDTH / 2 - 100, // x1
+        SCREEN_HEIGHT / 2 - 25, // y1
+        SCREEN_WIDTH / 2 + 100, // x2
+        SCREEN_HEIGHT / 2 + 25  // y2
+    };
+
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
 
-    //iniciando estado atual
-    EstadoAtual tela = MENU;
+    // Inicializando o estado atual
+    GameState estado = MENU;
 
     // Loop principal do jogo
     while (!input.sair) {
         ALLEGRO_EVENT evento;
         al_wait_for_event(queue, &evento);
-
-        //atualizando as telas
-        atualizar_estado(&tela);
 
         if (evento.type == ALLEGRO_EVENT_TIMER) {
             // Calcula o delta_time
@@ -135,14 +139,14 @@ int main() {
             tempo_anterior = tempo_atual;
 
             // Atualiza a lógica do jogo
-            update_game(&input.estado, &player, &proj, input.teclas, delta_time);
+            update_game(&estado, &player, &proj, input.teclas, delta_time);
 
-            // Renderiza o jogo
-            render_game(input.estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y);
+            // Renderiza o jogo, incluindo o start_button
+            render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button);
         }
         else {
-            // Lida com os eventos
-            handle_event(evento, &input, &player, &proj, continuar_botao, sair_botao);
+            // Lida com os eventos, incluindo o start_button
+            handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button);
         }
     }
 

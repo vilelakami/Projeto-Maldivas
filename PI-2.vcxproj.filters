@@ -42,6 +42,12 @@
     <ClCompile Include="ui.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="game_state.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="displays.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">

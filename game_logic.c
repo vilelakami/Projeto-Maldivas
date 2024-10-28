@@ -1,13 +1,14 @@
 // game_logic.c
 #include "game_logic.h"
-#include <stdio.h>  // Adicionado para declarar printf
+#include <stdio.h>  // Para printf
 
 void update_game(GameState* estado, Player* player, Projectile* proj, const bool* teclas, float delta_time) {
-    if (*estado == PLAYING) {
+    // Atualiza a lógica do jogo apenas se estiver em uma das fases do jogo
+    if (*estado == FASE_1 || *estado == FASE_2 || *estado == FASE_3) {
         // Atualiza o jogador
         update_player(player, teclas, delta_time);
 
-        // Atualiza o projetil
+        // Atualiza o projétil
         update_projectile(proj, delta_time);
 
         // Calcula as dimensões para colisão
@@ -28,7 +29,7 @@ void update_game(GameState* estado, Player* player, Projectile* proj, const bool
                 player->invencivel = true;
                 player->tempo_invencibilidade = 2.0f;
 
-                // Reinicia o projetil
+                // Reinicia o projétil
                 init_projectile(proj);
 
                 printf("Colisão detectada! Vida atual: %d\n", player->vida_atual);

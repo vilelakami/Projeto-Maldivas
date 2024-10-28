@@ -1,7 +1,6 @@
 // event_handling.c
 #include "event_handling.h"
 #include <stdio.h>
-#include "displays.h"
 
 void init_game_input(GameInput* input) {
     input->sair = false;
@@ -10,57 +9,54 @@ void init_game_input(GameInput* input) {
     }
     input->mouse_x = 0;
     input->mouse_y = 0;
-    input->estado = PLAYING;
 }
 
-void handle_event(ALLEGRO_EVENT evento, GameInput* input, Player* player, Projectile* proj, Rect continuar_botao, Rect sair_botao) {
-    if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* proj,
+    Rect continuar_botao, Rect sair_botao, Rect start_button) {
+    if (evento.type == ALLEGRO_EVENT_MOUSE_AXES ||
+        evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN ||
+        evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
         input->mouse_x = evento.mouse.x;
         input->mouse_y = evento.mouse.y;
+    }
 
-        if (input->estado == GAME_OVER) {
+    if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+        printf("Clique detectado em (%d, %d) no estado %d\n", input->mouse_x, input->mouse_y, *estado);
+
+        if (*estado == MENU) {
+            // Verifica se o clique está no botão "Start"
+            if (input->mouse_x >= start_button.x1 && input->mouse_x <= start_button.x2 &&
+                input->mouse_y >= start_button.y1 && input->mouse_y <= start_button.y2) {
+                // Muda o estado para FASE_1
+                *estado = FASE_1;
+                printf("Estado mudou para FASE_1\n");
+            }
+        }
+        else if (*estado == GAME_OVER) {
             // Verifica se o clique está no botão "Continuar"
             if (input->mouse_x >= continuar_botao.x1 && input->mouse_x <= continuar_botao.x2 &&
                 input->mouse_y >= continuar_botao.y1 && input->mouse_y <= continuar_botao.y2) {
-                // Reinicia o jogador
+                // Reinicia o jogador e o projétil
                 destroy_player(player);
                 init_player(player);
-
-                // Reinicia o projetil
                 destroy_projectile(proj);
                 init_projectile(proj);
 
-                // Muda o estado para PLAYING
-                input->estado = PLAYING;
+                // Muda o estado para FASE_1
+                *estado = FASE_1;
                 printf("Reiniciando o jogo...\n");
             }
-
             // Verifica se o clique está no botão "Sair"
-            if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
+            else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
                 input->mouse_y >= sair_botao.y1 && input->mouse_y <= sair_botao.y2) {
-                // Sair do jogo
                 input->sair = true;
                 printf("Saindo do jogo...\n");
             }
         }
     }
-    else if (evento.type == ALLEGRO_EVENT_MOUSE_AXES ||
-        evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-        // Atualiza a posição do mouse para efeitos de hover
-        input->mouse_x = evento.mouse.x;
-        input->mouse_y = evento.mouse.y;
-    }
     else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
         input->teclas[evento.keyboard.keycode] = true;
-        if (input->estado == MENU) 
-            input->estado = PROLOGO;
-        if (input->estado == PROLOGO) 
-            input->estado = FASE_1;
-        if (input->estado = FASE_1)
-            input->estado = FASE_2;
-        if (input->estado = FASE_2)
-            input->estado = FASE_3;
-        
+
         if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
             input->sair = true;
         }

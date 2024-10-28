@@ -20,6 +20,7 @@
 #define BOTAO_SAIR_X2 740
 #define BOTAO_SAIR_Y2 550
 
+
 // Cores
 #define COR_FUNDO al_map_rgb(255, 255, 255)
 #define COR_GAME_OVER al_map_rgb(0, 0, 0)

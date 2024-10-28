@@ -14,13 +14,14 @@ typedef struct {
     bool teclas[ALLEGRO_KEY_MAX];
     int mouse_x;
     int mouse_y;
-    GameState estado;
 } GameInput;
 
 // Inicializa a estrutura de entrada
 void init_game_input(GameInput* input);
 
 // Lida com um único evento recebido
-void handle_event(ALLEGRO_EVENT evento, GameInput* input, Player* player, Projectile* proj, Rect continuar_botao, Rect sair_botao);
+void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* proj,
+    Rect continuar_botao, Rect sair_botao, Rect start_button);
+
 
 #endif // EVENT_HANDLING_H

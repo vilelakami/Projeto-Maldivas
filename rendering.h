@@ -11,6 +11,8 @@
 #include "resources.h"
 
 // Função para renderizar o estado atual do jogo
-void render_game(GameState estado, Resources* res, Player* player, Projectile* proj, Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y);
+void render_game(GameState estado, Resources* res, Player* player, Projectile* proj,
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button);
+
 
 #endif // RENDERING_H

@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="colission.c" />
+    <ClCompile Include="displays.c" />
     <ClCompile Include="event_handling.c" />
     <ClCompile Include="game_logic.c" />
+    <ClCompile Include="game_state.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="projectile.c" />
