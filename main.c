@@ -14,30 +14,31 @@
     // incluindo biblioteca do mouse
     #include "allegro5/mouse.h"
 
-// criando struct e enumerando telas
-typedef enum {
-    PROLOGO,
-    FASE_1,
-    FASE_2,
-    FASE_3,
-    FASE_4,
-    FINAL1
-}Fases;
+    //criando struct e enumerando telas
+    typedef enum {
+        PROLOGO,
+        FASE_1,
+        FASE_2,
+        FASE_3,
+        FASE_4,
+        FINAL1
+    }Fases;
 
-int main()
-{
+    int main()
+    {
+        //aqui eu inicializo o programa
+        //se der algum erro e n„o inicializar o programa ele me rettorna -1
+        if (!al_init()) {
+            fprintf(stderr, "ERRO AO INICIAR");
+            return -1;
+        }
 
-    //aqui eu inicializo o programa
-    //se der algum erro e n√£o inicializar o programa ele me rettorna -1
-    if (!al_init()) {
-        fprintf(stderr, "ERRO AO INICIAR");
-        return -1;
-    }
         //aqui inicializo o keyboard
-        //se n√£o instalar o teclado me retorna -1
+        //se n„o instalar o teclado me retorna -1
         if (!al_install_keyboard()) {
             fprintf(stderr, "ERRO ao Instalar teclado");
             return -1;
+        }
 
         //inicializo o primitives
         //se der erro ele me retorna -1
@@ -82,17 +83,22 @@ int main()
 
         //ALLEGRO_BITMAP* fundofinal;
 
+        //ALLEGRO_BITMAP* fundofase4;
+
         //ponteiro pra fonte que eu usei
         ALLEGRO_FONT* fontes,* fontenome, *fontecontorno;
-   
+
         //crio o display
-        tela_inicial = al_create_display(720, 400);
+        tela_inicial = al_create_display(800, 600 );
        
         //carrego as imagems dos backgrounds
-        fundofase1 = al_load_bitmap("fundoUm.PNG");
-        fundofase2 = al_load_bitmap("fundoDoiss.PNG");
+        fundofase1 = al_load_bitmap("backgrounds/BG-1.PNG");
+
+        fundofase2 = al_load_bitmap("backgrounds/BG-2.PNG");
+
         fundofase3 = al_load_bitmap("fundoTres.PNG");
-        fundomenu = al_load_bitmap("menu.PNG");
+
+        fundomenu = al_load_bitmap("backgrounds/menu.PNG");
 
         //carregando sprites
         play = al_load_bitmap("play.PNG");
@@ -104,12 +110,12 @@ int main()
         fontecontorno = al_load_ttf_font("SpicyRice-Regular.ttf", 43, 0);
 
       
-        //verifica se a tela inicial foi criada, se n√£o retorna erro e -1
+        //verifica se a tela inicial foi criada, se n„o retorna erro e -1
         if (!tela_inicial) {
             fprintf(stderr, "erro ao criar display");
             return -1;
         }
-        //verifico se o fundo foi carregado, se n√£o ele me retorna -1
+        //verifico se o fundo foi carregado, se n„o ele me retorna -1
         if (!fundofase1 || !fundofase2 || !fundofase3 || !fundomenu || !play || !howtoplay) {
             fprintf(stderr, "erro ao criar fundo");
             return -1;
@@ -121,20 +127,19 @@ int main()
         //deixo o display em branco
         ALLEGRO_COLOR cor_fundo = al_map_rgb(255, 255, 255);
 
-        //deixando o circulo preto
-        ALLEGRO_COLOR cor_circle = al_map_rgb(0, 0, 0);
 
         //colorindo o menu
         ALLEGRO_COLOR cor_nome = al_map_rgb(255, 255, 0);
         ALLEGRO_COLOR cor_contorno = al_map_rgb(0, 0, 0);
 
-        //pintando o circulo
-        al_clear_to_color(cor_circle);
+        
+        //preencho de branco apenas o DISPLAY
+        al_clear_to_color(cor_fundo);
 
-        //criando uma fila de eventos pra usar o bot√£o ESC
+        //criando uma fila de eventos pra usar o bot„o ESC
         ALLEGRO_EVENT_QUEUE* fila_eventos = al_create_event_queue();
 
-        //se ele nao criar o evento, destr√≥i o display
+        //se ele nao criar o evento, destrÛi o display
         if (!fila_eventos) {
             fprintf(stderr, "erro ao criar eventos");
             al_destroy_display(tela_inicial);
@@ -143,11 +148,14 @@ int main()
 
         //registrando o evento e o teclado e o mouse
         al_register_event_source(fila_eventos, al_get_keyboard_event_source());
-        al_register_event_source(fila_eventos, al_get_mouse_event_source());
+        //al_register_event_source(fila_eventos, al_get_mouse_event_source());
 
+        //declarando as variaveis do circulo
+        float x = 360;
+        float y = 200;
         float raio = 20;
 
-        //declaro fases e dou o nome de tela atual do jogo, a primeira tela sempre ser√° o PROLOGO
+        //declaro fases e dou o nome de tela atual do jogo, a primeira tela sempre ser· o PROLOGO
         Fases tela_do_jogo = PROLOGO;
 
         //declarando uma variavel booleana como falsa
@@ -158,29 +166,30 @@ int main()
             0, 0,
             al_get_bitmap_width(fundomenu), al_get_bitmap_height(fundomenu),
             0, 0,
-            720, 400,
+            800, 600,
             0);
 
 
-         //t√≠tulo
-         al_draw_text(fontecontorno, cor_contorno, 180, 20, ALLEGRO_ALIGN_CENTRE, "CHERNOBYL GAME");
-         al_draw_text(fontenome, cor_nome, 180, 20, ALLEGRO_ALIGN_CENTRE, "CHERNOBYL GAME");
+         //tÌtulo
+//al_draw_text(fontecontorno, cor_contorno, 180, 20, ALLEGRO_ALIGN_CENTRE, "CHERNOBYL GAME");
+      //   al_draw_text(fontenome, cor_nome, 180, 20, ALLEGRO_ALIGN_CENTRE, "CHERNOBYL GAME");
 
          //botao play
          al_draw_scaled_bitmap(play,
              0, 0,
              al_get_bitmap_width(play), al_get_bitmap_height(play),
-             280, 120,
+             325, 300,
              150, 75,
              0);
 
          //botao how to play
-         al_draw_scaled_bitmap(howtoplay,
+        /* al_draw_scaled_bitmap(howtoplay,
              0, 0,
              al_get_bitmap_width(howtoplay), al_get_bitmap_height(howtoplay),
              280, 200,
              150, 75,
              0);
+             */
 
          al_flip_display();
 
@@ -191,7 +200,7 @@ int main()
             ALLEGRO_EVENT tecla;
             al_wait_for_event(fila_eventos, &tecla);
 
-
+            /*
             //verifico se o mouse foi clicado
             if (tecla.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
                 //verificando se foi a tecla do lado esquerdo (eu acho kkk)
@@ -208,28 +217,30 @@ int main()
                     }
                 }
             }   
+            */
+
             //verifica se foi clicada alguma tecla
             if (tecla.type == ALLEGRO_EVENT_KEY_DOWN) {
 
-                //verifica se a tecla √© a tecla ESC
+                //verifica se a tecla È a tecla ESC
                 if (tecla.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                     sair = true;
                
                 //verifica se enter foi clicado
                 else if (tecla.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-                    //verifica se a tela atual √© menu, se for e o enter for clicado, ele vai pra pr√≥x tela, fase 1
+                    //verifica se a tela atual È menu, se for e o enter for clicado, ele vai pra prÛx tela, fase 1
                     if (tela_do_jogo == PROLOGO)
                         tela_do_jogo = FASE_1;
 
-                    //mesma coisa, mas agr verifica se est√° na tela fase 1
+                    //mesma coisa, mas agr verifica se est· na tela fase 1
                     else if (tela_do_jogo == FASE_1)
                         tela_do_jogo = FASE_2;
 
-                    //mesma coisa mas verifica se a tela atual √© a fase 3
+                    //mesma coisa mas verifica se a tela atual È a fase 3
                     else if (tela_do_jogo == FASE_2)
                         tela_do_jogo = FASE_3;
 
-                    //mesma coisa mas verifica se a tela atual √© a fase 4
+                    //mesma coisa mas verifica se a tela atual È a fase 4
                     else if (tela_do_jogo == FASE_3)
                         tela_do_jogo = FASE_4;
 
@@ -251,28 +262,28 @@ int main()
                     0, 0,
                     al_get_bitmap_width(fundofase1), al_get_bitmap_height(fundofase1), 
                     0, 0,
-                    720, 400, 
+                    800, 600, 
                     0);
 
-                //verifica se a tecla √© a right, add 10 no x
+                //verifica se a tecla È a right, add 10 no x
                 if (tecla.keyboard.keycode == ALLEGRO_KEY_D) {
-                //verificando se o circulo encosta na borda, pra ele n√£o sair da    tela
+                //verificando se o circulo encosta na borda, pra ele n„o sair da    tela
                 if (x + raio < 650)
                     x = x + 10.0;
             }
 
-                //verifica se a tecla √© o left, add -10 no x
+                //verifica se a tecla È o left, add -10 no x
                 else if (tecla.keyboard.keycode == ALLEGRO_KEY_A) {
                     if (x - raio > 40)
                         x = x - 10.0;
                 }
 
-                //verifica se √© a tecla UP, add -10 no Y
+                //verifica se È a tecla UP, add -10 no Y
                 else if (tecla.keyboard.keycode == ALLEGRO_KEY_W) {
                     if (y - raio > 0)
                         y = y - 10.0;
                 }
-                //verifica se √© a tecla DOWN, add +10 no Y
+                //verifica se È a tecla DOWN, add +10 no Y
                 else if (tecla.keyboard.keycode == ALLEGRO_KEY_S) {
                     if (y + raio < 400)
                         y = y + 10.0;
@@ -284,7 +295,7 @@ int main()
                     0, 0,
                     al_get_bitmap_width(fundofase2), al_get_bitmap_height(fundofase2),
                     0, 0,
-                    720, 400,
+                    800, 600,
                     0);
                 break;
 
@@ -294,7 +305,7 @@ int main()
                     0, 0,
                     al_get_bitmap_width(fundofase3), al_get_bitmap_height(fundofase3),
                     0, 0,
-                    720, 400,
+                    800, 600,
                     0);
                 break;
 
@@ -308,38 +319,30 @@ int main()
             }
 
             //desenha o circulo por cima do display
-            al_draw_filled_circle(x, y, raio, cor_circle);
            
 
             //atualizando display
             al_flip_display();
 
-            //n ta funcionando (mouse)
-            if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && evento.mouse.button == 1) {
-                if (evento.mouse.x >= 280 && evento.mouse.x <= 430 &&
-                    evento.mouse.y >= 120 && evento.mouse.y <= 195) {
-                    estado_jogo = PROLOGO;
-                }
-                else if (evento.mouse.x >= 280 && evento.mouse.x <= 430 &&
-                    evento.mouse.y >= 200 && evento.mouse.y <= 275) {
-                    // n ta funcionando
-                }
-            }
         }
-        
-    // destroindo tudo
-    al_destroy_bitmap(fundofase1);
-    al_destroy_bitmap(fundofase2);
-    al_destroy_bitmap(fundofase3);
-    al_destroy_bitmap(prologo);
-    al_destroy_bitmap(fundomenu);
-    al_destroy_bitmap(play);
-    al_destroy_bitmap(howtoplay);
-    al_destroy_font(fontes);
-    al_destroy_font(fontenome);
-    al_destroy_font(fontecontorno);
-    al_destroy_event_queue(queue);
-    al_destroy_display(display);
 
-    return 0;
-}
+        //destruindo eventos
+        al_destroy_event_queue(fila_eventos);
+
+        //destruindo display
+        al_destroy_display(tela_inicial);
+
+        //destruindo fundos
+        al_destroy_bitmap(fundofase1);
+        al_destroy_bitmap(fundofase2);
+        al_destroy_bitmap(fundofase3);
+        al_destroy_bitmap(fundomenu);
+        al_destroy_bitmap(play);
+        al_destroy_bitmap(howtoplay);
+        al_destroy_font(fontes);
+        al_destroy_font(fontenome);
+        al_destroy_font(fontecontorno);
+
+        return 0;
+    }
+    
