@@ -4,7 +4,7 @@
 
 void update_game(GameState* estado, Player* player, Projectile* proj, const bool* teclas, float delta_time) {
     // Atualiza a lógica do jogo apenas se estiver em uma das fases do jogo
-    if (*estado == FASE_1 || *estado == FASE_2 || *estado == FASE_3) {
+    if (*estado == FASE_1) {
         // Atualiza o jogador
         update_player(player, teclas, delta_time);
 
@@ -32,7 +32,7 @@ void update_game(GameState* estado, Player* player, Projectile* proj, const bool
                 // Reinicia o projétil
                 init_projectile(proj);
 
-                printf("Colisão detectada! Vida atual: %d\n", player->vida_atual);
+                printf("Colisao detectada! Vida atual: %d\n", player->vida_atual);
             }
         }
 

@@ -56,7 +56,7 @@ void draw_projectile(const Projectile* proj) {
 
     // Calcula a posição X do frame atual no sprite sheet
     int frame_x = proj->frame_atual * (proj->largura_frame + espacamento_frame);
-    int frame_y = 0; // Assumindo que todos os frames estão na primeira linha
+    int frame_y = 0;
 
     // Verificar se os frames estão dentro dos limites do bitmap
     int bitmap_width = al_get_bitmap_width(proj->sprite);

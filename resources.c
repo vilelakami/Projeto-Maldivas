@@ -41,5 +41,4 @@ void destroy_resources(Resources* res) {
         al_destroy_font(res->font);
         res->font = NULL;
     }
-    // Libere outros recursos aqui se necessário
 }

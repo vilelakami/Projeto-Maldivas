@@ -31,13 +31,11 @@ bool is_point_inside_rect(int x, int y, Rect rect) {
     return (x >= rect.x1 && x <= rect.x2 && y >= rect.y1 && y <= rect.y2);
 }
 
-// Inicializa o módulo de UI (se necessário)
+// Inicializa o módulo de UI
 bool init_ui() {
-    // Implementar se houver inicializações específicas para UI
     return true;
 }
 
-// Finaliza o módulo de UI (se necessário)
+// Finaliza o módulo de UI
 void destroy_ui() {
-    // Implementar se houver recursos específicos para UI que precisem ser liberados
 }

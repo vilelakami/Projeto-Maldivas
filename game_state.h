@@ -6,8 +6,8 @@ typedef enum {
     MENU,
     PROLOGO,
     FASE_1,
-    FASE_2,
-    FASE_3,
+    //FASE_2,
+    //FASE_3,
     GAME_OVER,
     PLAYING
 } GameState;

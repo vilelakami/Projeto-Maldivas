@@ -1,6 +1,6 @@
 // rendering.c
 #include "rendering.h"
-#include "constants.h" // Para acesso às constantes de cores e dimensões
+#include "constants.h"
 
 void render_game(GameState estado, Resources* res, Player* player, Projectile* proj,
     Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button) {
@@ -24,12 +24,12 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
         al_draw_filled_rectangle(
             start_button.x1, start_button.y1,
             start_button.x2, start_button.y2,
-            cor_start // Cor ajustada
+            cor_start
         );
         al_draw_rectangle(
             start_button.x1, start_button.y1,
             start_button.x2, start_button.y2,
-            al_map_rgb(255, 255, 255), 2 // Borda branca
+            al_map_rgb(255, 255, 255), 2
         );
 
         // Desenha o texto "Start" no botão
@@ -45,7 +45,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         al_flip_display();
     }
-    else if (estado == FASE_1 || estado == FASE_2 || estado == FASE_3) {
+    else if (estado == FASE_1) {
         al_clear_to_color(COR_FUNDO);
 
         // Desenha o projétil
@@ -84,7 +84,6 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             cor_sair = al_map_rgb(150, 150, 150); // Cor hover
         }
 
-        // Desenha os botões "Continuar" e "Sair" com cores ajustadas
         // Botão Continuar
         al_draw_filled_rectangle(
             continuar_botao.x1, continuar_botao.y1,
