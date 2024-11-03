@@ -47,7 +47,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
     }
     else if (estado == FASE_1) {
         al_clear_to_color(COR_FUNDO);
-
+        al_draw_bitmap(res->BG_1, 0, 0, 0);
         // Desenha o projétil
         draw_projectile(proj);
 

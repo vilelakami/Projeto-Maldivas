@@ -5,8 +5,8 @@
 #include <allegro5/allegro5.h>
 
 // Definições das constantes da tela
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1080
+#define SCREEN_HEIGHT 700
 #define FPS 60
 
 // Posições e dimensões dos botões na tela de Game Over

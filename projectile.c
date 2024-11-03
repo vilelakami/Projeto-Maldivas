@@ -31,7 +31,7 @@ void update_projectile(Projectile* proj, float delta_time) {
     proj->y += proj->velocidade_y * delta_time;
 
     // Reinicia o projetil quando sai da tela
-    if (proj->y > 720) {
+    if (proj->y > 700) {
         proj->y = -proj->altura_frame * proj->escala;
         proj->x = (1280 / 2) - (proj->largura_frame * proj->escala) / 2; // Centraliza horizontalmente
     }

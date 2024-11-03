@@ -11,9 +11,15 @@ bool load_resources(Resources* res) {
     }
 
     // Carrega a imagem do menu
-    res->menu_image = al_load_bitmap("assets/menu.png");
+    res->menu_image = al_load_bitmap("assets/menu_1.png");
     if (!res->menu_image) {
         fprintf(stderr, "Erro ao carregar a imagem do menu.\n");
+        return false;
+    }
+    // Carrega o a imagem  background da fase 1
+    res->BG_1 = al_load_bitmap("assets/BG-1.png");
+    if (!res->BG_1) {
+        fprintf(stderr, "Erro ao carregar o background fase 1.\n");
         return false;
     }
 
@@ -36,6 +42,10 @@ void destroy_resources(Resources* res) {
     if (res->menu_image) {
         al_destroy_bitmap(res->menu_image);
         res->menu_image = NULL;
+    }
+    if (res->BG_1) {
+        al_destroy_bitmap(res->BG_1);
+        res->BG_1 = NULL;
     }
     if (res->font) {
         al_destroy_font(res->font);

@@ -17,8 +17,8 @@ void init_player(Player* player) {
     player->largura_frame = 40;
     player->altura_frame = 40;
 
-    player->x = (1280 / 2) - (player->largura_frame * player->escala) / 2;
-    player->y = (720 / 2) - (player->altura_frame * player->escala) / 2;
+    player->x = (1080 / 2) - (player->largura_frame * player->escala) / 2;
+    player->y = (700 / 2) - (player->altura_frame * player->escala) / 2;
     player->velocidade = 400.0f;
     player->direcao = DIRECAO_BAIXO;
     player->frame_atual = 0;
@@ -58,9 +58,9 @@ void update_player(Player* player, const bool* teclas, float delta_time) {
     // Prevenir que o jogador saia da tela
     if (player->x < 0) player->x = 0;
     if (player->y < 0) player->y = 0;
-    if (player->x + (player->largura_frame * player->escala) > 1280)
+    if (player->x + (player->largura_frame * player->escala) > 1080)
         player->x = 1280 - (player->largura_frame * player->escala);
-    if (player->y + (player->altura_frame * player->escala) > 720)
+    if (player->y + (player->altura_frame * player->escala) > 700)
         player->y = 720 - (player->altura_frame * player->escala);
 
     // Atualiza a animação
