@@ -9,7 +9,10 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Arquivos de Recurso">
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{7e631745-3085-4e5c-bf3f-8481589a88c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
@@ -46,6 +49,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="displays.c">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="introducao.c">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,8 +92,31 @@
     <ClInclude Include="displays.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="introducao.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\BG-1.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\projetil.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="..\p\assets\cien.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="..\p\assets\cienCpng">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Pictures\cientista.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Pictures\cients.png">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

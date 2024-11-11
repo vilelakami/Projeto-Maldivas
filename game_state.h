@@ -4,6 +4,7 @@
 
 typedef enum {
     MENU,
+    INTRODUCAO,
     PROLOGO,
     FASE_1,
     //FASE_2,

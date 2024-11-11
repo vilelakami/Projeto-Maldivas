@@ -24,6 +24,7 @@
     <ClCompile Include="event_handling.c" />
     <ClCompile Include="game_logic.c" />
     <ClCompile Include="game_state.c" />
+    <ClCompile Include="introducao.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="projectile.c" />
@@ -38,6 +39,7 @@
     <ClInclude Include="event_handling.h" />
     <ClInclude Include="game_logic.h" />
     <ClInclude Include="game_state.h" />
+    <ClInclude Include="introducao.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="rect.h" />
@@ -47,6 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Pictures\cientista.png" />
+    <Image Include="..\..\..\..\Pictures\cients.png" />
+    <Image Include="..\p\assets\cienCpng" />
+    <Image Include="..\p\assets\cien.png" />
+    <Image Include="assets\BG-1.png" />
+    <Image Include="assets\projetil.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -148,6 +158,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\kallayne\allegro5\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

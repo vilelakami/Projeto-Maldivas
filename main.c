@@ -11,6 +11,8 @@
 #include "ui.h"
 #include "game_state.h"
 #include "rect.h"
+#include "introducao.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -121,34 +123,72 @@ int main() {
         SCREEN_HEIGHT / 2 + 25  // y2
     };
 
+    //Definir botão "Avançar"
+    Rect avancar_botao = { 520, 400, 640, 440 }; 
+    // No main.c, onde você chama handle_event:
+
+    
+
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
 
     // Inicializando o estado atual
     GameState estado = MENU;
+    bool introducaoTerminada = false;
+    // Variável para controlar a transição
+bool transicaoEmAndamento = false;
+bool estadoMudado = false;
 
-    // Loop principal do jogo
+
     while (!input.sair) {
         ALLEGRO_EVENT evento;
         al_wait_for_event(queue, &evento);
 
+        // Calcula o delta_time
+        double tempo_atual = al_get_time();
+        float delta_time = (float)(tempo_atual - tempo_anterior);
+        tempo_anterior = tempo_atual;
+
         if (evento.type == ALLEGRO_EVENT_TIMER) {
-            // Calcula o delta_time
-            double tempo_atual = al_get_time();
-            float delta_time = (float)(tempo_atual - tempo_anterior);
-            tempo_anterior = tempo_atual;
-
-            // Atualiza a lógica do jogo
-            update_game(&estado, &player, &proj, input.teclas, delta_time);
-
-            // Renderiza o jogo, incluindo o start_button
-            render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button);
+            // Atualiza a lógica do jogo conforme o estado
+            if (estado != INTRODUCAO) {
+                update_game(&estado, &player, &proj, input.teclas, delta_time);
+                render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button);
+            }
+            else {
+                renderizar_introducao();  // Apenas renderiza a introdução
+            }
         }
-        else {
-            // Lida com os eventos, incluindo o start_button
-            handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button);
+        else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            // Detecta o clique do mouse para mudar o estado
+            if (estado == INTRODUCAO) {
+                estado = FASE_1; // Muda para FASE_1 após o clique
+            }
+            else {
+                handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button);
+            }
+        }
+        else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
+            if (estado == INTRODUCAO && (evento.keyboard.keycode == ALLEGRO_KEY_ENTER || evento.keyboard.keycode == ALLEGRO_KEY_SPACE)) {
+                estado = MENU; // Muda para o menu após a introdução
+                introducaoTerminada = true; // Finaliza a introdução
+            }
+            else {
+                handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button);
+            }
+        }
+
+
+
+        // Quando a introdução terminar, transita para o menu
+        if (introducaoTerminada) {
+            estado = MENU;
+            introducaoTerminada = false;  // Reset para a próxima vez
         }
     }
+
+
+
 
     // Finaliza recursos
     destroy_player(&player);
@@ -159,4 +199,4 @@ int main() {
     al_destroy_display(display);
 
     return 0;
-}
+} 
