@@ -30,6 +30,24 @@ bool load_resources(Resources* res) {
         return false;
     }
 
+    res->bg_prologo = al_load_bitmap("assets/bg_prologo.png");
+    if (!res->bg_prologo) {
+        fprintf(stderr, "Erro ao carregar o prologo.\n");
+        return false;
+    }
+
+    res->creditos = al_load_bitmap("assets/Creditos.png");
+    if (!res->creditos) {
+        fprintf(stderr, "Erro ao carregar o créditos.\n");
+        return false;
+    }
+
+    res->instructs = al_load_bitmap("assets/Instrucoes.png");
+    if (!res->instructs) {
+        fprintf(stderr, "Erro ao carregar o Instruções.\n");
+        return false;
+    }
+
     printf("Recursos carregados com sucesso.\n");
     return true;
 }
@@ -50,5 +68,17 @@ void destroy_resources(Resources* res) {
     if (res->font) {
         al_destroy_font(res->font);
         res->font = NULL;
+    }
+    if (res->bg_prologo) {
+        al_destroy_bitmap(res->bg_prologo);
+        res->bg_prologo = NULL;
+    }
+    if (res->creditos) {
+        al_destroy_bitmap(res->creditos);
+        res->creditos = NULL;
+    }
+    if (res->instructs) {
+        al_destroy_bitmap(res->instructs);
+        res->instructs = NULL;
     }
 }

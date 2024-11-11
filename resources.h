@@ -11,6 +11,10 @@ typedef struct {
     ALLEGRO_BITMAP* icon;
     ALLEGRO_BITMAP* menu_image;
     ALLEGRO_FONT* font;
+    ALLEGRO_BITMAP* bg_prologo;
+    ALLEGRO_BITMAP* creditos;
+    ALLEGRO_BITMAP* instructs;
+
 } Resources;
 
 // Função para carregar todos os recursos

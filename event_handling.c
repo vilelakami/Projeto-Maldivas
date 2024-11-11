@@ -12,7 +12,7 @@ void init_game_input(GameInput* input) {
 }
 
 void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* proj,
-    Rect continuar_botao, Rect sair_botao, Rect start_button) {
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button) {
     if (evento.type == ALLEGRO_EVENT_MOUSE_AXES ||
         evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN ||
         evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
@@ -27,9 +27,33 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
             // Verifica se o clique está no botão "Start"
             if (input->mouse_x >= start_button.x1 && input->mouse_x <= start_button.x2 &&
                 input->mouse_y >= start_button.y1 && input->mouse_y <= start_button.y2) {
-                // Muda o estado para FASE_1
+                // Muda o estado para Prologo
+                *estado = PROLOGO;
+                printf("Estado mudou para prologo\n");
+            }
+
+            if (input->mouse_x >= credits_button.x1 && input->mouse_x <= credits_button.x2 &&
+                input->mouse_y >= credits_button.y1 && input->mouse_y <= credits_button.y2) {
+                // Muda o estado para Prologo
+                *estado = CREDITOS;
+                printf("Estado mudou para os créditos\n");
+            }
+
+            if (input->mouse_x >= Instructs_button.x1 && input->mouse_x <= Instructs_button.x2 &&
+                input->mouse_y >= Instructs_button.y1 && input->mouse_y <= Instructs_button.y2) {
+                // Muda o estado para Prologo
+                *estado = INSTRUÇÕES;
+                printf("Estado mudou para as instruções\n");
+            }
+
+        }
+
+        else if (*estado == PROLOGO) {
+            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
+                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+                // Muda o estado para FASE_1 quando o botão "Avançar Prologo" for clicado
                 *estado = FASE_1;
-                printf("Estado mudou para FASE_1\n");
+                printf("Estado mudou para FASE 1\n");
             }
         }
         else if (*estado == GAME_OVER) {
@@ -45,9 +69,8 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
                 // Muda o estado para FASE_1
                 *estado = FASE_1;
                 printf("Reiniciando o jogo...\n");
-            }
-            // Verifica se o clique está no botão "Sair"
-            else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
+            }// Verifica se o clique está no botão "Sair"
+                else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
                 input->mouse_y >= sair_botao.y1 && input->mouse_y <= sair_botao.y2) {
                 input->sair = true;
                 printf("Saindo do jogo...\n");

@@ -21,7 +21,7 @@ void init_game_input(GameInput* input);
 
 // Lida com um único evento recebido
 void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* proj,
-    Rect continuar_botao, Rect sair_botao, Rect start_button);
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect , Rect credits_button, Rect Instructs_button);
 
 
 #endif // EVENT_HANDLING_H

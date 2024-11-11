@@ -121,6 +121,22 @@ int main() {
         SCREEN_HEIGHT / 2 + 25  // y2
     };
 
+    Rect credits_button = {
+         SCREEN_WIDTH / 2 - 100, // x1
+         SCREEN_HEIGHT / 2 + 35, // y1
+         SCREEN_WIDTH / 2 + 100, // x2
+         SCREEN_HEIGHT / 2 + 85  // y2
+    }; 
+
+    Rect Instructs_button = {
+         SCREEN_WIDTH / 2 - 100, // x1
+         SCREEN_HEIGHT / 2 + 95, // y1
+         SCREEN_WIDTH / 2 + 100, // x2
+         SCREEN_HEIGHT / 2 + 145  // y2
+    };
+
+    Rect prologo_button = { 907, 615, 1049, 657 };
+
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
 
@@ -142,11 +158,11 @@ int main() {
             update_game(&estado, &player, &proj, input.teclas, delta_time);
 
             // Renderiza o jogo, incluindo o start_button
-            render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button);
+            render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button, prologo_button, credits_button, Instructs_button);
         }
         else {
             // Lida com os eventos, incluindo o start_button
-            handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button);
+            handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button, prologo_button, credits_button, Instructs_button);
         }
     }
 

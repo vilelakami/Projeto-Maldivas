@@ -10,15 +10,15 @@
 #define FPS 60
 
 // Posições e dimensões dos botões na tela de Game Over
-#define BOTAO_CONTINUAR_X1 540
-#define BOTAO_CONTINUAR_Y1 400
-#define BOTAO_CONTINUAR_X2 740
-#define BOTAO_CONTINUAR_Y2 450
+#define BOTAO_CONTINUAR_X1 440
+#define BOTAO_CONTINUAR_Y1 300
+#define BOTAO_CONTINUAR_X2 640
+#define BOTAO_CONTINUAR_Y2 350
 
-#define BOTAO_SAIR_X1 540
-#define BOTAO_SAIR_Y1 500
-#define BOTAO_SAIR_X2 740
-#define BOTAO_SAIR_Y2 550
+#define BOTAO_SAIR_X1 440
+#define BOTAO_SAIR_Y1 400
+#define BOTAO_SAIR_X2 640
+#define BOTAO_SAIR_Y2 450
 
 
 // Cores
