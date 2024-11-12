@@ -149,7 +149,6 @@ int main() {
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
     time_since_last_projectile = 0.0f; // Inicializa o temporizador
-    //const float projectile_spawn_interval = 0.5f; // Intervalo de 0,5 segundos
 
     // Inicializando o estado atual
     GameState estado = MENU;

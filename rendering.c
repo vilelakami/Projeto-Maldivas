@@ -104,7 +104,6 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
                 ALLEGRO_ALIGN_LEFT, texto_intructions);
         }
 
-        // Finalize o desenho
         al_flip_display();  // Atualiza a tela
     }
     else if (estado == PROLOGO) {

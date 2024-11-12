@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 // Variável global para o temporizador dos projéteis
-extern float time_since_last_projectile; // Declarar como extern para usar aqui
+extern float time_since_last_projectile;
 
 void init_game_input(GameInput* input) {
     input->sair = false;
@@ -26,23 +26,29 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
         printf("Clique detectado em (%d, %d) no estado %d\n", input->mouse_x, input->mouse_y, *estado);
 
         if (*estado == MENU) {
+
             // Verifica se o clique está no botão "Start"
             if (input->mouse_x >= start_button.x1 && input->mouse_x <= start_button.x2 &&
                 input->mouse_y >= start_button.y1 && input->mouse_y <= start_button.y2) {
+
                 // Muda o estado para Prologo
                 *estado = PROLOGO;
                 printf("Estado mudou para prologo\n");
             }
+
             // Verifica se o clique está no botão "Creditos"
             else if (input->mouse_x >= credits_button.x1 && input->mouse_x <= credits_button.x2 &&
                 input->mouse_y >= credits_button.y1 && input->mouse_y <= credits_button.y2) {
+
                 // Muda o estado para Créditos
                 *estado = CREDITOS;
                 printf("Estado mudou para os créditos\n");
             }
+
             // Verifica se o clique está no botão "Instruções"
             else if (input->mouse_x >= Instructs_button.x1 && input->mouse_x <= Instructs_button.x2 &&
                 input->mouse_y >= Instructs_button.y1 && input->mouse_y <= Instructs_button.y2) {
+
                 // Muda o estado para Instruções
                 *estado = INSTRUÇÕES;
                 printf("Estado mudou para as instruções\n");
@@ -51,15 +57,18 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
         else if (*estado == PROLOGO) {
             if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
                 input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+
                 // Muda o estado para FASE_1 quando o botão "Continua" for clicado
                 *estado = FASE_1;
                 printf("Estado mudou para FASE 1\n");
             }
         }
         else if (*estado == GAME_OVER) {
+
             // Verifica se o clique está no botão "Continuar"
             if (input->mouse_x >= continuar_botao.x1 && input->mouse_x <= continuar_botao.x2 &&
                 input->mouse_y >= continuar_botao.y1 && input->mouse_y <= continuar_botao.y2) {
+
                 // Reinicia o jogador e os projéteis
                 destroy_player(player);
                 init_player(player);
@@ -67,7 +76,7 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
                 for (int i = 0; i < num_projectiles; ++i) {
                     destroy_projectile(&projectiles[i]);
                     init_projectile(&projectiles[i]);
-                    projectiles[i].active = false; // Desativa todos os projéteis
+                    projectiles[i].active = false;
                 }
 
                 // Reseta o temporizador de criação dos projéteis
@@ -77,6 +86,7 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
                 *estado = FASE_1;
                 printf("Reiniciando o jogo...\n");
             }
+
             // Verifica se o clique está no botão "Sair"
             else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
                 input->mouse_y >= sair_botao.y1 && input->mouse_y <= sair_botao.y2) {
@@ -84,6 +94,7 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
                 printf("Saindo do jogo...\n");
             }
         }
+
         else if (*estado == CREDITOS || *estado == INSTRUÇÕES) {
             // Se clicar em qualquer lugar na tela de créditos ou instruções, volta para o menu
             *estado = MENU;

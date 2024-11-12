@@ -22,11 +22,11 @@ void init_projectile(Projectile* proj) {
     proj->frame_atual = 0;
     proj->contador_animacao = 0;
     proj->velocidade_animacao = 10;
-    proj->active = false; // Inicialmente inativo
+    proj->active = false;
 }
 
 void update_projectile(Projectile* proj, float delta_time) {
-    if (!proj->active) return; // Não faz nada se o projétil não estiver ativo
+    if (!proj->active) return;
 
     // Atualiza a posição com base no delta_time
     proj->y += proj->velocidade_y * delta_time;
@@ -40,7 +40,7 @@ void update_projectile(Projectile* proj, float delta_time) {
 }
 
 void draw_projectile(const Projectile* proj) {
-    if (!proj->active) return; // Não desenha se o projétil não estiver ativo
+    if (!proj->active) return;
 
     if (!proj->sprite) {
         fprintf(stderr, "Erro: proj->sprite é NULL.\n");
