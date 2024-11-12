@@ -115,7 +115,6 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             }
         }
 
-        if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && evento.mouse.button == 1) {
             if (mouse_x >= Instructs_button.x1 && mouse_x <= Instructs_button.x2 &&
             mouse_y >= Instructs_button.y1 && mouse_y <= Instructs_button.y2) {
             // Exibe a imagem das instruções
