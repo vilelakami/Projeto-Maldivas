@@ -4,9 +4,11 @@
 
 typedef enum {
     MENU,
+    CREDITOS,
+    INSTRUÇÕES,
     PROLOGO,
     FASE_1,
-    //FASE_2,
+   //FASE_2,
     //FASE_3,
     GAME_OVER,
     PLAYING

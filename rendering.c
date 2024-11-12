@@ -2,15 +2,18 @@
 #include "rendering.h"
 #include "constants.h"
 
+
+static bool button_pressed = false;
+
 void render_game(GameState estado, Resources* res, Player* player, Projectile* proj,
-    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button) {
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button) {
     if (estado == MENU) {
         // Desenha a imagem do menu ou limpa a tela
         if (res->menu_image) {
             al_draw_bitmap(res->menu_image, 0, 0, 0);
         }
         else {
-            al_clear_to_color(al_map_rgb(0, 0, 0));
+            al_clear_to_color(al_map_rgb(0, 0, 0)); 
         }
 
         // Botão "Start": Verifica se o mouse está sobre o botão
@@ -42,9 +45,147 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
                 (start_button.y1 + start_button.y2 - altura_texto) / 2,
                 ALLEGRO_ALIGN_LEFT, texto_start);
         }
+        //-------------------------------------------------------------Créditos---------------------------------------------------------
+
+        // Botão "Creditos": Verifica se o mouse está sobre o botão
+        ALLEGRO_COLOR cor_credits = al_map_rgb(100, 100, 100); // Cor padrão
+        if (mouse_x >= credits_button.x1 && mouse_x <= credits_button.x2 &&
+            mouse_y >= credits_button.y1 && mouse_y <= credits_button.y2) {
+            cor_credits = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
+        }
+        // Desenha o botão "Creditos"
+        al_draw_filled_rectangle(
+            credits_button.x1, credits_button.y1,
+            credits_button.x2, credits_button.y2,
+            cor_credits
+        );
+        al_draw_rectangle(
+            credits_button.x1, credits_button.y1,
+            credits_button.x2, credits_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+        // Desenha o texto "Creditos" no botão
+        if (res->font) {
+            const char* texto_credits = "Creditos";
+            int largura_texto = al_get_text_width(res->font, texto_credits);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (credits_button.x1 + credits_button.x2 - largura_texto) / 2,
+                (credits_button.y1 + credits_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_credits);
+        }
+        //-------------------------------------------------------------Instruções---------------------------------------------------------
+
+        // Botão "Instruções": Verifica se o mouse está sobre o botão
+        ALLEGRO_COLOR cor_instructs = al_map_rgb(100, 100, 100); // Cor padrão
+        if (mouse_x >= Instructs_button.x1 && mouse_x <= Instructs_button.x2 &&
+            mouse_y >= Instructs_button.y1 && mouse_y <= Instructs_button.y2) {
+            cor_instructs = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
+        }
+        // Desenha o botão "Instruções"
+        al_draw_filled_rectangle(
+            Instructs_button.x1, Instructs_button.y1,
+            Instructs_button.x2, Instructs_button.y2,
+            cor_instructs
+        );
+        al_draw_rectangle(
+            Instructs_button.x1, Instructs_button.y1,
+            Instructs_button.x2, Instructs_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        // Desenha o texto "Instruções" no botão
+        if (res->font) {
+            const char* texto_intructions = "Instrucoes";
+            int largura_texto = al_get_text_width(res->font, texto_intructions);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (Instructs_button.x1 + Instructs_button.x2 - largura_texto) / 2,
+                (Instructs_button.y1 + Instructs_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_intructions);
+        }
+
+        // Verifique se o botão "Creditos" ou "Instruções" foi clicado
+        if (mouse_x >= credits_button.x1 && mouse_x <= credits_button.x2 &&
+            mouse_y >= credits_button.y1 && mouse_y <= credits_button.y2) {
+            // Exibe a imagem de créditos
+            if (res->creditos) {
+                al_draw_bitmap(res->creditos, 0, 0, 0); // Desenha a imagem de créditos
+                button_pressed = true;
+            }
+        }
+
+        if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && evento.mouse.button == 1) {
+            if (mouse_x >= Instructs_button.x1 && mouse_x <= Instructs_button.x2 &&
+            mouse_y >= Instructs_button.y1 && mouse_y <= Instructs_button.y2) {
+            // Exibe a imagem das instruções
+            if (res->instructs) {
+                al_draw_bitmap(res->instructs, 0, 0, 0); // Desenha a imagem das instruções
+                button_pressed = true;
+            }
+        }
+
+        // Finalize o desenho
+        al_flip_display();  // Atualiza a tela
+    }
+    
+    //-------------------------------------------------------------Prologo---------------------------------------------------------
+
+
+    else if (estado == PROLOGO) {
+        al_clear_to_color(COR_FUNDO);
+        al_draw_bitmap(res->bg_prologo, 0, 0, 0);
+
+        // Botão "Prologo": Verifica se o mouse está sobre o botão
+        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
+        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
+            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
+            cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
+        }
+
+        // Desenha o botão "Prologo"
+        al_draw_filled_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            cor_prologo
+        );
+        al_draw_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        // Desenha o texto "Prologo" no botão
+        if (res->font) {
+            if (res->font) {
+                const char* texto_prologo = "Continua";
+
+                // Calcular a largura e altura do texto
+                int largura_texto = al_get_text_width(res->font, texto_prologo);
+                int altura_texto = al_get_font_line_height(res->font);
+
+                // Coordenadas fixas para o botão
+                int x1 = 907;
+                int y1 = 615;
+                int x2 = 1049;
+                int y2 = 657;
+
+                // Calcular a posição X para centralizar o texto
+                float pos_x = (x1 + x2 - largura_texto) / 2;
+
+                // Calcular a posição Y para centralizar o texto
+                float pos_y = (y1 + y2 - altura_texto) / 2;
+
+                // Desenhar o texto na tela
+                al_draw_text(res->font, al_map_rgb(255, 255, 255), pos_x, pos_y, ALLEGRO_ALIGN_LEFT, texto_prologo);
+            }
+
+        }
 
         al_flip_display();
+
     }
+    //---------------------------------------------------Fase 1---------------------------------------
     else if (estado == FASE_1) {
         al_clear_to_color(COR_FUNDO);
         al_draw_bitmap(res->BG_1, 0, 0, 0);

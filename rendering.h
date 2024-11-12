@@ -12,7 +12,7 @@
 
 // Função para renderizar o estado atual do jogo
 void render_game(GameState estado, Resources* res, Player* player, Projectile* proj,
-    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button);
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button);
 
 
 #endif // RENDERING_H

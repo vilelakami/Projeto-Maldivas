@@ -1,1 +1,6 @@
-﻿  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\x64\Debug\PI-2.exe
+﻿  rendering.c
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(118,13): error C2065: 'evento': identificador não declarado
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(118,20): error C2224: esquerda de '.type' deve possuir tipo struct/union
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(118,63): error C2065: 'evento': identificador não declarado
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(118,70): error C2224: esquerda de '.mouse' deve possuir tipo struct/union
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(9,154): error C1075: '{': nenhum token correspondente encontrado
