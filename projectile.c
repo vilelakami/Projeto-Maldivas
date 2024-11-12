@@ -1,10 +1,9 @@
-// projectile.c
 #include "projectile.h"
+#include "constants.h" // Para SCREEN_WIDTH e SCREEN_HEIGHT
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-// Inicializa as propriedades do projetil
 void init_projectile(Projectile* proj) {
     // Carrega o sprite do projetil
     proj->sprite = al_load_bitmap("assets/projetil.png");
@@ -14,27 +13,23 @@ void init_projectile(Projectile* proj) {
     }
 
     // Inicializa as propriedades do projetil
-    proj->escala = 2.0f;
+    proj->escala = 6.0f;
     proj->largura_frame = 14;
     proj->altura_frame = 32;
-    proj->x = (1280 / 2) - (proj->largura_frame * proj->escala) / 2;
-    proj->y = -proj->altura_frame * proj->escala;
-    proj->velocidade_y = 350.0f;
+    proj->x = 0;
+    proj->y = 0;
+    proj->velocidade_y = 650.0f;
     proj->frame_atual = 0;
     proj->contador_animacao = 0;
     proj->velocidade_animacao = 10;
+    proj->active = false; // Inicialmente inativo
 }
 
-// Atualiza a posição do projetil e a animação
 void update_projectile(Projectile* proj, float delta_time) {
+    if (!proj->active) return; // Não faz nada se o projétil não estiver ativo
+
     // Atualiza a posição com base no delta_time
     proj->y += proj->velocidade_y * delta_time;
-
-    // Reinicia o projetil quando sai da tela
-    if (proj->y > 700) {
-        proj->y = -proj->altura_frame * proj->escala;
-        proj->x = (1280 / 2) - (proj->largura_frame * proj->escala) / 2; // Centraliza horizontalmente
-    }
 
     // Atualiza a animação
     proj->contador_animacao++;
@@ -44,8 +39,9 @@ void update_projectile(Projectile* proj, float delta_time) {
     }
 }
 
-// Desenha o projetil na tela rotacionado 180 graus
 void draw_projectile(const Projectile* proj) {
+    if (!proj->active) return; // Não desenha se o projétil não estiver ativo
+
     if (!proj->sprite) {
         fprintf(stderr, "Erro: proj->sprite é NULL.\n");
         return; // Evita tentar desenhar um bitmap nulo
@@ -99,7 +95,6 @@ void draw_projectile(const Projectile* proj) {
     al_destroy_bitmap(frame_bitmap);
 }
 
-// Libera os recursos do projetil
 void destroy_projectile(Projectile* proj) {
     if (proj->sprite) {
         al_destroy_bitmap(proj->sprite);

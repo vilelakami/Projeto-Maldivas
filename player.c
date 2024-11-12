@@ -13,13 +13,13 @@ void init_player(Player* player) {
     }
 
     // Inicializa as propriedades do jogador
-    player->escala = 2.0f;
+    player->escala = 3.0f;
     player->largura_frame = 40;
     player->altura_frame = 40;
 
     player->x = (1080 / 2) - (player->largura_frame * player->escala) / 2;
     player->y = (700 / 2) - (player->altura_frame * player->escala) / 2;
-    player->velocidade = 400.0f;
+    player->velocidade = 200.0f;
     player->direcao = DIRECAO_BAIXO;
     player->frame_atual = 0;
     player->contador_animacao = 0;

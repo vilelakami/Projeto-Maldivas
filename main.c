@@ -1,5 +1,3 @@
-// main.c
-
 #include "constants.h"
 #include "resources.h"
 #include "event_handling.h"
@@ -19,6 +17,11 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Variável global para o temporizador dos projéteis
+float time_since_last_projectile = 0.0f;
 
 int main() {
     // Inicialização do Allegro e addons
@@ -51,6 +54,9 @@ int main() {
         fprintf(stderr, "Erro ao inicializar o addon de fontes.\n");
         return -1;
     }
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
 
     // Criação da janela
     ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -101,9 +107,12 @@ int main() {
     Player player;
     init_player(&player);
 
-    // Inicializa o projetil
-    Projectile proj;
-    init_projectile(&proj);
+    // Inicializa os projéteis
+    Projectile projectiles[MAX_PROJECTILES];
+    for (int i = 0; i < MAX_PROJECTILES; ++i) {
+        init_projectile(&projectiles[i]);
+        projectiles[i].active = false; // Define todos os projéteis como inativos
+    }
 
     // Inicializa os inputs do jogo
     GameInput input;
@@ -126,7 +135,7 @@ int main() {
          SCREEN_HEIGHT / 2 + 35, // y1
          SCREEN_WIDTH / 2 + 100, // x2
          SCREEN_HEIGHT / 2 + 85  // y2
-    }; 
+    };
 
     Rect Instructs_button = {
          SCREEN_WIDTH / 2 - 100, // x1
@@ -139,6 +148,8 @@ int main() {
 
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
+    time_since_last_projectile = 0.0f; // Inicializa o temporizador
+    //const float projectile_spawn_interval = 0.5f; // Intervalo de 0,5 segundos
 
     // Inicializando o estado atual
     GameState estado = MENU;
@@ -155,20 +166,25 @@ int main() {
             tempo_anterior = tempo_atual;
 
             // Atualiza a lógica do jogo
-            update_game(&estado, &player, &proj, input.teclas, delta_time);
+            update_game(&estado, &player, projectiles, MAX_PROJECTILES, input.teclas, delta_time, &time_since_last_projectile);
 
-            // Renderiza o jogo, incluindo o start_button
-            render_game(estado, &res, &player, &proj, continuar_botao, sair_botao, input.mouse_x, input.mouse_y, start_button, prologo_button, credits_button, Instructs_button);
+            // Renderiza o jogo
+            render_game(estado, &res, &player, projectiles, MAX_PROJECTILES,
+                continuar_botao, sair_botao, input.mouse_x, input.mouse_y,
+                start_button, prologo_button, credits_button, Instructs_button);
         }
         else {
-            // Lida com os eventos, incluindo o start_button
-            handle_event(evento, &input, &estado, &player, &proj, continuar_botao, sair_botao, start_button, prologo_button, credits_button, Instructs_button);
+            // Lida com os eventos
+            handle_event(evento, &input, &estado, &player, projectiles, MAX_PROJECTILES,
+                continuar_botao, sair_botao, start_button, prologo_button, credits_button, Instructs_button);
         }
     }
 
     // Finaliza recursos
     destroy_player(&player);
-    destroy_projectile(&proj);
+    for (int i = 0; i < MAX_PROJECTILES; ++i) {
+        destroy_projectile(&projectiles[i]);
+    }
     destroy_resources(&res);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
