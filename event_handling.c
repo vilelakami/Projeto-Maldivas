@@ -58,9 +58,36 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
             if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
                 input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
 
-                // Muda o estado para FASE_1 quando o botão "Continua" for clicado
+                // Muda o estado para Prologo 2 quando o botão "Continua" for clicado
+                *estado = PROLOGO2;
+                printf("Estado mudou para Prologo 2\n");
+            }
+        }
+        else if (*estado == PROLOGO2) {
+            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
+                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+
+                // Muda o estado para Prologo 3 quando o botão "Continua" for clicado
+                *estado = PROLOGO3;
+                printf("Estado mudou para Prologo 3\n");
+            }
+        }
+        else if (*estado == PROLOGO3) {
+            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
+                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+
+                // Muda o estado para Prologo 4 quando o botão "Continua" for clicado
+                *estado = PROLOGO4;
+                printf("Estado mudou para Prologo 4\n");
+            }
+        }
+        else if (*estado == PROLOGO4) {
+            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
+                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+
+                // Muda o estado para Menu quando o botão "Continua" for clicado
                 *estado = FASE_1;
-                printf("Estado mudou para FASE 1\n");
+                printf("Estado mudou para Fase 1\n");
             }
         }
         else if (*estado == GAME_OVER) {

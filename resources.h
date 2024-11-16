@@ -12,6 +12,9 @@ typedef struct {
     ALLEGRO_BITMAP* menu_image;
     ALLEGRO_FONT* font;
     ALLEGRO_BITMAP* bg_prologo;
+    ALLEGRO_BITMAP* bg_prologo2;
+    ALLEGRO_BITMAP* bg_prologo3;
+    ALLEGRO_BITMAP* bg_prologo4;
     ALLEGRO_BITMAP* creditos;
     ALLEGRO_BITMAP* instructs;
 

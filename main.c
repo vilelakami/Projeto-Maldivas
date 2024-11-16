@@ -144,7 +144,7 @@ int main() {
          SCREEN_HEIGHT / 2 + 145  // y2
     };
 
-    Rect prologo_button = { 907, 615, 1049, 657 };
+    Rect prologo_button = { 907, 75, 1049, 112 };
 
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();

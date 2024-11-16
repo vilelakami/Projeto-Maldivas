@@ -7,9 +7,12 @@ typedef enum {
     CREDITOS,
     INSTRUÇÕES,
     PROLOGO,
+    PROLOGO2,
+    PROLOGO3,
+    PROLOGO4,
     FASE_1,
-   //FASE_2,
-    //FASE_3,
+    //FASE_2,
+     //FASE_3,
     GAME_OVER,
     PLAYING
 } GameState;
