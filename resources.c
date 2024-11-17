@@ -30,25 +30,25 @@ bool load_resources(Resources* res) {
         return false;
     }
 
-    res->bg_prologo = al_load_bitmap("assets/bg_prologo.png");
+    res->bg_prologo = al_load_bitmap("assets/fundoUm.png");
     if (!res->bg_prologo) {
         fprintf(stderr, "Erro ao carregar o prologo.\n");
         return false;
     }
 
-    res->bg_prologo2 = al_load_bitmap("assets/fundoUm.png");
+    res->bg_prologo2 = al_load_bitmap("assets/fundoDoiss.png");
     if (!res->bg_prologo2) {
         fprintf(stderr, "Erro ao carregar o prologo 2.\n");
         return false;
     }
 
-    res->bg_prologo3 = al_load_bitmap("assets/fundoDoiss.png");
+    res->bg_prologo3 = al_load_bitmap("assets/fundoTres.png");
     if (!res->bg_prologo3) {
         fprintf(stderr, "Erro ao carregar o prologo 3.\n");
         return false;
     }
 
-    res->bg_prologo4 = al_load_bitmap("assets/menu.png");
+    res->bg_prologo4 = al_load_bitmap("assets/fundoQuatro.png");
     if (!res->bg_prologo4) {
         fprintf(stderr, "Erro ao carregar o prologo 4.\n");
         return false;
@@ -93,15 +93,15 @@ void destroy_resources(Resources* res) {
     }
     if (res->bg_prologo2) {
         al_destroy_bitmap(res->bg_prologo2);
-        res->bg_prologo = NULL;
+        res->bg_prologo2 = NULL;
     }
     if (res->bg_prologo3) {
         al_destroy_bitmap(res->bg_prologo3);
-        res->bg_prologo = NULL;
+        res->bg_prologo3 = NULL;
     }
     if (res->bg_prologo4) {
         al_destroy_bitmap(res->bg_prologo4);
-        res->bg_prologo = NULL;
+        res->bg_prologo4 = NULL;
     }
     if (res->creditos) {
         al_destroy_bitmap(res->creditos);
