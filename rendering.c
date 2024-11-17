@@ -1,5 +1,7 @@
 #include "rendering.h"
 #include "constants.h"
+#include "collision.h"
+#include <stdio.h>
 
 
 static bool button_pressed = false;
@@ -255,6 +257,33 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
     else if (estado == FASE_1) {
         al_clear_to_color(COR_FUNDO);
         al_draw_bitmap(res->BG_1, 0, 0, 0);
+
+        Retangulos retangulo[] = {
+            {0,0,260,320},
+            {0,340,100,485},
+            {180,380,260,485},
+            {820,380,900,485},
+            {980,330,1260,485},
+            {820,0,1260,320},
+            {500,210,580,385},
+            {402,164,654,20},
+            {580,320,660,370},
+            {500,320,420,370},
+            {444,433,470,508},
+            {821,654,982,692},
+            {97,655,255,688}
+        };
+
+        for (int i = 0; i < sizeof(retangulo) / sizeof(Retangulos); i++) {
+            ALLEGRO_COLOR cor = al_map_rgb(255, 0, 0);
+            if (colisaoPersonagem(player, &retangulo[i])) {
+                fprintf(stdout, "Colidiu com o retângulo %d!\n", i);
+            }
+            // Desenhar o retângulo
+            al_draw_filled_rectangle(retangulo[i].x1, retangulo[i].y1,
+                retangulo[i].x2, retangulo[i].y2, cor);
+        }
+
 
         // Desenha todos os projéteis ativos
         for (int i = 0; i < num_projectiles; ++i) {

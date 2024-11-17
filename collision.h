@@ -3,6 +3,13 @@
 #define COLLISION_H
 
 #include <stdbool.h>
+#include "player.h"
+
+typedef struct {
+    int x1, y1, x2, y2;
+} Retangulos;
+
+bool colisaoPersonagem(Player* player, Retangulos* retangulo);
 
 // Função para verificar colisão retangular
 bool verifica_colisao(float x1, float y1, float largura1, float altura1,

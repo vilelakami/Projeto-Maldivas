@@ -13,7 +13,7 @@ void init_player(Player* player) {
     }
 
     // Inicializa as propriedades do jogador
-    player->escala = 3.0f;
+    player->escala = 2.0f;
     player->largura_frame = 40;
     player->altura_frame = 40;
 
