@@ -17,14 +17,14 @@ void init_player(Player* player) {
     player->largura_frame = 40;
     player->altura_frame = 40;
 
-    player->x = (1080 / 2) - (player->largura_frame * player->escala) / 2;
-    player->y = (700 / 2) - (player->altura_frame * player->escala) / 2;
+    player->x = (540) - (player->largura_frame * player->escala) / 2;
+    player->y = (600) - (player->altura_frame * player->escala) / 2;
     player->velocidade = 200.0f;
     player->direcao = DIRECAO_BAIXO;
     player->frame_atual = 0;
     player->contador_animacao = 0;
     player->velocidade_animacao = 10;
-    player->vida_maxima = 20;
+    player->vida_maxima = 60;
     player->vida_atual = player->vida_maxima;
     player->invencivel = false;
     player->tempo_invencibilidade = 0.0f;
