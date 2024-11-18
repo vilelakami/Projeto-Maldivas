@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "player.h"
 
+
 typedef struct {
     int x1, y1, x2, y2;
 } Retangulos;

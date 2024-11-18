@@ -3,6 +3,7 @@
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "collision.h"
 
 void init_player(Player* player) {
     // Carrega o sprite do jogador
@@ -53,15 +54,17 @@ void update_player(Player* player, const bool* teclas, float delta_time) {
         player->x += player->velocidade * delta_time;
         player->direcao = DIRECAO_DIREITA;
         movendo = true;
+        
     }
 
+    verificar_colisaop(player);
     // Prevenir que o jogador saia da tela
     if (player->x < 0) player->x = 0;
     if (player->y < 0) player->y = 0;
     if (player->x + (player->largura_frame * player->escala) > 1080)
-        player->x = 1280 - (player->largura_frame * player->escala);
+        player->x = 1080 - (player->largura_frame * player->escala);
     if (player->y + (player->altura_frame * player->escala) > 700)
-        player->y = 720 - (player->altura_frame * player->escala);
+        player->y = 700 - (player->altura_frame * player->escala);
 
     // Atualiza a animação
     if (movendo) {

@@ -7,6 +7,8 @@
 
 // Estrutura para armazenar todos os recursos do jogo
 typedef struct {
+    ALLEGRO_BITMAP* NPC_CHEFE;
+    ALLEGRO_BITMAP* NPC_ENGENHEIRO;
     ALLEGRO_BITMAP* BG_1;
     ALLEGRO_BITMAP* icon;
     ALLEGRO_BITMAP* menu_image;

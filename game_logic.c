@@ -57,7 +57,7 @@ void update_game(GameState* estado, Player* player, Projectile* projectiles, int
                         // Desativa o projétil
                         projectiles[i].active = false;
 
-                        printf("Colisão detectada! Vida atual: %d\n", player->vida_atual);
+                        printf("Você foi atingido! Vida atual: %d\n", player->vida_atual);
                     }
                 }
 

@@ -30,15 +30,15 @@ bool load_resources(Resources* res) {
         return false;
     }
 
-    res->bg_prologo = al_load_bitmap("assets/bg_prologo.png");
+    res->bg_prologo = al_load_bitmap("assets/PROLOGO.png");
     if (!res->bg_prologo) {
-        fprintf(stderr, "Erro ao carregar o prologo.\n");
+        fprintf(stderr, "Erro ao carregar o prologo introdução.\n");
         return false;
     }
 
-    res->bg_prologo2 = al_load_bitmap("assets/fundoUm.png");
+    res->bg_prologo2 = al_load_bitmap("assets/bg_prologo.png");
     if (!res->bg_prologo2) {
-        fprintf(stderr, "Erro ao carregar o prologo 2.\n");
+        fprintf(stderr, "Erro ao carregar o prologo-dialogo.\n");
         return false;
     }
 
@@ -52,6 +52,14 @@ bool load_resources(Resources* res) {
     if (!res->bg_prologo4) {
         fprintf(stderr, "Erro ao carregar o prologo 4.\n");
         return false;
+    }
+    res->NPC_CHEFE = al_load_bitmap("assets/chefe-usina.png");
+    if (!res->NPC_CHEFE) {
+        fprintf(stderr, "Erro ao carregarsprite NPC CHEFE-USINA.\n");
+    }
+    res->NPC_ENGENHEIRO = al_load_bitmap("assets/engenheiro.png");
+    if (!res->NPC_ENGENHEIRO) {
+        fprintf(stderr, "Erro ao carregarsprite NPC CHEFE-USINA.\n");
     }
 
     res->creditos = al_load_bitmap("assets/Creditos.png");
@@ -110,5 +118,13 @@ void destroy_resources(Resources* res) {
     if (res->instructs) {
         al_destroy_bitmap(res->instructs);
         res->instructs = NULL;
+    }
+    if (res->NPC_CHEFE) {
+        al_destroy_bitmap(res->NPC_CHEFE);
+        res->NPC_CHEFE = NULL;
+    }
+    if (res->NPC_ENGENHEIRO) {
+        al_destroy_bitmap(res->NPC_ENGENHEIRO);
+        res->NPC_ENGENHEIRO = NULL;
     }
 }

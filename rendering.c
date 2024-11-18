@@ -109,9 +109,11 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         al_flip_display();  // Atualiza a tela
     }
+
+    //PROLOGO COM INTRODUÇÃO 
     else if (estado == PROLOGO) {
         al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo, 0, 0, 0);
+        al_draw_bitmap(res->bg_prologo, 0 , 0, 0);
 
         // Botão "Prologo": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
@@ -145,9 +147,15 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         al_flip_display();
     }
+    // PROLOGO COM COM DIALOGO ENTRE NPCS
     else if (estado == PROLOGO2) {
         al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo2, 0, 0, 0);
+        al_draw_bitmap(res->bg_prologo2, 195, 0, 0);
+        //carrega npc chefe
+      
+        al_draw_bitmap_region(res->NPC_CHEFE, 0, 104, 34, 52, 445, 475, 0);
+        //ADD NPC 
+        al_draw_bitmap_region(res->NPC_ENGENHEIRO, 0, 52, 34, 52, 500, 475, 0);
 
         // Botão "Prologo": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
@@ -273,7 +281,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             {821,654,982,692},
             {97,655,255,688}
         };
-
+/*
         for (int i = 0; i < sizeof(retangulo) / sizeof(Retangulos); i++) {
             ALLEGRO_COLOR cor = al_map_rgb(255, 0, 0);
             if (colisaoPersonagem(player, &retangulo[i])) {
@@ -283,7 +291,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             al_draw_filled_rectangle(retangulo[i].x1, retangulo[i].y1,
                 retangulo[i].x2, retangulo[i].y2, cor);
         }
-
+        */
 
         // Desenha todos os projéteis ativos
         for (int i = 0; i < num_projectiles; ++i) {
