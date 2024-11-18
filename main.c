@@ -23,6 +23,36 @@
 // Variável global para o temporizador dos projéteis
 float time_since_last_projectile = 0.0f;
 
+// Define os obstáculos
+#define NUM_OBSTACLES 4
+Rect obstacles[NUM_OBSTACLES];
+
+void init_obstacles(Rect* obstacles) {
+    // Obstáculo na borda esquerda
+    obstacles[0].x1 = 0;
+    obstacles[0].y1 = 0;
+    obstacles[0].x2 = 100;
+    obstacles[0].y2 = SCREEN_HEIGHT;
+
+    // Obstáculo na borda direita
+    obstacles[1].x1 = SCREEN_WIDTH - 100;
+    obstacles[1].y1 = 0;
+    obstacles[1].x2 = SCREEN_WIDTH;
+    obstacles[1].y2 = SCREEN_HEIGHT;
+
+    // Obstáculo na borda superior
+    obstacles[2].x1 = 0;
+    obstacles[2].y1 = 0;
+    obstacles[2].x2 = SCREEN_WIDTH;
+    obstacles[2].y2 = 100;
+
+    // Obstáculo na borda inferior
+    obstacles[3].x1 = 0;
+    obstacles[3].y1 = SCREEN_HEIGHT - 100;
+    obstacles[3].x2 = SCREEN_WIDTH;
+    obstacles[3].y2 = SCREEN_HEIGHT;
+}
+
 int main() {
     // Inicialização do Allegro e addons
     if (!al_init()) {
@@ -146,6 +176,9 @@ int main() {
 
     Rect prologo_button = { 907, 75, 1049, 112 };
 
+    // Inicializa os obstáculos
+    init_obstacles(obstacles);
+
     // Variáveis para rastrear o delta_time
     double tempo_anterior = al_get_time();
     time_since_last_projectile = 0.0f; // Inicializa o temporizador
@@ -165,12 +198,12 @@ int main() {
             tempo_anterior = tempo_atual;
 
             // Atualiza a lógica do jogo
-            update_game(&estado, &player, projectiles, MAX_PROJECTILES, input.teclas, delta_time, &time_since_last_projectile);
+            update_game(&estado, &player, projectiles, MAX_PROJECTILES, input.teclas, delta_time, &time_since_last_projectile, obstacles, NUM_OBSTACLES);
 
             // Renderiza o jogo
             render_game(estado, &res, &player, projectiles, MAX_PROJECTILES,
                 continuar_botao, sair_botao, input.mouse_x, input.mouse_y,
-                start_button, prologo_button, credits_button, Instructs_button);
+                start_button, prologo_button, credits_button, Instructs_button, obstacles, NUM_OBSTACLES);
         }
         else {
             // Lida com os eventos

@@ -1,11 +1,13 @@
+// rendering.c
 #include "rendering.h"
 #include "constants.h"
-
 
 static bool button_pressed = false;
 
 void render_game(GameState estado, Resources* res, Player* player, Projectile* projectiles, int num_projectiles,
-    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button) {
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y,
+    Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Rect* obstacles, int num_obstacles) {
+
     if (estado == MENU) {
         // Desenha a imagem do menu ou limpa a tela
         if (res->menu_image) {
@@ -45,14 +47,14 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
                 ALLEGRO_ALIGN_LEFT, texto_start);
         }
 
-        // Botão "Creditos": Verifica se o mouse está sobre o botão
+        // Botão "Credits": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_credits = al_map_rgb(100, 100, 100); // Cor padrão
         if (mouse_x >= credits_button.x1 && mouse_x <= credits_button.x2 &&
             mouse_y >= credits_button.y1 && mouse_y <= credits_button.y2) {
             cor_credits = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
         }
 
-        // Desenha o botão "Creditos"
+        // Desenha o botão "Credits"
         al_draw_filled_rectangle(
             credits_button.x1, credits_button.y1,
             credits_button.x2, credits_button.y2,
@@ -64,7 +66,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             al_map_rgb(255, 255, 255), 2
         );
 
-        // Desenha o texto "Creditos" no botão
+        // Desenha o texto "Credits" no botão
         if (res->font) {
             const char* texto_credits = "Credits";
             int largura_texto = al_get_text_width(res->font, texto_credits);
@@ -75,14 +77,14 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
                 ALLEGRO_ALIGN_LEFT, texto_credits);
         }
 
-        // Botão "Instruções": Verifica se o mouse está sobre o botão
+        // Botão "Instruction": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_instructs = al_map_rgb(100, 100, 100); // Cor padrão
         if (mouse_x >= Instructs_button.x1 && mouse_x <= Instructs_button.x2 &&
             mouse_y >= Instructs_button.y1 && mouse_y <= Instructs_button.y2) {
             cor_instructs = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
         }
 
-        // Desenha o botão "Instruções"
+        // Desenha o botão "Instruction"
         al_draw_filled_rectangle(
             Instructs_button.x1, Instructs_button.y1,
             Instructs_button.x2, Instructs_button.y2,
@@ -94,31 +96,53 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             al_map_rgb(255, 255, 255), 2
         );
 
-        // Desenha o texto "Instruções" no botão
+        // Desenha o texto "Instruction" no botão
         if (res->font) {
-            const char* texto_intructions = "Instruction";
-            int largura_texto = al_get_text_width(res->font, texto_intructions);
+            const char* texto_instructions = "Instruction";
+            int largura_texto = al_get_text_width(res->font, texto_instructions);
             int altura_texto = al_get_font_line_height(res->font);
             al_draw_text(res->font, al_map_rgb(255, 255, 255),
                 (Instructs_button.x1 + Instructs_button.x2 - largura_texto) / 2,
                 (Instructs_button.y1 + Instructs_button.y2 - altura_texto) / 2,
-                ALLEGRO_ALIGN_LEFT, texto_intructions);
+                ALLEGRO_ALIGN_LEFT, texto_instructions);
         }
 
         al_flip_display();  // Atualiza a tela
     }
-    else if (estado == PROLOGO) {
+    else if (estado == PROLOGO || estado == PROLOGO2 || estado == PROLOGO3 || estado == PROLOGO4) {
         al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo, 0, 0, 0);
 
-        // Botão "Prologo": Verifica se o mouse está sobre o botão
+        // Seleciona o background apropriado
+        ALLEGRO_BITMAP* bg_prologo = NULL;
+        switch (estado) {
+        case PROLOGO:
+            bg_prologo = res->bg_prologo;
+            break;
+        case PROLOGO2:
+            bg_prologo = res->bg_prologo2;
+            break;
+        case PROLOGO3:
+            bg_prologo = res->bg_prologo3;
+            break;
+        case PROLOGO4:
+            bg_prologo = res->bg_prologo4;
+            break;
+        default:
+            break;
+        }
+
+        if (bg_prologo) {
+            al_draw_bitmap(bg_prologo, 0, 0, 0);
+        }
+
+        // Botão "Continuar": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
         if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
             mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
             cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
         }
 
-        // Desenha o botão "Prologo"
+        // Desenha o botão "Continuar"
         al_draw_filled_rectangle(
             prologo_button.x1, prologo_button.y1,
             prologo_button.x2, prologo_button.y2,
@@ -130,7 +154,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             al_map_rgb(255, 255, 255), 2
         );
 
-        // Desenha o texto "Continua" no botão
+        // Desenha o texto "Continuar" no botão
         if (res->font) {
             const char* texto_prologo = "Continuar";
             int largura_texto = al_get_text_width(res->font, texto_prologo);
@@ -143,118 +167,18 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         al_flip_display();
     }
-    else if (estado == PROLOGO2) {
-        al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo2, 0, 0, 0);
-
-        // Botão "Prologo": Verifica se o mouse está sobre o botão
-        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
-        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
-            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
-            cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
-        }
-
-        // Desenha o botão "Prologo"
-        al_draw_filled_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            cor_prologo
-        );
-        al_draw_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            al_map_rgb(255, 255, 255), 2
-        );
-
-        // Desenha o texto "Continua" no botão
-        if (res->font) {
-            const char* texto_prologo = "Continuar";
-            int largura_texto = al_get_text_width(res->font, texto_prologo);
-            int altura_texto = al_get_font_line_height(res->font);
-            al_draw_text(res->font, al_map_rgb(255, 255, 255),
-                (prologo_button.x1 + prologo_button.x2 - largura_texto) / 2,
-                (prologo_button.y1 + prologo_button.y2 - altura_texto) / 2,
-                ALLEGRO_ALIGN_LEFT, texto_prologo);
-        }
-
-        al_flip_display();
-    }
-    else if (estado == PROLOGO3) {
-        al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo3, 0, 0, 0);
-
-        // Botão "Prologo": Verifica se o mouse está sobre o botão
-        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
-        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
-            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
-            cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
-        }
-
-        // Desenha o botão "Prologo"
-        al_draw_filled_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            cor_prologo
-        );
-        al_draw_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            al_map_rgb(255, 255, 255), 2
-        );
-
-        // Desenha o texto "Continua" no botão
-        if (res->font) {
-            const char* texto_prologo = "Continuar";
-            int largura_texto = al_get_text_width(res->font, texto_prologo);
-            int altura_texto = al_get_font_line_height(res->font);
-            al_draw_text(res->font, al_map_rgb(255, 255, 255),
-                (prologo_button.x1 + prologo_button.x2 - largura_texto) / 2,
-                (prologo_button.y1 + prologo_button.y2 - altura_texto) / 2,
-                ALLEGRO_ALIGN_LEFT, texto_prologo);
-        }
-
-        al_flip_display();
-    }
-    else if (estado == PROLOGO4) {
-        al_clear_to_color(COR_FUNDO);
-        al_draw_bitmap(res->bg_prologo4, 0, 0, 0);
-
-        // Botão "Prologo": Verifica se o mouse está sobre o botão
-        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
-        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
-            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
-            cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
-        }
-
-        // Desenha o botão "Prologo"
-        al_draw_filled_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            cor_prologo
-        );
-        al_draw_rectangle(
-            prologo_button.x1, prologo_button.y1,
-            prologo_button.x2, prologo_button.y2,
-            al_map_rgb(255, 255, 255), 2
-        );
-
-        // Desenha o texto "Continua" no botão
-        if (res->font) {
-            const char* texto_prologo = "Continuar";
-            int largura_texto = al_get_text_width(res->font, texto_prologo);
-            int altura_texto = al_get_font_line_height(res->font);
-            al_draw_text(res->font, al_map_rgb(255, 255, 255),
-                (prologo_button.x1 + prologo_button.x2 - largura_texto) / 2,
-                (prologo_button.y1 + prologo_button.y2 - altura_texto) / 2,
-                ALLEGRO_ALIGN_LEFT, texto_prologo);
-        }
-
-        al_flip_display();
-    }
-    
     else if (estado == FASE_1) {
         al_clear_to_color(COR_FUNDO);
         al_draw_bitmap(res->BG_1, 0, 0, 0);
+
+        // Desenha os obstáculos
+        for (int i = 0; i < num_obstacles; ++i) {
+            al_draw_filled_rectangle(
+                obstacles[i].x1, obstacles[i].y1,
+                obstacles[i].x2, obstacles[i].y2,
+                al_map_rgba(255, 0, 0, 128) // Vermelho semi-transparente
+            );
+        }
 
         // Desenha todos os projéteis ativos
         for (int i = 0; i < num_projectiles; ++i) {
@@ -279,24 +203,25 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             // Desenha "GAME OVER" no centro superior
             const char* texto_game_over = "GAME OVER";
             int largura_texto = al_get_text_width(res->font, texto_game_over);
-            al_draw_text(res->font, al_map_rgb(255, 0, 0), (SCREEN_WIDTH - largura_texto) / 2, 200, ALLEGRO_ALIGN_LEFT, texto_game_over);
+            al_draw_text(res->font, al_map_rgb(255, 0, 0),
+                (SCREEN_WIDTH - largura_texto) / 2, 200, ALLEGRO_ALIGN_LEFT, texto_game_over);
         }
 
-        // Botão Continuar: Verifica se o mouse está sobre o botão
+        // Botão "Continuar": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_continuar = al_map_rgb(100, 100, 100); // Cor padrão
         if (mouse_x >= continuar_botao.x1 && mouse_x <= continuar_botao.x2 &&
             mouse_y >= continuar_botao.y1 && mouse_y <= continuar_botao.y2) {
             cor_continuar = al_map_rgb(150, 150, 150); // Cor hover
         }
 
-        // Botão Sair: Verifica se o mouse está sobre o botão
+        // Botão "Sair": Verifica se o mouse está sobre o botão
         ALLEGRO_COLOR cor_sair = al_map_rgb(100, 100, 100); // Cor padrão
         if (mouse_x >= sair_botao.x1 && mouse_x <= sair_botao.x2 &&
             mouse_y >= sair_botao.y1 && mouse_y <= sair_botao.y2) {
             cor_sair = al_map_rgb(150, 150, 150); // Cor hover
         }
 
-        // Botão Continuar
+        // Botão "Continuar"
         al_draw_filled_rectangle(
             continuar_botao.x1, continuar_botao.y1,
             continuar_botao.x2, continuar_botao.y2,
@@ -318,7 +243,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
                 ALLEGRO_ALIGN_LEFT, texto_continuar);
         }
 
-        // Botão Sair
+        // Botão "Sair"
         al_draw_filled_rectangle(
             sair_botao.x1, sair_botao.y1,
             sair_botao.x2, sair_botao.y2,

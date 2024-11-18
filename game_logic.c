@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include "constants.h"
 
-void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile) {
+void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile, Rect* obstacles, int num_obstacles) {
     if (*estado == FASE_1) {
         // Atualiza o jogador
-        update_player(player, teclas, delta_time);
+        update_player(player, teclas, delta_time, obstacles, num_obstacles);
 
         // Atualiza o temporizador
         *time_since_last_projectile += delta_time;

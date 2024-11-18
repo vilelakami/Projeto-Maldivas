@@ -1,1 +1,6 @@
-﻿  PI-2.vcxproj -> C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\x64\Debug\PI-2.exe
+﻿  main.c
+D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\main.c(27,9): warning C4005: 'NUM_OBSTACLES': redefinição de macro
+      D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\constants.h(30,9):
+      ver a definição anterior de "NUM_OBSTACLES"
+  
+  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\x64\Debug\PI-2.exe

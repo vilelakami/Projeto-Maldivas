@@ -1,9 +1,9 @@
-// player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <stdbool.h>
 #include <allegro5/allegro5.h>
+#include "rect.h"
 
 // Constantes de direção
 #define DIRECAO_BAIXO 4
@@ -31,7 +31,7 @@ typedef struct {
 
 // Funções relacionadas ao jogador
 void init_player(Player* player);
-void update_player(Player* player, const bool* teclas, float delta_time);
+void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles);
 void draw_player(Player* player);
 void destroy_player(Player* player);
 

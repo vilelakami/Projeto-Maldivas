@@ -1,5 +1,5 @@
-// player.c
 #include "player.h"
+#include "collision.h"
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,38 +30,97 @@ void init_player(Player* player) {
     player->tempo_invencibilidade = 0.0f;
 }
 
-void update_player(Player* player, const bool* teclas, float delta_time) {
+void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles) {
     bool movendo = false;
+
+    float dx = 0.0f;
+    float dy = 0.0f;
 
     // Movimentação baseada em delta_time
     if (teclas[ALLEGRO_KEY_W]) {
-        player->y -= player->velocidade * delta_time;
+        dy -= player->velocidade * delta_time;
         player->direcao = DIRECAO_CIMA;
         movendo = true;
     }
     if (teclas[ALLEGRO_KEY_S]) {
-        player->y += player->velocidade * delta_time;
+        dy += player->velocidade * delta_time;
         player->direcao = DIRECAO_BAIXO;
         movendo = true;
     }
     if (teclas[ALLEGRO_KEY_A]) {
-        player->x -= player->velocidade * delta_time;
+        dx -= player->velocidade * delta_time;
         player->direcao = DIRECAO_ESQUERDA;
         movendo = true;
     }
     if (teclas[ALLEGRO_KEY_D]) {
-        player->x += player->velocidade * delta_time;
+        dx += player->velocidade * delta_time;
         player->direcao = DIRECAO_DIREITA;
         movendo = true;
     }
 
-    // Prevenir que o jogador saia da tela
-    if (player->x < 0) player->x = 0;
-    if (player->y < 0) player->y = 0;
-    if (player->x + (player->largura_frame * player->escala) > 1080)
-        player->x = 1280 - (player->largura_frame * player->escala);
-    if (player->y + (player->altura_frame * player->escala) > 700)
-        player->y = 720 - (player->altura_frame * player->escala);
+    // Movimento no eixo X
+    if (dx != 0.0f) {
+        float new_x = player->x + dx;
+
+        // Prevenir que o jogador saia da tela
+        if (new_x < 0) new_x = 0;
+        if (new_x + (player->largura_frame * player->escala) > 1080)
+            new_x = 1080 - (player->largura_frame * player->escala);
+
+        // Cria o retângulo do jogador na nova posição X
+        Rect player_rect_x = {
+            (int)new_x,
+            (int)player->y,
+            (int)(new_x + player->largura_frame * player->escala),
+            (int)(player->y + player->altura_frame * player->escala)
+        };
+
+        // Verifica colisão com obstáculos
+        bool collision_x = false;
+        for (int i = 0; i < num_obstacles; ++i) {
+            if (verifica_colisao_rect(player_rect_x, obstacles[i])) {
+                collision_x = true;
+                break;
+            }
+        }
+
+        // Se não houver colisão, atualiza a posição X
+        if (!collision_x) {
+            player->x = new_x;
+        }
+    }
+
+    // Movimento no eixo Y
+    if (dy != 0.0f) {
+        float new_y = player->y + dy;
+
+        // Prevenir que o jogador saia da tela
+        if (new_y < 0) new_y = 0;
+        if (new_y + (player->altura_frame * player->escala) > 700)
+            new_y = 700 - (player->altura_frame * player->escala);
+
+        // Cria o retângulo do jogador na nova posição Y
+        Rect player_rect_y = {
+            (int)player->x,
+            (int)new_y,
+            (int)(player->x + player->largura_frame * player->escala),
+            (int)(new_y + player->altura_frame * player->escala)
+        };
+
+        // Verifica colisão com obstáculos
+        bool collision_y = false;
+        for (int i = 0; i < num_obstacles; ++i) {
+            if (verifica_colisao_rect(player_rect_y, obstacles[i])) {
+                collision_y = true;
+                break;
+            }
+        }
+
+        // Se não houver colisão, atualiza a posição Y
+        if (!collision_y) {
+            player->y = new_y;
+        }
+    }
 
     // Atualiza a animação
     if (movendo) {

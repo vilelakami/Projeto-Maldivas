@@ -5,8 +5,9 @@
 #include "player.h"
 #include "projectile.h"
 #include "collision.h"
+#include "rect.h"
 
 // Atualiza a lógica do jogo com base no estado atual
-void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile);
+void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile, Rect* obstacles, int num_obstacles);
 
 #endif // GAME_LOGIC_H
