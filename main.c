@@ -19,6 +19,8 @@
 #include <allegro5/allegro_font.h>
 #include <stdlib.h>
 #include <time.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 // Variável global para o temporizador dos projéteis
 float time_since_last_projectile = 0.0f;

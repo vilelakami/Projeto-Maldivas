@@ -1,6 +1,10 @@
 // rendering.c
 #include "rendering.h"
 #include "constants.h"
+#include "resources.h"
+#include <stdio.h>
+
+
 
 static bool button_pressed = false;
 
@@ -9,6 +13,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
     Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Rect* obstacles, int num_obstacles) {
 
     if (estado == MENU) {
+
         // Desenha a imagem do menu ou limpa a tela
         if (res->menu_image) {
             al_draw_bitmap(res->menu_image, 0, 0, 0);
@@ -176,7 +181,7 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
             al_draw_filled_rectangle(
                 obstacles[i].x1, obstacles[i].y1,
                 obstacles[i].x2, obstacles[i].y2,
-                al_map_rgba(255, 0, 0, 128) // Vermelho semi-transparente
+                al_map_rgba(0, 0, 0, 0) // Vermelho semi-transparente
             );
         }
 

@@ -13,7 +13,7 @@ void init_player(Player* player) {
     }
 
     // Inicializa as propriedades do jogador
-    player->escala = 3.0f;
+    player->escala = 2.0f;
     player->largura_frame = 40;
     player->altura_frame = 40;
 
@@ -121,6 +121,15 @@ void update_player(Player* player, const bool* teclas, float delta_time, Rect* o
             player->y = new_y;
         }
     }
+
+    verificar_colisaop(player);
+    // Prevenir que o jogador saia da tela
+    if (player->x < 0) player->x = 0;
+    if (player->y < 0) player->y = 0;
+    if (player->x + (player->largura_frame * player->escala) > 1080)
+        player->x = 1080 - (player->largura_frame * player->escala);
+    if (player->y + (player->altura_frame * player->escala) > 700)
+        player->y = 700 - (player->altura_frame * player->escala);
 
     // Atualiza a animação
     if (movendo) {

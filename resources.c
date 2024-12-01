@@ -4,6 +4,7 @@
 
 bool load_resources(Resources* res) {
     // Carrega o ícone
+
     res->icon = al_load_bitmap("icon.bmp");
     if (!res->icon) {
         fprintf(stderr, "Erro ao carregar o ícone.\n");

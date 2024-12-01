@@ -5,6 +5,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 
+
 // Estrutura para armazenar todos os recursos do jogo
 typedef struct {
     ALLEGRO_BITMAP* BG_1;

@@ -13,7 +13,7 @@ void init_projectile(Projectile* proj) {
     }
 
     // Inicializa as propriedades do projetil
-    proj->escala = 4.0f;
+    proj->escala = 2.0f;
     proj->largura_frame = 14;
     proj->altura_frame = 32;
     proj->x = 0;
