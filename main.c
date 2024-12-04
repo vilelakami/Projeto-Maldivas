@@ -88,6 +88,29 @@ int main() {
         return -1;
     }
 
+    if (!al_install_audio()) {
+        fprintf(stderr, "Erro ao inicializar o áudio.\n");
+        return -1;
+    }
+
+    if (!al_init_acodec_addon()) {
+        fprintf(stderr, "Erro ao inicializar os codecs de áudio.\n");
+        return -1;
+    }
+
+    if (!al_reserve_samples(10)) {
+        fprintf(stderr, "Erro ao reservar samples.\n");
+        return -1;
+    }
+
+
+    // Carrega a trilha sonora
+    Resources res;
+    al_attach_sample_instance_to_mixer(res.inst_trilha, al_get_default_mixer());
+    al_set_sample_instance_playmode(res.inst_trilha, ALLEGRO_PLAYMODE_LOOP);
+    al_play_sample_instance(res.inst_trilha);
+
+
     // Inicializa o gerador de números aleatórios
     srand(time(NULL));
 

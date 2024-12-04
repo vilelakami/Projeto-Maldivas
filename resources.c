@@ -73,6 +73,31 @@ bool load_resources(Resources* res) {
         return false;
     }
 
+    res->som_trilha_sonora = al_load_sample("assets/sons/trilhaSonora.wav");
+    if (!res->som_trilha_sonora) {
+        fprintf(stderr, "Erro ao carregar a trilha sonora.\n");
+        return -1;
+    }
+
+    res->inst_trilha = al_create_sample_instance(res->som_trilha_sonora);
+    if (!res->inst_trilha) {
+        fprintf(stderr, "Erro ao carregar a instancia trilha sonora.\n");
+        return -1;
+    }
+
+    res->som_hit = al_load_sample("assets/Sons/PlayerDie.wav");
+    if (!res->som_hit) {
+        fprintf(stderr, "Erro ao carregar o som de hit.\n");
+        return false;
+    }
+
+    res->som_gameOver = al_load_sample("assets/Sons/gameOverSound.wav", 0.3);
+    if (!res->som_gameOver) {
+        fprintf(stderr, "Erro ao carregar o som game over.\n");
+        return false;
+    }
+
+
     printf("Recursos carregados com sucesso.\n");
     return true;
 }
@@ -122,4 +147,21 @@ void destroy_resources(Resources* res) {
         al_destroy_bitmap(res->instructs);
         res->instructs = NULL;
     }
+    if (res->som_trilha_sonora) {
+        al_destroy_sample(res->som_trilha_sonora);
+        res->som_trilha_sonora = NULL;
+    }
+    if (res->inst_trilha) {
+        al_destroy_sample(res->inst_trilha);
+        res->inst_trilha = NULL;
+    }
+    if (res->som_hit) {
+        al_destroy_sample(res->som_hit);
+        res->som_hit = NULL;
+    }
+    if (res->som_gameOver) {
+        al_destroy_sample(res->som_gameOver);
+        res->som_gameOver = NULL;
+    }
+
 }

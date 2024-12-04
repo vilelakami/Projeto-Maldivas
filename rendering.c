@@ -8,6 +8,7 @@
 
 al_install_keyboard();
 static bool button_pressed = false;
+static bool som_GO = false;
 
 void render_game(GameState estado, Resources* res, Player* player, Projectile* projectiles, int num_projectiles,
     Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y,
@@ -243,6 +244,25 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
     else if (estado == GAME_OVER) {
         // Desenha a tela de Game Over
         al_clear_to_color(COR_GAME_OVER); // Fundo preto
+        if (res->inst_trilha && al_get_sample_instance_playing(res->inst_trilha)) {
+            al_stop_sample_instance(res->inst_trilha);
+        }
+
+        // Desenha a tela de Game Over
+        al_clear_to_color(COR_GAME_OVER); // Fundo preto
+
+        if (!som_GO) {
+            if (res->som_gameOver) {
+                al_play_sample(res->som_gameOver, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+            }
+            som_GO = true;
+        }
+
+        // Redefinir o som ao sair do GAME_OVER
+        if (estado != GAME_OVER) {
+            som_GO = false;
+        }
+
 
         if (res->font) {
             // Desenha "GAME OVER" no centro superior

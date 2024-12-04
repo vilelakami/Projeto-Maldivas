@@ -4,6 +4,8 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 
 // Estrutura para armazenar todos os recursos do jogo
@@ -19,6 +21,11 @@ typedef struct {
     ALLEGRO_BITMAP* creditos;
     ALLEGRO_BITMAP* instructs;
     ALLEGRO_BITMAP* INTRO;
+    ALLEGRO_SAMPLE* som_trilha_sonora;
+    ALLEGRO_SAMPLE_INSTANCE* inst_trilha;
+    ALLEGRO_SAMPLE* som_hit;
+    ALLEGRO_SAMPLE* som_gameOver;
+
 
 } Resources;
 

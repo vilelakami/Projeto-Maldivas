@@ -1,1 +1,59 @@
-﻿  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\x64\Debug\PI-2.exe
+﻿  main.c
+  rendering.c
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(7,9): warning C4005: 'DIRECAO_BAIXO': redefinição de macro
+  (compilando o arquivo fonte 'main.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(9,9):
+      ver a definição anterior de "DIRECAO_BAIXO"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(8,9): warning C4005: 'DIRECAO_ESQUERDA': redefinição de macro
+  (compilando o arquivo fonte 'main.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(10,9):
+      ver a definição anterior de "DIRECAO_ESQUERDA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(9,9): warning C4005: 'DIRECAO_DIREITA': redefinição de macro
+  (compilando o arquivo fonte 'main.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(11,9):
+      ver a definição anterior de "DIRECAO_DIREITA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(10,9): warning C4005: 'DIRECAO_CIMA': redefinição de macro
+  (compilando o arquivo fonte 'main.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(12,9):
+      ver a definição anterior de "DIRECAO_CIMA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\main.c(127,15): error C2086: 'Resources res': redefinição
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\main.c(108,15):
+      consulte a declaração de 'res'
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\main.c(171,5): warning C4013: 'init_npc_engenheiro' indefinido; assumindo extern retornando int
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(7,9): warning C4005: 'DIRECAO_BAIXO': redefinição de macro
+  (compilando o arquivo fonte 'rendering.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(9,9):
+      ver a definição anterior de "DIRECAO_BAIXO"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(8,9): warning C4005: 'DIRECAO_ESQUERDA': redefinição de macro
+  (compilando o arquivo fonte 'rendering.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(10,9):
+      ver a definição anterior de "DIRECAO_ESQUERDA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(9,9): warning C4005: 'DIRECAO_DIREITA': redefinição de macro
+  (compilando o arquivo fonte 'rendering.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(11,9):
+      ver a definição anterior de "DIRECAO_DIREITA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\npc.h(10,9): warning C4005: 'DIRECAO_CIMA': redefinição de macro
+  (compilando o arquivo fonte 'rendering.c')
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\player.h(12,9):
+      ver a definição anterior de "DIRECAO_CIMA"
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(9,1): error C2371: 'al_install_keyboard': redefinição; tipos básicos diferentes
+      C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\packages\Allegro.5.2.10\build\native\include\allegro5\keyboard.h(44,1):
+      consulte a declaração de 'al_install_keyboard'
+  
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(182,13): warning C4013: 'draw_npc_engenheiro' indefinido; assumindo extern retornando int
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(183,13): warning C4013: 'movimento_eng' indefinido; assumindo extern retornando int
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\rendering.c(187,22): warning C4552: '+': o resultado da expressão não é usado
+  resources.c
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\resources.c(94,73): error C2197: 'ALLEGRO_SAMPLE *al_load_sample(const char *)': muitos argumentos para chamada
+C:\Users\gabri\OneDrive\Documentos\Projeto-Maldivas\resources.c(155,30): warning C4133: 'função': tipos incompatíveis - de 'ALLEGRO_SAMPLE_INSTANCE *' para 'ALLEGRO_SAMPLE *'
+  ui.c
+  Gerando Código...
