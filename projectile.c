@@ -1,4 +1,4 @@
-ï»¿#include "projectile.h"
+#include "projectile.h"
 #include "constants.h" // Para SCREEN_WIDTH e SCREEN_HEIGHT
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
@@ -28,10 +28,10 @@ void init_projectile(Projectile* proj) {
 void update_projectile(Projectile* proj, float delta_time) {
     if (!proj->active) return;
 
-    // Atualiza a posiï¿½ï¿½o com base no delta_time
+    // Atualiza a posição com base no delta_time
     proj->y += proj->velocidade_y * delta_time;
 
-    // Atualiza a animaï¿½ï¿½o
+    // Atualiza a animação
     proj->contador_animacao++;
     if (proj->contador_animacao >= proj->velocidade_animacao) {
         proj->contador_animacao = 0;
@@ -43,18 +43,18 @@ void draw_projectile(const Projectile* proj) {
     if (!proj->active) return;
 
     if (!proj->sprite) {
-        fprintf(stderr, "Erro: proj->sprite ï¿½ NULL.\n");
+        fprintf(stderr, "Erro: proj->sprite é NULL.\n");
         return; // Evita tentar desenhar um bitmap nulo
     }
 
-    // Define o espaï¿½amento entre os frames
-    const int espacamento_frame = 5; // 4 pixels de distï¿½ncia entre os frames
+    // Define o espaçamento entre os frames
+    const int espacamento_frame = 5; // 4 pixels de distância entre os frames
 
-    // Calcula a posiï¿½ï¿½o X do frame atual no sprite sheet
+    // Calcula a posição X do frame atual no sprite sheet
     int frame_x = proj->frame_atual * (proj->largura_frame + espacamento_frame);
     int frame_y = 0;
 
-    // Verificar se os frames estï¿½o dentro dos limites do bitmap
+    // Verificar se os frames estão dentro dos limites do bitmap
     int bitmap_width = al_get_bitmap_width(proj->sprite);
     int bitmap_height = al_get_bitmap_height(proj->sprite);
 
@@ -70,11 +70,11 @@ void draw_projectile(const Projectile* proj) {
         return;
     }
 
-    // Calcula o centro do frame para a rotaï¿½ï¿½o
+    // Calcula o centro do frame para a rotação
     float sx = proj->largura_frame / 2.0f;
     float sy = proj->altura_frame / 2.0f;
 
-    // Calcula a posiï¿½ï¿½o de destino (centro) no display
+    // Calcula a posição de destino (centro) no display
     float dx = proj->x + (proj->largura_frame * proj->escala) / 2.0f;
     float dy = proj->y + (proj->altura_frame * proj->escala) / 2.0f;
 
