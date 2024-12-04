@@ -67,6 +67,12 @@ bool load_resources(Resources* res) {
         return false;
     }
 
+    res->INTRO = al_load_bitmap("assets/bg_prologo.png");
+    if (!res->INTRO) {
+        fprintf(stderr, "Erro ao carregar o fundo INTRO.\n");
+        return false;
+    }
+
     printf("Recursos carregados com sucesso.\n");
     return true;
 }
@@ -111,5 +117,9 @@ void destroy_resources(Resources* res) {
     if (res->instructs) {
         al_destroy_bitmap(res->instructs);
         res->instructs = NULL;
+    }
+    if (res->INTRO) {
+        al_destroy_bitmap(res->INTRO);
+        res->INTRO = NULL;
     }
 }

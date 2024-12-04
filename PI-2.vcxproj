@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="colission.c" />
+    <ClCompile Include="dialogo.c" />
     <ClCompile Include="displays.c" />
     <ClCompile Include="event_handling.c" />
     <ClCompile Include="game_logic.c" />
     <ClCompile Include="game_state.c" />
     <ClCompile Include="interacoes.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="npc.c" />
     <ClCompile Include="player.c" />
     <ClCompile Include="projectile.c" />
     <ClCompile Include="rendering.c" />
@@ -35,11 +37,13 @@
   <ItemGroup>
     <ClInclude Include="collision.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="dialogo.h" />
     <ClInclude Include="displays.h" />
     <ClInclude Include="event_handling.h" />
     <ClInclude Include="game_logic.h" />
     <ClInclude Include="game_state.h" />
     <ClInclude Include="interacoes.h" />
+    <ClInclude Include="npc.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="rect.h" />

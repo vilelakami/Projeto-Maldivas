@@ -1,0 +1,280 @@
+==== collision.h ====
+#ifndef COLLISION_H
+#define COLLISION_H
+
+#include <stdbool.h>
+#include "rect.h"
+#include "player.h"
+
+// Função para verificar colisão retangular baseada em coordenadas e dimensões
+bool verifica_colisao(float x1, float y1, float largura1, float altura1,
+    float x2, float y2, float largura2, float altura2);
+
+// Função para verificar colisão entre dois retângulos definidos pela estrutura Rect
+bool verifica_colisao_rect(Rect a, Rect b);
+
+#endif // COLLISION_H
+==== constants.h ====
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#include <allegro5/allegro5.h>
+
+// Definições das constantes da tela
+#define SCREEN_WIDTH 1080
+#define SCREEN_HEIGHT 700
+#define FPS 60
+
+// Posições e dimensões dos botões na tela de Game Over
+#define BOTAO_CONTINUAR_X1 440
+#define BOTAO_CONTINUAR_Y1 300
+#define BOTAO_CONTINUAR_X2 640
+#define BOTAO_CONTINUAR_Y2 350
+
+#define BOTAO_SAIR_X1 440
+#define BOTAO_SAIR_Y1 400
+#define BOTAO_SAIR_X2 640
+#define BOTAO_SAIR_Y2 450
+
+// Cores
+#define COR_FUNDO al_map_rgb(255, 255, 255)
+#define COR_GAME_OVER al_map_rgb(0, 0, 0)
+
+// Número máximo de projéteis
+#define MAX_PROJECTILES 10
+
+#endif // CONSTANTS_H
+==== displays.h ====
+// displays.h
+#ifndef DISPLAYS_H
+#define DISPLAYS_H
+
+#include "game_state.h"
+
+#endif // DISPLAYS_H
+==== event_handling.h ====
+#ifndef EVENT_HANDLING_H
+#define EVENT_HANDLING_H
+
+#include "game_state.h"
+#include "player.h"
+#include "projectile.h"
+#include "rect.h"
+#include "interacoes.h"
+#include <allegro5/allegro5.h>
+
+// Estrutura para armazenar inputs do jogo
+typedef struct {
+    bool sair;
+    bool teclas[ALLEGRO_KEY_MAX];
+    int mouse_x;
+    int mouse_y;
+} GameInput;
+
+// Função para inicializar os inputs do jogo
+void init_game_input(GameInput* input);
+
+// Função para lidar com eventos
+void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* projectiles, int num_projectiles,
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Interacoes* interacoes,
+    Rect botao_sair_vitoria, Rect botao_menu_vitoria);
+
+
+#endif // EVENT_HANDLING_H
+==== game_logic.h ====
+#ifndef GAME_LOGIC_H
+#define GAME_LOGIC_H
+
+#include "player.h"
+#include "projectile.h"
+#include "game_state.h"
+#include "rect.h"
+#include "interacoes.h"
+
+void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile, Rect* obstacles, int* num_obstacles, Interacoes* interacoes, Rect* proximity_zones);
+
+#endif // GAME_LOGIC_H
+==== game_state.h ====
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
+
+typedef enum {
+    MENU,
+    PROLOGO,
+    PROLOGO2,
+    PROLOGO3,
+    PROLOGO4,
+    FASE_1,
+    GAME_OVER,
+    CREDITOS,
+    INSTRUÇÕES,
+    VITORIA
+} GameState;
+
+#endif // GAME_STATE_H
+==== interacoes.h ====
+#ifndef INTERACOES_H
+#define INTERACOES_H
+
+#include <stdbool.h>
+
+typedef struct {
+    bool interagiu_obstaculo_2;
+    bool interagiu_obstaculo_3;
+    int contador_interacoes;
+} Interacoes;
+
+void init_interacoes(Interacoes* interacoes);
+
+#endif // INTERACOES_H
+==== player.h ====
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <allegro5/allegro.h>
+#include <stdbool.h>
+#include "rect.h"
+#include "interacoes.h"
+
+typedef enum {
+    DIRECAO_CIMA = 7,
+    DIRECAO_BAIXO = 4,
+    DIRECAO_ESQUERDA = 5,
+    DIRECAO_DIREITA = 6
+} Direcao;
+
+typedef struct {
+    ALLEGRO_BITMAP* sprite;
+    float x, y;
+    float escala;
+    int largura_frame, altura_frame;
+    float velocidade;
+    Direcao direcao;
+    int frame_atual;
+    int contador_animacao;
+    int velocidade_animacao;
+    int vida_maxima;
+    int vida_atual;
+    bool invencivel;
+    float tempo_invencibilidade;
+    bool perto_do_obstaculo_2;
+    bool perto_do_obstaculo_3;
+} Player;
+
+void init_player(Player* player);
+void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles, Interacoes* interacoes, Rect* proximity_zones);
+void draw_player(Player* player);
+void destroy_player(Player* player);
+
+#endif // PLAYER_H
+==== projectile.h ====
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
+
+#include <allegro5/allegro5.h>
+#include <stdbool.h>
+
+// Estrutura que representa o projetil
+typedef struct {
+    float x, y;
+    float velocidade_y;
+    float escala;
+    int largura_frame;
+    int altura_frame;
+    ALLEGRO_BITMAP* sprite;
+    int frame_atual;
+    int contador_animacao;
+    int velocidade_animacao;
+    bool active;
+} Projectile;
+
+// Funções de gerenciamento do projetil
+void init_projectile(Projectile* proj);
+void update_projectile(Projectile* proj, float delta_time);
+void draw_projectile(const Projectile* proj);
+void destroy_projectile(Projectile* proj);
+
+#endif // PROJECTILE_H
+==== rect.h ====
+#ifndef RECT_H
+#define RECT_H
+
+typedef struct {
+    int x1, y1; // Coordenadas do canto superior esquerdo
+    int x2, y2; // Coordenadas do canto inferior direito
+} Rect;
+
+#endif // RECT_H
+==== rendering.h ====
+#ifndef RENDERING_H
+#define RENDERING_H
+
+#include "game_state.h"
+#include "resources.h"
+#include "player.h"
+#include "projectile.h"
+#include "rect.h"
+#include "interacoes.h"
+
+// Função para renderizar o jogo
+void render_game(GameState estado, Resources* res, Player* player, Projectile* projectiles, int num_projectiles,
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y,
+    Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button,
+    Rect* obstacles, int num_obstacles, Interacoes* interacoes,
+    Rect botao_sair_vitoria, Rect botao_menu_vitoria);
+
+
+#endif // RENDERING_H
+==== resources.h ====
+#ifndef RESOURCES_H
+#define RESOURCES_H
+
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+
+// Estrutura para armazenar todos os recursos do jogo
+typedef struct {
+    ALLEGRO_BITMAP* BG_1;
+    ALLEGRO_BITMAP* icon;
+    ALLEGRO_BITMAP* menu_image;
+    ALLEGRO_FONT* font;
+    ALLEGRO_BITMAP* bg_prologo;
+    ALLEGRO_BITMAP* bg_prologo2;
+    ALLEGRO_BITMAP* bg_prologo3;
+    ALLEGRO_BITMAP* bg_prologo4;
+    ALLEGRO_BITMAP* creditos;
+    ALLEGRO_BITMAP* instructs;
+} Resources;
+
+// Função para carregar todos os recursos
+bool load_resources(Resources* res);
+
+// Função para liberar todos os recursos
+void destroy_resources(Resources* res);
+
+#endif // RESOURCES_H
+==== ui.h ====
+#ifndef UI_H
+#define UI_H
+
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include "game_state.h"
+#include "player.h"
+#include "projectile.h"
+#include "rect.h"
+
+// Inicializa o módulo de UI
+bool init_ui();
+
+// Desenha a barra de vida
+void draw_life_bar(Player* player);
+
+// Verifica se um ponto está dentro de um retângulo
+bool is_point_inside_rect(int x, int y, Rect rect);
+
+// Finaliza o módulo de UI
+void destroy_ui();
+
+#endif // UI_H

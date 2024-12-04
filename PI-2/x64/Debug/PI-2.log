@@ -1,1 +1,3 @@
-﻿  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro\vilelakami\Projeto-Maldivas\x64\Debug\PI-2.exe
+﻿  rendering.c
+D:\dev\VisualStudio\Allegro - Copia\vilelakami\Projeto-Maldivas\rendering.c(124,9): warning C4013: 'movimento_eng' indefinido; assumindo extern retornando int
+  PI-2.vcxproj -> D:\dev\VisualStudio\Allegro - Copia\vilelakami\Projeto-Maldivas\x64\Debug\PI-2.exe

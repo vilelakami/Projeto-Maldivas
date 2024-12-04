@@ -10,6 +10,8 @@
 #include "game_state.h"
 #include "rect.h"
 #include "interacoes.h"
+#include "npc.h"
+#include "dialogo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -233,6 +235,15 @@ int main() {
 
     GameState estado = MENU;
 
+    NPC_DIRETOR npc_chefe;
+    init_npc_chefe(&npc_chefe);
+
+    NPC_ENGENHEIRO npc_engenheiro;
+    init_npc_engenheiro(&npc_engenheiro);
+
+    DialogueManager dialogue_manager;
+    init_dialogue_manager(&dialogue_manager);
+
     Interacoes interacoes;
     init_interacoes(&interacoes);
 
@@ -251,13 +262,14 @@ int main() {
                 continuar_botao, sair_botao, input.mouse_x, input.mouse_y,
                 start_button, prologo_button, credits_button, Instructs_button,
                 obstacles, num_obstacles, &interacoes,
-                botao_sair_vitoria, botao_menu_vitoria);
+                botao_sair_vitoria, botao_menu_vitoria,
+                &npc_chefe, &npc_engenheiro, &dialogue_manager);
 
         }
         else {
             handle_event(evento, &input, &estado, &player, projectiles, MAX_PROJECTILES,
                 continuar_botao, sair_botao, start_button, prologo_button, credits_button, Instructs_button, &interacoes,
-                botao_sair_vitoria, botao_menu_vitoria);
+                botao_sair_vitoria, botao_menu_vitoria, &dialogue_manager);
 
         }
     }
@@ -270,6 +282,8 @@ int main() {
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
     al_destroy_display(display);
+    destroy_npc_chefe(&npc_chefe);
+    destroy_npc_engenheiro(&npc_engenheiro);
 
     return 0;
 }

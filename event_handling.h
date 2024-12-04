@@ -6,6 +6,7 @@
 #include "projectile.h"
 #include "rect.h"
 #include "interacoes.h"
+#include "dialogo.h" // Adicione esta linha
 #include <allegro5/allegro5.h>
 
 // Estrutura para armazenar inputs do jogo
@@ -20,9 +21,11 @@ typedef struct {
 void init_game_input(GameInput* input);
 
 // Função para lidar com eventos
-void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* projectiles, int num_projectiles,
-    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Interacoes* interacoes,
-    Rect botao_sair_vitoria, Rect botao_menu_vitoria);
-
+void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player,
+    Projectile* projectiles, int num_projectiles,
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button,
+    Rect credits_button, Rect Instructs_button, Interacoes* interacoes,
+    Rect botao_sair_vitoria, Rect botao_menu_vitoria,
+    DialogueManager* dialogue_manager);
 
 #endif // EVENT_HANDLING_H

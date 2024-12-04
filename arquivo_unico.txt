@@ -1,0 +1,1382 @@
+==== colission.c ====
+#include "collision.h"
+#include <stdio.h>
+
+bool verifica_colisao(float x1, float y1, float largura1, float altura1,
+    float x2, float y2, float largura2, float altura2) {
+    return x1 < x2 + largura2 &&
+        x1 + largura1 > x2 &&
+        y1 < y2 + altura2 &&
+        y1 + altura1 > y2;
+}
+
+bool verifica_colisao_rect(Rect a, Rect b) {
+    return a.x1 < b.x2 &&
+        a.x2 > b.x1 &&
+        a.y1 < b.y2 &&
+        a.y2 > b.y1;
+}
+==== displays.c ====
+// displays.c
+#include "displays.h"
+#include "game_state.h"
+==== event_handling.c ====
+#include "event_handling.h"
+#include "game_state.h"
+#include "constants.h"
+#include "interacoes.h"
+#include "player.h"
+#include "projectile.h"
+#include "ui.h"
+#include <allegro5/allegro.h>
+
+void init_game_input(GameInput* input) {
+    for (int i = 0; i < ALLEGRO_KEY_MAX; i++) {
+        input->teclas[i] = false;
+    }
+    input->mouse_x = 0;
+    input->mouse_y = 0;
+    input->sair = false;
+}
+
+void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* projectiles, int num_projectiles,
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Interacoes* interacoes, Rect botao_sair_vitoria, Rect botao_menu_vitoria) {
+
+    if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+        input->sair = true;
+    }
+    else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
+        input->teclas[evento.keyboard.keycode] = true;
+
+        if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+            input->sair = true;
+        }
+
+        if (evento.keyboard.keycode == ALLEGRO_KEY_F) {
+            if (player->perto_do_obstaculo_2 && !interacoes->interagiu_obstaculo_2) {
+                interacoes->interagiu_obstaculo_2 = true;
+                interacoes->contador_interacoes++;
+                printf("Interagiu com o obstáculo 2.\n");
+            }
+
+            if (player->perto_do_obstaculo_3 && !interacoes->interagiu_obstaculo_3) {
+                interacoes->interagiu_obstaculo_3 = true;
+                interacoes->contador_interacoes++;
+                printf("Interagiu com o obstáculo 3.\n");
+            }
+        }
+    }
+    else if (evento.type == ALLEGRO_EVENT_KEY_UP) {
+        input->teclas[evento.keyboard.keycode] = false;
+    }
+    else if (evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
+        input->mouse_x = evento.mouse.x;
+        input->mouse_y = evento.mouse.y;
+    }
+    else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+        if (*estado == MENU) {
+            if (input->mouse_x >= start_button.x1 && input->mouse_x <= start_button.x2 &&
+                input->mouse_y >= start_button.y1 && input->mouse_y <= start_button.y2) {
+                reset_game(player, projectiles, num_projectiles, interacoes);
+                *estado = PROLOGO;
+            }
+            else if (input->mouse_x >= credits_button.x1 && input->mouse_x <= credits_button.x2 &&
+                input->mouse_y >= credits_button.y1 && input->mouse_y <= credits_button.y2) {
+                *estado = CREDITOS;
+            }
+            else if (input->mouse_x >= Instructs_button.x1 && input->mouse_x <= Instructs_button.x2 &&
+                input->mouse_y >= Instructs_button.y1 && input->mouse_y <= Instructs_button.y2) {
+                *estado = INSTRUÇÕES;
+            }
+        }
+        else if (*estado == PROLOGO || *estado == PROLOGO2 || *estado == PROLOGO3 || *estado == PROLOGO4) {
+            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
+                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
+                // Avança para a próxima tela do prólogo ou inicia o jogo
+                if (*estado == PROLOGO) {
+                    *estado = PROLOGO2;
+                }
+                else if (*estado == PROLOGO2) {
+                    *estado = PROLOGO3;
+                }
+                else if (*estado == PROLOGO3) {
+                    *estado = PROLOGO4;
+                }
+                else if (*estado == PROLOGO4) {
+                    *estado = FASE_1;
+                }
+            }
+        }
+        else if (*estado == GAME_OVER) {
+            if (input->mouse_x >= continuar_botao.x1 && input->mouse_x <= continuar_botao.x2 &&
+                input->mouse_y >= continuar_botao.y1 && input->mouse_y <= continuar_botao.y2) {
+                // Reiniciar o jogo
+                destroy_player(player);
+                init_player(player);
+
+                for (int i = 0; i < num_projectiles; ++i) {
+                    destroy_projectile(&projectiles[i]);
+                    init_projectile(&projectiles[i]);
+                    projectiles[i].active = false;
+                }
+
+                extern float time_since_last_projectile;
+                time_since_last_projectile = 0.0f;
+
+                init_interacoes(interacoes);
+
+                *estado = FASE_1;
+            }
+            else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
+                input->mouse_y >= sair_botao.y1 && input->mouse_y <= sair_botao.y2) {
+                // Sair do jogo
+                input->sair = true;
+            }
+        }
+        else if (*estado == VITORIA) {
+            if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if (input->mouse_x >= botao_sair_vitoria.x1 && input->mouse_x <= botao_sair_vitoria.x2 &&
+                    input->mouse_y >= botao_sair_vitoria.y1 && input->mouse_y <= botao_sair_vitoria.y2) {
+                    // Sair do jogo
+                    input->sair = true;
+                }
+                else if (input->mouse_x >= botao_menu_vitoria.x1 && input->mouse_x <= botao_menu_vitoria.x2 &&
+                    input->mouse_y >= botao_menu_vitoria.y1 && input->mouse_y <= botao_menu_vitoria.y2) {
+                    reset_game(player, projectiles, num_projectiles, interacoes);
+                    *estado = MENU;
+                }
+            }
+        }
+
+        else if (*estado == CREDITOS || *estado == INSTRUÇÕES) {
+            // Voltar ao menu ao clicar em qualquer lugar
+            *estado = MENU;
+        }
+    }
+}
+==== game_logic.c ====
+#include "game_logic.h"
+#include "constants.h"
+#include "collision.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void update_game(GameState* estado, Player* player, Projectile* projectiles, int num_projectiles, const bool* teclas, float delta_time, float* time_since_last_projectile, Rect* obstacles, int* num_obstacles, Interacoes* interacoes, Rect* proximity_zones) {
+    if (*estado == FASE_1) {
+        update_player(player, teclas, delta_time, obstacles, *num_obstacles, interacoes, proximity_zones);
+
+        *time_since_last_projectile += delta_time;
+        const float projectile_spawn_interval = 0.5f;
+
+        if (*time_since_last_projectile >= projectile_spawn_interval) {
+            for (int i = 0; i < num_projectiles; ++i) {
+                if (!projectiles[i].active) {
+                    projectiles[i].active = true;
+                    projectiles[i].x = rand() % (SCREEN_WIDTH - (int)(projectiles[i].largura_frame * projectiles[i].escala));
+                    projectiles[i].y = -projectiles[i].altura_frame * projectiles[i].escala;
+                    break;
+                }
+            }
+            *time_since_last_projectile = 0.0f;
+        }
+
+        float player_largura = player->largura_frame * player->escala;
+        float player_altura = player->altura_frame * player->escala;
+
+        for (int i = 0; i < num_projectiles; ++i) {
+            if (projectiles[i].active) {
+                update_projectile(&projectiles[i], delta_time);
+
+                float proj_largura = projectiles[i].largura_frame * projectiles[i].escala;
+                float proj_altura = projectiles[i].altura_frame * projectiles[i].escala;
+
+                if (verifica_colisao(player->x, player->y, player_largura, player_altura,
+                    projectiles[i].x, projectiles[i].y, proj_largura, proj_altura)) {
+                    if (!player->invencivel) {
+                        player->vida_atual -= 10;
+                        if (player->vida_atual < 0) player->vida_atual = 0;
+
+                        player->invencivel = true;
+                        player->tempo_invencibilidade = 2.0f;
+
+                        projectiles[i].active = false;
+                    }
+                }
+
+                if (projectiles[i].y > SCREEN_HEIGHT) {
+                    projectiles[i].active = false;
+                }
+            }
+        }
+
+        if (player->vida_atual <= 0) {
+            *estado = GAME_OVER;
+        }
+
+        if (interacoes->contador_interacoes >= 2) {
+            *num_obstacles = 9;
+        }
+
+        if (player->y + player->altura_frame * player->escala >= SCREEN_HEIGHT - 10) {
+            if (interacoes->contador_interacoes >= 2) {
+                *estado = VITORIA;
+                printf("Jogador venceu o jogo!\n");
+            }
+            else {
+                player->y = SCREEN_HEIGHT - 10 - player->altura_frame * player->escala;
+            }
+        }
+    }
+}
+==== game_state.c ====
+// game_state.c
+#include "game_state.h"
+#include "player.h"
+#include "projectile.h"
+
+// Definição da função atualizar_estado
+void atualizar_estado(GameState* estado) {
+
+}
+
+void reset_game(Player* player, Projectile* projectiles, int num_projectiles, Interacoes* interacoes) {
+    destroy_player(player);
+    init_player(player);
+
+    for (int i = 0; i < num_projectiles; ++i) {
+        destroy_projectile(&projectiles[i]);
+        init_projectile(&projectiles[i]);
+        projectiles[i].active = false;
+    }
+
+    extern float time_since_last_projectile;
+    time_since_last_projectile = 0.0f;
+
+    init_interacoes(interacoes);
+}
+
+==== interacoes.c ====
+#include "interacoes.h"
+
+void init_interacoes(Interacoes* interacoes) {
+    interacoes->interagiu_obstaculo_2 = false;
+    interacoes->interagiu_obstaculo_3 = false;
+    interacoes->contador_interacoes = 0;
+}
+==== main.c ====
+#include "constants.h"
+#include "resources.h"
+#include "event_handling.h"
+#include "game_logic.h"
+#include "rendering.h"
+#include "player.h"
+#include "projectile.h"
+#include "collision.h"
+#include "ui.h"
+#include "game_state.h"
+#include "rect.h"
+#include "interacoes.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+
+#define NUM_OBSTACLES 9
+#define MAX_PROXIMITY_ZONES 2
+
+float time_since_last_projectile = 0.0f;
+Rect obstacles[NUM_OBSTACLES];
+Rect proximity_zones[MAX_PROXIMITY_ZONES];
+
+void init_obstacles(Rect* obstacles) {
+    // Obstáculo 1 - Combinação do Obstáculo 1 e Obstáculo 5 originais
+    obstacles[0].x1 = 0;
+    obstacles[0].y1 = 0;
+    obstacles[0].x2 = 350; // x2 do antigo Obstáculo 5
+    obstacles[0].y2 = 320;
+
+    // Obstáculo 2 (antigo Obstáculo 2) - Interação
+    obstacles[1].x1 = 180;
+    obstacles[1].y1 = 380;
+    obstacles[1].x2 = 260;
+    obstacles[1].y2 = 485;
+
+    // Obstáculo 3 (antigo Obstáculo 3) - Interação
+    obstacles[2].x1 = 820;
+    obstacles[2].y1 = 380;
+    obstacles[2].x2 = 900;
+    obstacles[2].y2 = 485;
+
+    // Obstáculo 4 (antigo Obstáculo 4)
+    obstacles[3].x1 = 820;
+    obstacles[3].y1 = 0;
+    obstacles[3].x2 = SCREEN_WIDTH;
+    obstacles[3].y2 = 320;
+
+    // Obstáculo 5 - Combinação do Obstáculo 6 e Obstáculo 7 originais
+    obstacles[4].x1 = 350; // x1 do antigo Obstáculo 6
+    obstacles[4].y1 = 0;
+    obstacles[4].x2 = 480; // x2 do antigo Obstáculo 7
+    obstacles[4].y2 = 480; // y2 do antigo Obstáculo 7
+
+    // Obstáculo 6 (antigo Obstáculo 8)
+    obstacles[5].x1 = 575;
+    obstacles[5].y1 = 0;
+    obstacles[5].x2 = 670;
+    obstacles[5].y2 = 480;
+
+    // Obstáculo 7 - Ajuste para não sobrepor o obstáculo 6
+    obstacles[6].x1 = 670; // Ajustado de 600 para 670
+    obstacles[6].y1 = 0;
+    obstacles[6].x2 = 810;
+    obstacles[6].y2 = 250;
+
+    // Obstáculo 8 (antigo Obstáculo 11)
+    obstacles[7].x1 = 0;
+    obstacles[7].y1 = SCREEN_HEIGHT - 50;
+    obstacles[7].x2 = 300;
+    obstacles[7].y2 = SCREEN_HEIGHT;
+
+    // Obstáculo 9 (antigo Obstáculo 12)
+    obstacles[8].x1 = SCREEN_WIDTH - 300;
+    obstacles[8].y1 = SCREEN_HEIGHT - 50;
+    obstacles[8].x2 = SCREEN_WIDTH;
+    obstacles[8].y2 = SCREEN_HEIGHT;
+}
+
+void init_proximity_zones(Rect* proximity_zones, Rect* obstacles) {
+    // Zona de proximidade para o obstáculo 2 (interação)
+    proximity_zones[0].x1 = obstacles[1].x1 - 50;
+    proximity_zones[0].y1 = obstacles[1].y1 - 50;
+    proximity_zones[0].x2 = obstacles[1].x2 + 50;
+    proximity_zones[0].y2 = obstacles[1].y2 + 50;
+
+    // Zona de proximidade para o obstáculo 3 (interação)
+    proximity_zones[1].x1 = obstacles[2].x1 - 50;
+    proximity_zones[1].y1 = obstacles[2].y1 - 50;
+    proximity_zones[1].x2 = obstacles[2].x2 + 50;
+    proximity_zones[1].y2 = obstacles[2].y2 + 50;
+}
+
+int main() {
+    if (!al_init()) {
+        fprintf(stderr, "Erro ao inicializar o Allegro.\n");
+        return -1;
+    }
+
+    if (!al_init_primitives_addon()) {
+        fprintf(stderr, "Erro ao inicializar o addon de primitivas.\n");
+        return -1;
+    }
+
+    if (!al_init_image_addon()) {
+        fprintf(stderr, "Erro ao inicializar o addon de imagem.\n");
+        return -1;
+    }
+
+    if (!al_install_keyboard()) {
+        fprintf(stderr, "Erro ao instalar o teclado.\n");
+        return -1;
+    }
+
+    if (!al_install_mouse()) {
+        fprintf(stderr, "Erro ao instalar o mouse.\n");
+        return -1;
+    }
+
+    if (!al_init_font_addon()) {
+        fprintf(stderr, "Erro ao inicializar o addon de fontes.\n");
+        return -1;
+    }
+
+    srand(time(NULL));
+
+    ALLEGRO_DISPLAY* display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
+    if (!display) {
+        fprintf(stderr, "Erro ao criar o display.\n");
+        return -1;
+    }
+
+    al_set_window_title(display, "Chernobyl Game");
+
+    Resources res;
+    if (!load_resources(&res)) {
+        al_destroy_display(display);
+        return -1;
+    }
+
+    if (res.icon) {
+        al_set_display_icon(display, res.icon);
+    }
+
+    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
+    if (!queue) {
+        fprintf(stderr, "Erro ao criar a fila de eventos.\n");
+        destroy_resources(&res);
+        al_destroy_display(display);
+        return -1;
+    }
+    al_register_event_source(queue, al_get_keyboard_event_source());
+    al_register_event_source(queue, al_get_display_event_source(display));
+    al_register_event_source(queue, al_get_mouse_event_source());
+
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
+    if (!timer) {
+        fprintf(stderr, "Erro ao criar o temporizador.\n");
+        al_destroy_event_queue(queue);
+        destroy_resources(&res);
+        al_destroy_display(display);
+        return -1;
+    }
+    al_register_event_source(queue, al_get_timer_event_source(timer));
+    al_start_timer(timer);
+
+    Player player;
+    init_player(&player);
+
+    Projectile projectiles[MAX_PROJECTILES];
+    for (int i = 0; i < MAX_PROJECTILES; ++i) {
+        init_projectile(&projectiles[i]);
+        projectiles[i].active = false;
+    }
+
+    GameInput input;
+    init_game_input(&input);
+
+    Rect continuar_botao = { BOTAO_CONTINUAR_X1, BOTAO_CONTINUAR_Y1, BOTAO_CONTINUAR_X2, BOTAO_CONTINUAR_Y2 };
+    Rect sair_botao = { BOTAO_SAIR_X1, BOTAO_SAIR_Y1, BOTAO_SAIR_X2, BOTAO_SAIR_Y2 };
+
+    Rect start_button = {
+        SCREEN_WIDTH / 2 - 100,
+        SCREEN_HEIGHT / 2 - 75,
+        SCREEN_WIDTH / 2 + 100,
+        SCREEN_HEIGHT / 2 - 25
+    };
+
+    Rect credits_button = {
+        SCREEN_WIDTH / 2 - 100,
+        SCREEN_HEIGHT / 2,
+        SCREEN_WIDTH / 2 + 100,
+        SCREEN_HEIGHT / 2 + 50
+    };
+
+    Rect Instructs_button = {
+        SCREEN_WIDTH / 2 - 100,
+        SCREEN_HEIGHT / 2 + 75,
+        SCREEN_WIDTH / 2 + 100,
+        SCREEN_HEIGHT / 2 + 125
+    };
+
+    Rect prologo_button = {
+        SCREEN_WIDTH - 150,
+        20,
+        SCREEN_WIDTH - 50,
+        70
+    };
+
+    Rect botao_sair_vitoria = {
+    SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 50,
+    SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2 + 100
+    };
+
+    Rect botao_menu_vitoria = {
+        SCREEN_WIDTH / 2 + 50, SCREEN_HEIGHT / 2 + 50,
+        SCREEN_WIDTH / 2 + 150, SCREEN_HEIGHT / 2 + 100
+    };
+
+
+    init_obstacles(obstacles);
+    init_proximity_zones(proximity_zones, obstacles);
+    int num_obstacles = NUM_OBSTACLES;
+
+    double tempo_anterior = al_get_time();
+    time_since_last_projectile = 0.0f;
+
+    GameState estado = MENU;
+
+    Interacoes interacoes;
+    init_interacoes(&interacoes);
+
+    while (!input.sair) {
+        ALLEGRO_EVENT evento;
+        al_wait_for_event(queue, &evento);
+
+        if (evento.type == ALLEGRO_EVENT_TIMER) {
+            double tempo_atual = al_get_time();
+            float delta_time = (float)(tempo_atual - tempo_anterior);
+            tempo_anterior = tempo_atual;
+
+            update_game(&estado, &player, projectiles, MAX_PROJECTILES, input.teclas, delta_time, &time_since_last_projectile, obstacles, &num_obstacles, &interacoes, proximity_zones);
+
+            render_game(estado, &res, &player, projectiles, MAX_PROJECTILES,
+                continuar_botao, sair_botao, input.mouse_x, input.mouse_y,
+                start_button, prologo_button, credits_button, Instructs_button,
+                obstacles, num_obstacles, &interacoes,
+                botao_sair_vitoria, botao_menu_vitoria);
+
+        }
+        else {
+            handle_event(evento, &input, &estado, &player, projectiles, MAX_PROJECTILES,
+                continuar_botao, sair_botao, start_button, prologo_button, credits_button, Instructs_button, &interacoes,
+                botao_sair_vitoria, botao_menu_vitoria);
+
+        }
+    }
+
+    destroy_player(&player);
+    for (int i = 0; i < MAX_PROJECTILES; ++i) {
+        destroy_projectile(&projectiles[i]);
+    }
+    destroy_resources(&res);
+    al_destroy_timer(timer);
+    al_destroy_event_queue(queue);
+    al_destroy_display(display);
+
+    return 0;
+}
+==== player.c ====
+#include "player.h"
+#include "collision.h"
+#include "constants.h"
+#include "interacoes.h"
+#include <allegro5/allegro_image.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void init_player(Player* player) {
+    player->sprite = al_load_bitmap("assets/cientista.png");
+    if (!player->sprite) {
+        fprintf(stderr, "Erro ao carregar o sprite do jogador.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    player->escala = 2.0f;
+    player->largura_frame = 40;
+    player->altura_frame = 40;
+
+    player->x = 350;
+    player->y = 500;
+
+    player->velocidade = 200.0f;
+    player->direcao = DIRECAO_BAIXO;
+    player->frame_atual = 0;
+    player->contador_animacao = 0;
+    player->velocidade_animacao = 10;
+    player->vida_maxima = 20;
+    player->vida_atual = player->vida_maxima;
+    player->invencivel = false;
+    player->tempo_invencibilidade = 0.0f;
+    player->perto_do_obstaculo_2 = false;
+    player->perto_do_obstaculo_3 = false;
+}
+
+void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles, Interacoes* interacoes, Rect* proximity_zones) {
+    bool movendo = false;
+
+    float dx = 0.0f;
+    float dy = 0.0f;
+
+    if (teclas[ALLEGRO_KEY_W]) {
+        dy -= player->velocidade * delta_time;
+        player->direcao = DIRECAO_CIMA;
+        movendo = true;
+    }
+    if (teclas[ALLEGRO_KEY_S]) {
+        dy += player->velocidade * delta_time;
+        player->direcao = DIRECAO_BAIXO;
+        movendo = true;
+    }
+    if (teclas[ALLEGRO_KEY_A]) {
+        dx -= player->velocidade * delta_time;
+        player->direcao = DIRECAO_ESQUERDA;
+        movendo = true;
+    }
+    if (teclas[ALLEGRO_KEY_D]) {
+        dx += player->velocidade * delta_time;
+        player->direcao = DIRECAO_DIREITA;
+        movendo = true;
+    }
+
+    if (dx != 0.0f) {
+        float new_x = player->x + dx;
+
+        if (new_x < 0) new_x = 0;
+        if (new_x + (player->largura_frame * player->escala) > SCREEN_WIDTH)
+            new_x = SCREEN_WIDTH - (player->largura_frame * player->escala);
+
+        Rect player_rect_x = {
+            (int)new_x,
+            (int)player->y,
+            (int)(new_x + player->largura_frame * player->escala),
+            (int)(player->y + player->altura_frame * player->escala)
+        };
+
+        bool collision_x = false;
+        for (int i = 0; i < num_obstacles; ++i) {
+            if (verifica_colisao_rect(player_rect_x, obstacles[i])) {
+                collision_x = true;
+                break;
+            }
+        }
+
+        if (!collision_x) {
+            player->x = new_x;
+        }
+    }
+
+    if (dy != 0.0f) {
+        float new_y = player->y + dy;
+
+        if (new_y < 0) new_y = 0;
+        if (new_y + (player->altura_frame * player->escala) > SCREEN_HEIGHT)
+            new_y = SCREEN_HEIGHT - (player->altura_frame * player->escala);
+
+        Rect player_rect_y = {
+            (int)player->x,
+            (int)new_y,
+            (int)(player->x + player->largura_frame * player->escala),
+            (int)(new_y + player->altura_frame * player->escala)
+        };
+
+        bool collision_y = false;
+        for (int i = 0; i < num_obstacles; ++i) {
+            if (verifica_colisao_rect(player_rect_y, obstacles[i])) {
+                collision_y = true;
+                break;
+            }
+        }
+
+        if (!collision_y) {
+            player->y = new_y;
+        }
+    }
+
+    if (player->x < 0) player->x = 0;
+    if (player->y < 0) player->y = 0;
+    if (player->x + (player->largura_frame * player->escala) > SCREEN_WIDTH)
+        player->x = SCREEN_WIDTH - (player->largura_frame * player->escala);
+    if (player->y + (player->altura_frame * player->escala) > SCREEN_HEIGHT)
+        player->y = SCREEN_HEIGHT - (player->altura_frame * player->escala);
+
+    if (movendo) {
+        player->contador_animacao++;
+        if (player->contador_animacao >= player->velocidade_animacao) {
+            player->contador_animacao = 0;
+            player->frame_atual = (player->frame_atual + 1) % 4;
+        }
+    }
+    else {
+        player->frame_atual = 0;
+        player->contador_animacao = 0;
+    }
+
+    if (player->invencivel) {
+        player->tempo_invencibilidade -= delta_time;
+        if (player->tempo_invencibilidade <= 0.0f) {
+            player->invencivel = false;
+            player->tempo_invencibilidade = 0.0f;
+        }
+    }
+
+    // Verifica proximidade usando colisão com as zonas de proximidade
+    if (!interacoes->interagiu_obstaculo_2) {
+        Rect player_rect = {
+            (int)player->x,
+            (int)player->y,
+            (int)(player->x + player->largura_frame * player->escala),
+            (int)(player->y + player->altura_frame * player->escala)
+        };
+
+        if (verifica_colisao_rect(player_rect, proximity_zones[0])) {
+            player->perto_do_obstaculo_2 = true;
+        }
+        else {
+            player->perto_do_obstaculo_2 = false;
+        }
+    }
+
+    if (!interacoes->interagiu_obstaculo_3) {
+        Rect player_rect = {
+            (int)player->x,
+            (int)player->y,
+            (int)(player->x + player->largura_frame * player->escala),
+            (int)(player->y + player->altura_frame * player->escala)
+        };
+
+        if (verifica_colisao_rect(player_rect, proximity_zones[1])) {
+            player->perto_do_obstaculo_3 = true;
+        }
+        else {
+            player->perto_do_obstaculo_3 = false;
+        }
+    }
+}
+
+void draw_player(Player* player) {
+    bool desenhar = true;
+    if (player->invencivel) {
+        int pisca = (int)(player->tempo_invencibilidade * 10) % 2;
+        desenhar = pisca == 0;
+    }
+
+    if (desenhar) {
+        int frame_x = player->frame_atual * player->largura_frame;
+        int frame_y = player->direcao * player->altura_frame;
+
+        al_draw_scaled_bitmap(
+            player->sprite,
+            frame_x, frame_y,
+            player->largura_frame, player->altura_frame,
+            player->x, player->y,
+            player->largura_frame * player->escala,
+            player->altura_frame * player->escala,
+            0
+        );
+    }
+}
+
+void destroy_player(Player* player) {
+    if (player->sprite) {
+        al_destroy_bitmap(player->sprite);
+        player->sprite = NULL;
+    }
+}
+==== projectile.c ====
+#include "projectile.h"
+#include "constants.h" // Para SCREEN_WIDTH e SCREEN_HEIGHT
+#include <allegro5/allegro_image.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void init_projectile(Projectile* proj) {
+    // Carrega o sprite do projetil
+    proj->sprite = al_load_bitmap("assets/projetil.png");
+    if (!proj->sprite) {
+        fprintf(stderr, "Erro ao carregar o sprite do projetil.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Inicializa as propriedades do projetil
+    proj->escala = 2.0f;
+    proj->largura_frame = 14;
+    proj->altura_frame = 32;
+    proj->x = 0;
+    proj->y = 0;
+    proj->velocidade_y = 150.0f;
+    proj->frame_atual = 0;
+    proj->contador_animacao = 0;
+    proj->velocidade_animacao = 10;
+    proj->active = false;
+}
+
+void update_projectile(Projectile* proj, float delta_time) {
+    if (!proj->active) return;
+
+    // Atualiza a posi??o com base no delta_time
+    proj->y += proj->velocidade_y * delta_time;
+
+    // Atualiza a anima??o
+    proj->contador_animacao++;
+    if (proj->contador_animacao >= proj->velocidade_animacao) {
+        proj->contador_animacao = 0;
+        proj->frame_atual = (proj->frame_atual + 1) % 4; // 4 frames (0 a 3)
+    }
+}
+
+void draw_projectile(const Projectile* proj) {
+    if (!proj->active) return;
+
+    if (!proj->sprite) {
+        fprintf(stderr, "Erro: proj->sprite ? NULL.\n");
+        return; // Evita tentar desenhar um bitmap nulo
+    }
+
+    // Define o espa?amento entre os frames
+    const int espacamento_frame = 5; // 4 pixels de dist?ncia entre os frames
+
+    // Calcula a posi??o X do frame atual no sprite sheet
+    int frame_x = proj->frame_atual * (proj->largura_frame + espacamento_frame);
+    int frame_y = 0;
+
+    // Verificar se os frames est?o dentro dos limites do bitmap
+    int bitmap_width = al_get_bitmap_width(proj->sprite);
+    int bitmap_height = al_get_bitmap_height(proj->sprite);
+
+    if (frame_x + proj->largura_frame > bitmap_width || frame_y + proj->altura_frame > bitmap_height) {
+        fprintf(stderr, "Erro: Frame fora dos limites do bitmap.\n");
+        return;
+    }
+
+    // Cria um sub-bitmap para o frame atual
+    ALLEGRO_BITMAP* frame_bitmap = al_create_sub_bitmap(proj->sprite, frame_x, frame_y, proj->largura_frame, proj->altura_frame);
+    if (!frame_bitmap) {
+        fprintf(stderr, "Erro ao criar o sub-bitmap do frame.\n");
+        return;
+    }
+
+    // Calcula o centro do frame para a rota??o
+    float sx = proj->largura_frame / 2.0f;
+    float sy = proj->altura_frame / 2.0f;
+
+    // Calcula a posi??o de destino (centro) no display
+    float dx = proj->x + (proj->largura_frame * proj->escala) / 2.0f;
+    float dy = proj->y + (proj->altura_frame * proj->escala) / 2.0f;
+
+    // Rotaciona 180 graus (ALLEGRO_PI radianos)
+    float angle = ALLEGRO_PI;
+
+    // Desenha o bitmap rotacionado
+    al_draw_scaled_rotated_bitmap(
+        frame_bitmap,
+        sx, sy,
+        dx, dy,
+        proj->escala, proj->escala,
+        angle,
+        0
+    );
+
+    // Libera o sub-bitmap
+    al_destroy_bitmap(frame_bitmap);
+}
+
+void destroy_projectile(Projectile* proj) {
+    if (proj->sprite) {
+        al_destroy_bitmap(proj->sprite);
+        proj->sprite = NULL;
+    }
+}
+==== rendering.c ====
+#include "rendering.h"
+#include "constants.h"
+#include "resources.h"
+#include "player.h"
+#include "projectile.h"
+#include "ui.h"
+#include "interacoes.h"
+#include <stdio.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
+
+void render_game(GameState estado, Resources* res, Player* player, Projectile* projectiles, int num_projectiles,
+    Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y,
+    Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button,
+    Rect* obstacles, int num_obstacles, Interacoes* interacoes, Rect botao_sair_vitoria, Rect botao_menu_vitoria) {
+
+    if (estado == MENU) {
+        if (res->menu_image) {
+            al_draw_bitmap(res->menu_image, 0, 0, 0);
+        }
+        else {
+            al_clear_to_color(al_map_rgb(0, 0, 0));
+        }
+
+        // Desenha o botão "Start"
+        ALLEGRO_COLOR cor_start = al_map_rgb(100, 100, 100);
+        if (mouse_x >= start_button.x1 && mouse_x <= start_button.x2 &&
+            mouse_y >= start_button.y1 && mouse_y <= start_button.y2) {
+            cor_start = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            start_button.x1, start_button.y1,
+            start_button.x2, start_button.y2,
+            cor_start
+        );
+        al_draw_rectangle(
+            start_button.x1, start_button.y1,
+            start_button.x2, start_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_start = "Comecar";
+            int largura_texto = al_get_text_width(res->font, texto_start);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (start_button.x1 + start_button.x2 - largura_texto) / 2,
+                (start_button.y1 + start_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_start);
+        }
+
+        // Desenha o botão "Credits"
+        ALLEGRO_COLOR cor_credits = al_map_rgb(100, 100, 100);
+        if (mouse_x >= credits_button.x1 && mouse_x <= credits_button.x2 &&
+            mouse_y >= credits_button.y1 && mouse_y <= credits_button.y2) {
+            cor_credits = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            credits_button.x1, credits_button.y1,
+            credits_button.x2, credits_button.y2,
+            cor_credits
+        );
+        al_draw_rectangle(
+            credits_button.x1, credits_button.y1,
+            credits_button.x2, credits_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_credits = "Creditos";
+            int largura_texto = al_get_text_width(res->font, texto_credits);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (credits_button.x1 + credits_button.x2 - largura_texto) / 2,
+                (credits_button.y1 + credits_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_credits);
+        }
+
+        // Desenha o botão "Instruction"
+        ALLEGRO_COLOR cor_instructs = al_map_rgb(100, 100, 100);
+        if (mouse_x >= Instructs_button.x1 && mouse_x <= Instructs_button.x2 &&
+            mouse_y >= Instructs_button.y1 && mouse_y <= Instructs_button.y2) {
+            cor_instructs = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            Instructs_button.x1, Instructs_button.y1,
+            Instructs_button.x2, Instructs_button.y2,
+            cor_instructs
+        );
+        al_draw_rectangle(
+            Instructs_button.x1, Instructs_button.y1,
+            Instructs_button.x2, Instructs_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_instructions = "Instrucoes";
+            int largura_texto = al_get_text_width(res->font, texto_instructions);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (Instructs_button.x1 + Instructs_button.x2 - largura_texto) / 2,
+                (Instructs_button.y1 + Instructs_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_instructions);
+        }
+
+        al_flip_display();
+    }
+    else if (estado == PROLOGO || estado == PROLOGO2 || estado == PROLOGO3 || estado == PROLOGO4) {
+        al_clear_to_color(COR_FUNDO);
+
+        ALLEGRO_BITMAP* bg_prologo = NULL;
+        switch (estado) {
+        case PROLOGO:
+            bg_prologo = res->bg_prologo;
+            break;
+        case PROLOGO2:
+            bg_prologo = res->bg_prologo2;
+            break;
+        case PROLOGO3:
+            bg_prologo = res->bg_prologo3;
+            break;
+        case PROLOGO4:
+            bg_prologo = res->bg_prologo4;
+            break;
+        default:
+            break;
+        }
+
+        if (bg_prologo) {
+            al_draw_bitmap(bg_prologo, 0, 0, 0);
+        }
+
+        // Desenha o botão "Continuar"
+        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100);
+        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
+            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
+            cor_prologo = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            cor_prologo
+        );
+        al_draw_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_prologo = "Continuar";
+            int largura_texto = al_get_text_width(res->font, texto_prologo);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (prologo_button.x1 + prologo_button.x2 - largura_texto) / 2,
+                (prologo_button.y1 + prologo_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_prologo);
+        }
+
+        al_flip_display();
+    }
+    else if (estado == FASE_1) {
+        al_clear_to_color(COR_FUNDO);
+        al_draw_bitmap(res->BG_1, 0, 0, 0);
+
+        // Desenha obstáculos e seus números para depuração
+        for (int i = 0; i < num_obstacles; ++i) {
+            // Desenha o retângulo do obstáculo
+            al_draw_filled_rectangle(
+                obstacles[i].x1, obstacles[i].y1,
+                obstacles[i].x2, obstacles[i].y2,
+                al_map_rgba(255, 0, 0, 100)
+            );
+
+            // Prepara o texto com o número do obstáculo
+            char texto_obstaculo[20];
+            snprintf(texto_obstaculo, sizeof(texto_obstaculo), "Obst %d", i + 1);
+
+            // Calcula a posição para centralizar o texto no obstáculo
+            float texto_x = (obstacles[i].x1 + obstacles[i].x2) / 2;
+            float texto_y = (obstacles[i].y1 + obstacles[i].y2) / 2;
+
+            if (res->font) {
+                al_draw_text(res->font, al_map_rgb(255, 255, 255), texto_x, texto_y, ALLEGRO_ALIGN_CENTER, texto_obstaculo);
+            }
+            else {
+                printf("Fonte nao carregada.\n");
+            }
+        }
+
+        for (int i = 0; i < num_projectiles; ++i) {
+            if (projectiles[i].active) {
+                draw_projectile(&projectiles[i]);
+            }
+        }
+
+        draw_player(player);
+
+        if (player->perto_do_obstaculo_2 && !interacoes->interagiu_obstaculo_2) {
+            if (res->font) {
+                al_draw_text(res->font, al_map_rgb(255, 255, 255), player->x, player->y - 20, 0, "Aperte F para interagir");
+            }
+            else {
+                printf("Fonte nao carregada.\n");
+            }
+        }
+
+        if (player->perto_do_obstaculo_3 && !interacoes->interagiu_obstaculo_3) {
+            if (res->font) {
+                al_draw_text(res->font, al_map_rgb(255, 255, 255), player->x, player->y - 20, 0, "Aperte F para interagir");
+            }
+            else {
+                printf("Fonte nao carregada.\n");
+            }
+        }
+
+        draw_life_bar(player);
+
+        al_flip_display();
+    }
+    else if (estado == GAME_OVER) {
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+
+        if (res->font) {
+            const char* texto_game_over = "GAME OVER";
+            int largura_texto = al_get_text_width(res->font, texto_game_over);
+            al_draw_text(res->font, al_map_rgb(255, 0, 0),
+                (SCREEN_WIDTH - largura_texto) / 2, SCREEN_HEIGHT / 2 - 50, ALLEGRO_ALIGN_LEFT, texto_game_over);
+        }
+        else {
+            printf("Fonte nao carregada.\n");
+        }
+
+        // Desenha os botões "Continuar" e "Sair" na tela
+        // Desenhar o botão "Continuar"
+        ALLEGRO_COLOR cor_continuar = al_map_rgb(100, 100, 100);
+        if (mouse_x >= continuar_botao.x1 && mouse_x <= continuar_botao.x2 &&
+            mouse_y >= continuar_botao.y1 && mouse_y <= continuar_botao.y2) {
+            cor_continuar = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            continuar_botao.x1, continuar_botao.y1,
+            continuar_botao.x2, continuar_botao.y2,
+            cor_continuar
+        );
+        al_draw_rectangle(
+            continuar_botao.x1, continuar_botao.y1,
+            continuar_botao.x2, continuar_botao.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_continuar = "Continuar";
+            int largura_texto = al_get_text_width(res->font, texto_continuar);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (continuar_botao.x1 + continuar_botao.x2 - largura_texto) / 2,
+                (continuar_botao.y1 + continuar_botao.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_continuar);
+        }
+
+        // Desenhar o botão "Sair"
+        ALLEGRO_COLOR cor_sair = al_map_rgb(100, 100, 100);
+        if (mouse_x >= sair_botao.x1 && mouse_x <= sair_botao.x2 &&
+            mouse_y >= sair_botao.y1 && mouse_y <= sair_botao.y2) {
+            cor_sair = al_map_rgb(150, 150, 150);
+        }
+
+        al_draw_filled_rectangle(
+            sair_botao.x1, sair_botao.y1,
+            sair_botao.x2, sair_botao.y2,
+            cor_sair
+        );
+        al_draw_rectangle(
+            sair_botao.x1, sair_botao.y1,
+            sair_botao.x2, sair_botao.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        if (res->font) {
+            const char* texto_sair = "Sair";
+            int largura_texto = al_get_text_width(res->font, texto_sair);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (sair_botao.x1 + sair_botao.x2 - largura_texto) / 2,
+                (sair_botao.y1 + sair_botao.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_sair);
+        }
+
+        al_flip_display();
+        }
+
+    else if (estado == CREDITOS) {
+        if (res->creditos) {
+            al_draw_bitmap(res->creditos, 0, 0, 0);
+        }
+        al_flip_display();
+    }
+    else if (estado == INSTRUÇÕES) {
+        if (res->instructs) {
+            al_draw_bitmap(res->instructs, 0, 0, 0);
+        }
+        al_flip_display();
+    }
+    else if (estado == VITORIA) {
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+
+        if (res->font) {
+            const char* texto_vitoria = "Voce venceu!";
+            int largura_texto = al_get_text_width(res->font, texto_vitoria);
+            al_draw_text(res->font, al_map_rgb(0, 255, 0),
+                (SCREEN_WIDTH - largura_texto) / 2, SCREEN_HEIGHT / 2 - 50, ALLEGRO_ALIGN_LEFT, texto_vitoria);
+
+            // Desenha o botão "Sair"
+            ALLEGRO_COLOR cor_sair_vitoria = al_map_rgb(100, 100, 100);
+            if (mouse_x >= botao_sair_vitoria.x1 && mouse_x <= botao_sair_vitoria.x2 &&
+                mouse_y >= botao_sair_vitoria.y1 && mouse_y <= botao_sair_vitoria.y2) {
+                cor_sair_vitoria = al_map_rgb(150, 150, 150);
+            }
+
+            al_draw_filled_rectangle(
+                botao_sair_vitoria.x1, botao_sair_vitoria.y1,
+                botao_sair_vitoria.x2, botao_sair_vitoria.y2,
+                cor_sair_vitoria
+            );
+            al_draw_rectangle(
+                botao_sair_vitoria.x1, botao_sair_vitoria.y1,
+                botao_sair_vitoria.x2, botao_sair_vitoria.y2,
+                al_map_rgb(255, 255, 255), 2
+            );
+
+            const char* texto_sair = "Sair";
+            int largura_texto_sair = al_get_text_width(res->font, texto_sair);
+            int altura_texto_sair = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (botao_sair_vitoria.x1 + botao_sair_vitoria.x2 - largura_texto_sair) / 2,
+                (botao_sair_vitoria.y1 + botao_sair_vitoria.y2 - altura_texto_sair) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_sair);
+
+            // Desenha o botão "Menu"
+            ALLEGRO_COLOR cor_menu_vitoria = al_map_rgb(100, 100, 100);
+            if (mouse_x >= botao_menu_vitoria.x1 && mouse_x <= botao_menu_vitoria.x2 &&
+                mouse_y >= botao_menu_vitoria.y1 && mouse_y <= botao_menu_vitoria.y2) {
+                cor_menu_vitoria = al_map_rgb(150, 150, 150);
+            }
+
+            al_draw_filled_rectangle(
+                botao_menu_vitoria.x1, botao_menu_vitoria.y1,
+                botao_menu_vitoria.x2, botao_menu_vitoria.y2,
+                cor_menu_vitoria
+            );
+            al_draw_rectangle(
+                botao_menu_vitoria.x1, botao_menu_vitoria.y1,
+                botao_menu_vitoria.x2, botao_menu_vitoria.y2,
+                al_map_rgb(255, 255, 255), 2
+            );
+
+            const char* texto_menu = "Menu";
+            int largura_texto_menu = al_get_text_width(res->font, texto_menu);
+            int altura_texto_menu = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (botao_menu_vitoria.x1 + botao_menu_vitoria.x2 - largura_texto_menu) / 2,
+                (botao_menu_vitoria.y1 + botao_menu_vitoria.y2 - altura_texto_menu) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_menu);
+        }
+        else {
+            printf("Fonte nao carregada.\n");
+        }
+
+        al_flip_display();
+        }
+
+    else {
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+        al_flip_display();
+    }
+}
+==== resources.c ====
+#include "resources.h"
+#include <stdio.h>
+
+bool load_resources(Resources* res) {
+    // Carrega o ícone
+    res->icon = al_load_bitmap("icon.bmp");
+    if (!res->icon) {
+        fprintf(stderr, "Erro ao carregar o ícone.\n");
+        return false;
+    }
+
+    // Carrega a imagem do menu
+    res->menu_image = al_load_bitmap("assets/menu_1.png");
+    if (!res->menu_image) {
+        fprintf(stderr, "Erro ao carregar a imagem do menu.\n");
+        return false;
+    }
+
+    // Carrega a imagem de background da fase 1
+    res->BG_1 = al_load_bitmap("assets/BG-1.png");
+    if (!res->BG_1) {
+        fprintf(stderr, "Erro ao carregar o background da fase 1.\n");
+        return false;
+    }
+
+    // Carrega a fonte embutida do Allegro
+    res->font = al_create_builtin_font();
+    if (!res->font) {
+        fprintf(stderr, "Erro ao criar a fonte embutida.\n");
+        return false;
+    }
+
+    // Carrega outros recursos...
+    res->bg_prologo = al_load_bitmap("assets/fundoUm.png");
+    if (!res->bg_prologo) {
+        fprintf(stderr, "Erro ao carregar o prólogo.\n");
+        return false;
+    }
+
+    res->bg_prologo2 = al_load_bitmap("assets/fundoDoiss.png");
+    if (!res->bg_prologo2) {
+        fprintf(stderr, "Erro ao carregar o prólogo 2.\n");
+        return false;
+    }
+
+    res->bg_prologo3 = al_load_bitmap("assets/fundoTres.png");
+    if (!res->bg_prologo3) {
+        fprintf(stderr, "Erro ao carregar o prólogo 3.\n");
+        return false;
+    }
+
+    res->bg_prologo4 = al_load_bitmap("assets/fundoQuatro.png");
+    if (!res->bg_prologo4) {
+        fprintf(stderr, "Erro ao carregar o prólogo 4.\n");
+        return false;
+    }
+
+    res->creditos = al_load_bitmap("assets/Creditos.png");
+    if (!res->creditos) {
+        fprintf(stderr, "Erro ao carregar os créditos.\n");
+        return false;
+    }
+
+    res->instructs = al_load_bitmap("assets/Instrucoes.png");
+    if (!res->instructs) {
+        fprintf(stderr, "Erro ao carregar as instruções.\n");
+        return false;
+    }
+
+    printf("Recursos carregados com sucesso.\n");
+    return true;
+}
+
+void destroy_resources(Resources* res) {
+    if (res->icon) {
+        al_destroy_bitmap(res->icon);
+        res->icon = NULL;
+    }
+    if (res->menu_image) {
+        al_destroy_bitmap(res->menu_image);
+        res->menu_image = NULL;
+    }
+    if (res->BG_1) {
+        al_destroy_bitmap(res->BG_1);
+        res->BG_1 = NULL;
+    }
+    if (res->font) {
+        al_destroy_font(res->font);
+        res->font = NULL;
+    }
+    if (res->bg_prologo) {
+        al_destroy_bitmap(res->bg_prologo);
+        res->bg_prologo = NULL;
+    }
+    if (res->bg_prologo2) {
+        al_destroy_bitmap(res->bg_prologo2);
+        res->bg_prologo2 = NULL;
+    }
+    if (res->bg_prologo3) {
+        al_destroy_bitmap(res->bg_prologo3);
+        res->bg_prologo3 = NULL;
+    }
+    if (res->bg_prologo4) {
+        al_destroy_bitmap(res->bg_prologo4);
+        res->bg_prologo4 = NULL;
+    }
+    if (res->creditos) {
+        al_destroy_bitmap(res->creditos);
+        res->creditos = NULL;
+    }
+    if (res->instructs) {
+        al_destroy_bitmap(res->instructs);
+        res->instructs = NULL;
+    }
+}
+==== ui.c ====
+#include "ui.h"
+#include "player.h"
+#include <allegro5/allegro_primitives.h>
+
+void draw_life_bar(Player* player) {
+    int x = 50;
+    int y = 50;
+    int largura_max = 200;
+    int altura = 20;
+
+    float vida_ratio = (float)player->vida_atual / player->vida_maxima;
+    if (vida_ratio < 0) vida_ratio = 0;
+    int largura_atual = (int)(largura_max * vida_ratio);
+
+    al_draw_filled_rectangle(x, y, x + largura_max, y + altura, al_map_rgb(100, 100, 100));
+    al_draw_filled_rectangle(x, y, x + largura_atual, y + altura, al_map_rgb(0, 255, 0));
+    al_draw_rectangle(x, y, x + largura_max, y + altura, al_map_rgb(255, 255, 255), 2);
+}
+
+bool is_point_inside_rect(int x, int y, Rect rect) {
+    return (x >= rect.x1 && x <= rect.x2 && y >= rect.y1 && y <= rect.y2);
+}
+
+bool init_ui() {
+    return true;
+}
+
+void destroy_ui() {
+}

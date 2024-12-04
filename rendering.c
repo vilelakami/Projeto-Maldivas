@@ -8,11 +8,15 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include "npc.h"
 
 void render_game(GameState estado, Resources* res, Player* player, Projectile* projectiles, int num_projectiles,
     Rect continuar_botao, Rect sair_botao, int mouse_x, int mouse_y,
     Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button,
-    Rect* obstacles, int num_obstacles, Interacoes* interacoes, Rect botao_sair_vitoria, Rect botao_menu_vitoria) {
+    Rect* obstacles, int num_obstacles, Interacoes* interacoes,
+    Rect botao_sair_vitoria, Rect botao_menu_vitoria,
+    NPC_DIRETOR* npc_chefe, NPC_ENGENHEIRO* npc_engenheiro,
+    DialogueManager* dialogue_manager) {
 
     if (estado == MENU) {
         if (res->menu_image) {
@@ -108,6 +112,66 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         al_flip_display();
     }
+
+    else if (estado == INTRO) {
+        al_clear_to_color(COR_FUNDO);
+        if (res->INTRO) {
+            al_draw_bitmap(res->INTRO, 0, 0, 0);
+        }
+
+        draw_npc_chefe(npc_chefe);
+        draw_npc_engenheiro(npc_engenheiro);
+        movimento_eng(npc_engenheiro, npc_chefe);
+
+        if (!dialogue_manager->dialogue_finished) {
+            const char* texto = dialogue_manager->dialogues[dialogue_manager->dialogue_index].texto;
+            ALLEGRO_COLOR text_color = al_map_rgb(255, 255, 255);
+            int x = 100; // Posição X do texto
+            int y = 500; // Posição Y do texto
+            int largura_caixa = SCREEN_WIDTH - 200;
+            int altura_caixa = 100;
+
+            // Desenha uma caixa para o diálogo
+            al_draw_filled_rectangle(x - 10, y - 10, x + largura_caixa + 10, y + altura_caixa + 10, al_map_rgb(0, 0, 0));
+            al_draw_rectangle(x - 10, y - 10, x + largura_caixa + 10, y + altura_caixa + 10, al_map_rgb(255, 255, 255), 2);
+
+            // Desenha o texto do diálogo
+            al_draw_text(res->font, text_color, x, y, 0, texto);
+        }
+
+        // Desenhar o botão 'Continuar'
+        ALLEGRO_COLOR cor_prologo = al_map_rgb(100, 100, 100); // Cor padrão
+        if (mouse_x >= prologo_button.x1 && mouse_x <= prologo_button.x2 &&
+            mouse_y >= prologo_button.y1 && mouse_y <= prologo_button.y2) {
+            cor_prologo = al_map_rgb(150, 150, 150); // Cor quando o mouse está sobre o botão
+        }
+
+        // Desenha o botão 'Continuar'
+        al_draw_filled_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            cor_prologo
+        );
+        al_draw_rectangle(
+            prologo_button.x1, prologo_button.y1,
+            prologo_button.x2, prologo_button.y2,
+            al_map_rgb(255, 255, 255), 2
+        );
+
+        // Desenha o texto 'Continuar' no botão
+        if (res->font) {
+            const char* texto_prologo = "Continuar";
+            int largura_texto = al_get_text_width(res->font, texto_prologo);
+            int altura_texto = al_get_font_line_height(res->font);
+            al_draw_text(res->font, al_map_rgb(255, 255, 255),
+                (prologo_button.x1 + prologo_button.x2 - largura_texto) / 2,
+                (prologo_button.y1 + prologo_button.y2 - altura_texto) / 2,
+                ALLEGRO_ALIGN_LEFT, texto_prologo);
+        }
+
+        al_flip_display();
+    }
+
     else if (estado == PROLOGO || estado == PROLOGO2 || estado == PROLOGO3 || estado == PROLOGO4) {
         al_clear_to_color(COR_FUNDO);
 
@@ -169,27 +233,6 @@ void render_game(GameState estado, Resources* res, Player* player, Projectile* p
 
         // Desenha obstáculos e seus números para depuração
         for (int i = 0; i < num_obstacles; ++i) {
-            // Desenha o retângulo do obstáculo
-            al_draw_filled_rectangle(
-                obstacles[i].x1, obstacles[i].y1,
-                obstacles[i].x2, obstacles[i].y2,
-                al_map_rgba(255, 0, 0, 100)
-            );
-
-            // Prepara o texto com o número do obstáculo
-            char texto_obstaculo[20];
-            snprintf(texto_obstaculo, sizeof(texto_obstaculo), "Obst %d", i + 1);
-
-            // Calcula a posição para centralizar o texto no obstáculo
-            float texto_x = (obstacles[i].x1 + obstacles[i].x2) / 2;
-            float texto_y = (obstacles[i].y1 + obstacles[i].y2) / 2;
-
-            if (res->font) {
-                al_draw_text(res->font, al_map_rgb(255, 255, 255), texto_x, texto_y, ALLEGRO_ALIGN_CENTER, texto_obstaculo);
-            }
-            else {
-                printf("Fonte nao carregada.\n");
-            }
         }
 
         for (int i = 0; i < num_projectiles; ++i) {
