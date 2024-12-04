@@ -1,102 +1,93 @@
-#include "event_handling.h"
-#include <stdio.h>
-
-// Variável global para o temporizador dos projéteis
-extern float time_since_last_projectile;
+ï»¿#include "event_handling.h"
+#include "game_state.h"
+#include "constants.h"
+#include "interacoes.h"
+#include "player.h"
+#include "projectile.h"
+#include "ui.h"
+#include <allegro5/allegro.h>
 
 void init_game_input(GameInput* input) {
-    input->sair = false;
     for (int i = 0; i < ALLEGRO_KEY_MAX; i++) {
         input->teclas[i] = false;
     }
     input->mouse_x = 0;
     input->mouse_y = 0;
+    input->sair = false;
 }
 
 void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Player* player, Projectile* projectiles, int num_projectiles,
-    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button) {
-    if (evento.type == ALLEGRO_EVENT_MOUSE_AXES ||
-        evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN ||
-        evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+    Rect continuar_botao, Rect sair_botao, Rect start_button, Rect prologo_button, Rect credits_button, Rect Instructs_button, Interacoes* interacoes, Rect botao_sair_vitoria, Rect botao_menu_vitoria) {
+
+    if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+        input->sair = true;
+    }
+    else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
+        input->teclas[evento.keyboard.keycode] = true;
+
+        if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+            input->sair = true;
+        }
+
+        if (evento.keyboard.keycode == ALLEGRO_KEY_F) {
+            if (player->perto_do_obstaculo_2 && !interacoes->interagiu_obstaculo_2) {
+                interacoes->interagiu_obstaculo_2 = true;
+                interacoes->contador_interacoes++;
+                printf("Interagiu com o obstÃ¡culo 2.\n");
+            }
+
+            if (player->perto_do_obstaculo_3 && !interacoes->interagiu_obstaculo_3) {
+                interacoes->interagiu_obstaculo_3 = true;
+                interacoes->contador_interacoes++;
+                printf("Interagiu com o obstÃ¡culo 3.\n");
+            }
+        }
+    }
+    else if (evento.type == ALLEGRO_EVENT_KEY_UP) {
+        input->teclas[evento.keyboard.keycode] = false;
+    }
+    else if (evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
         input->mouse_x = evento.mouse.x;
         input->mouse_y = evento.mouse.y;
     }
-
-    if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-        printf("Clique detectado em (%d, %d) no estado %d\n", input->mouse_x, input->mouse_y, *estado);
-
+    else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         if (*estado == MENU) {
-
-            // Verifica se o clique está no botão "Start"
             if (input->mouse_x >= start_button.x1 && input->mouse_x <= start_button.x2 &&
                 input->mouse_y >= start_button.y1 && input->mouse_y <= start_button.y2) {
-
-                // Muda o estado para Prologo
+                reset_game(player, projectiles, num_projectiles, interacoes);
                 *estado = PROLOGO;
-                printf("Estado mudou para prologo\n");
             }
-
-            // Verifica se o clique está no botão "Creditos"
             else if (input->mouse_x >= credits_button.x1 && input->mouse_x <= credits_button.x2 &&
                 input->mouse_y >= credits_button.y1 && input->mouse_y <= credits_button.y2) {
-
-                // Muda o estado para Créditos
                 *estado = CREDITOS;
-                printf("Estado mudou para os créditos\n");
             }
-
-            // Verifica se o clique está no botão "Instruções"
             else if (input->mouse_x >= Instructs_button.x1 && input->mouse_x <= Instructs_button.x2 &&
                 input->mouse_y >= Instructs_button.y1 && input->mouse_y <= Instructs_button.y2) {
-
-                // Muda o estado para Instruções
-                *estado = INSTRUÇÕES;
-                printf("Estado mudou para as instruções\n");
+                *estado = INSTRUÃ‡Ã•ES;
             }
         }
-        else if (*estado == PROLOGO) {
+        else if (*estado == PROLOGO || *estado == PROLOGO2 || *estado == PROLOGO3 || *estado == PROLOGO4) {
             if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
                 input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
-
-                // Muda o estado para Prologo 2 quando o botão "Continua" for clicado
-                *estado = PROLOGO2;
-                printf("Estado mudou para Prologo 2\n");
-            }
-        }
-        else if (*estado == PROLOGO2) {
-            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
-                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
-
-                // Muda o estado para Prologo 3 quando o botão "Continua" for clicado
-                *estado = PROLOGO3;
-                printf("Estado mudou para Prologo 3\n");
-            }
-        }
-        else if (*estado == PROLOGO3) {
-            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
-                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
-
-                // Muda o estado para Prologo 4 quando o botão "Continua" for clicado
-                *estado = PROLOGO4;
-                printf("Estado mudou para Prologo 4\n");
-            }
-        }
-        else if (*estado == PROLOGO4) {
-            if (input->mouse_x >= prologo_button.x1 && input->mouse_x <= prologo_button.x2 &&
-                input->mouse_y >= prologo_button.y1 && input->mouse_y <= prologo_button.y2) {
-
-                // Muda o estado para Menu quando o botão "Continua" for clicado
-                *estado = FASE_1;
-                printf("Estado mudou para Fase 1\n");
+                // AvanÃ§a para a prÃ³xima tela do prÃ³logo ou inicia o jogo
+                if (*estado == PROLOGO) {
+                    *estado = PROLOGO2;
+                }
+                else if (*estado == PROLOGO2) {
+                    *estado = PROLOGO3;
+                }
+                else if (*estado == PROLOGO3) {
+                    *estado = PROLOGO4;
+                }
+                else if (*estado == PROLOGO4) {
+                    *estado = FASE_1;
+                }
             }
         }
         else if (*estado == GAME_OVER) {
-
-            // Verifica se o clique está no botão "Continuar"
             if (input->mouse_x >= continuar_botao.x1 && input->mouse_x <= continuar_botao.x2 &&
                 input->mouse_y >= continuar_botao.y1 && input->mouse_y <= continuar_botao.y2) {
-
-                // Reinicia o jogador e os projéteis
+                // Reiniciar o jogo
                 destroy_player(player);
                 init_player(player);
 
@@ -106,39 +97,37 @@ void handle_event(ALLEGRO_EVENT evento, GameInput* input, GameState* estado, Pla
                     projectiles[i].active = false;
                 }
 
-                // Reseta o temporizador de criação dos projéteis
+                extern float time_since_last_projectile;
                 time_since_last_projectile = 0.0f;
 
-                // Muda o estado para FASE_1
-                *estado = FASE_1;
-                printf("Reiniciando o jogo...\n");
-            }
+                init_interacoes(interacoes);
 
-            // Verifica se o clique está no botão "Sair"
+                *estado = FASE_1;
+            }
             else if (input->mouse_x >= sair_botao.x1 && input->mouse_x <= sair_botao.x2 &&
                 input->mouse_y >= sair_botao.y1 && input->mouse_y <= sair_botao.y2) {
+                // Sair do jogo
                 input->sair = true;
-                printf("Saindo do jogo...\n");
+            }
+        }
+        else if (*estado == VITORIA) {
+            if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if (input->mouse_x >= botao_sair_vitoria.x1 && input->mouse_x <= botao_sair_vitoria.x2 &&
+                    input->mouse_y >= botao_sair_vitoria.y1 && input->mouse_y <= botao_sair_vitoria.y2) {
+                    // Sair do jogo
+                    input->sair = true;
+                }
+                else if (input->mouse_x >= botao_menu_vitoria.x1 && input->mouse_x <= botao_menu_vitoria.x2 &&
+                    input->mouse_y >= botao_menu_vitoria.y1 && input->mouse_y <= botao_menu_vitoria.y2) {
+                    reset_game(player, projectiles, num_projectiles, interacoes);
+                    *estado = MENU;
+                }
             }
         }
 
-        else if (*estado == CREDITOS || *estado == INSTRUÇÕES) {
-            // Se clicar em qualquer lugar na tela de créditos ou instruções, volta para o menu
+        else if (*estado == CREDITOS || *estado == INSTRUÃ‡Ã•ES) {
+            // Voltar ao menu ao clicar em qualquer lugar
             *estado = MENU;
-            printf("Voltando para o menu principal\n");
         }
-    }
-    else if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
-        input->teclas[evento.keyboard.keycode] = true;
-
-        if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-            input->sair = true;
-        }
-    }
-    else if (evento.type == ALLEGRO_EVENT_KEY_UP) {
-        input->teclas[evento.keyboard.keycode] = false;
-    }
-    else if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-        input->sair = true;
     }
 }

@@ -1,10 +1,8 @@
-// resources.c
 #include "resources.h"
 #include <stdio.h>
 
 bool load_resources(Resources* res) {
     // Carrega o ícone
-
     res->icon = al_load_bitmap("icon.bmp");
     if (!res->icon) {
         fprintf(stderr, "Erro ao carregar o ícone.\n");
@@ -17,53 +15,55 @@ bool load_resources(Resources* res) {
         fprintf(stderr, "Erro ao carregar a imagem do menu.\n");
         return false;
     }
-    // Carrega o a imagem  background da fase 1
+
+    // Carrega a imagem de background da fase 1
     res->BG_1 = al_load_bitmap("assets/BG-1.png");
     if (!res->BG_1) {
-        fprintf(stderr, "Erro ao carregar o background fase 1.\n");
+        fprintf(stderr, "Erro ao carregar o background da fase 1.\n");
         return false;
     }
 
-    // Cria a fonte incorporada do Allegro
+    // Carrega a fonte embutida do Allegro
     res->font = al_create_builtin_font();
     if (!res->font) {
-        fprintf(stderr, "Erro ao criar a fonte incorporada.\n");
+        fprintf(stderr, "Erro ao criar a fonte embutida.\n");
         return false;
     }
 
+    // Carrega outros recursos...
     res->bg_prologo = al_load_bitmap("assets/fundoUm.png");
     if (!res->bg_prologo) {
-        fprintf(stderr, "Erro ao carregar o prologo.\n");
+        fprintf(stderr, "Erro ao carregar o prólogo.\n");
         return false;
     }
 
     res->bg_prologo2 = al_load_bitmap("assets/fundoDoiss.png");
     if (!res->bg_prologo2) {
-        fprintf(stderr, "Erro ao carregar o prologo 2.\n");
+        fprintf(stderr, "Erro ao carregar o prólogo 2.\n");
         return false;
     }
 
     res->bg_prologo3 = al_load_bitmap("assets/fundoTres.png");
     if (!res->bg_prologo3) {
-        fprintf(stderr, "Erro ao carregar o prologo 3.\n");
+        fprintf(stderr, "Erro ao carregar o prólogo 3.\n");
         return false;
     }
 
     res->bg_prologo4 = al_load_bitmap("assets/fundoQuatro.png");
     if (!res->bg_prologo4) {
-        fprintf(stderr, "Erro ao carregar o prologo 4.\n");
+        fprintf(stderr, "Erro ao carregar o prólogo 4.\n");
         return false;
     }
 
     res->creditos = al_load_bitmap("assets/Creditos.png");
     if (!res->creditos) {
-        fprintf(stderr, "Erro ao carregar o créditos.\n");
+        fprintf(stderr, "Erro ao carregar os créditos.\n");
         return false;
     }
 
     res->instructs = al_load_bitmap("assets/Instrucoes.png");
     if (!res->instructs) {
-        fprintf(stderr, "Erro ao carregar o Instruções.\n");
+        fprintf(stderr, "Erro ao carregar as instruções.\n");
         return false;
     }
 

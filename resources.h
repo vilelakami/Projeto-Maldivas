@@ -1,10 +1,8 @@
-// resources.h
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
-
 
 // Estrutura para armazenar todos os recursos do jogo
 typedef struct {
@@ -18,7 +16,6 @@ typedef struct {
     ALLEGRO_BITMAP* bg_prologo4;
     ALLEGRO_BITMAP* creditos;
     ALLEGRO_BITMAP* instructs;
-
 } Resources;
 
 // Função para carregar todos os recursos

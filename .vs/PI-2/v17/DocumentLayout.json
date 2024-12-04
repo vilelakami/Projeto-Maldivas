@@ -1,38 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\",
+  "WorkspaceRootPath": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:event_handling.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\game_state.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:game_state.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:event_handling.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:rendering.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\resources.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:resources.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\game_logic.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:game_logic.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:rendering.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:constants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\collision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B5E719E7-AE1F-47A1-91B1-58A76F568CC4}|PI-2.vcxproj|solutionrelative:collision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 122,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,106 +46,93 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "rendering.c",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.c",
-              "RelativeDocumentMoniker": "rendering.c",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.c",
-              "RelativeToolTip": "rendering.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-11-18T06:29:15.871Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "player.c",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.c",
-              "RelativeDocumentMoniker": "player.c",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.c",
-              "RelativeToolTip": "player.c",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "game_state.c",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\game_state.c",
+              "RelativeDocumentMoniker": "game_state.c",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\game_state.c",
+              "RelativeToolTip": "game_state.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-11-18T06:29:07.389Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "game_logic.c",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\game_logic.c",
-              "RelativeDocumentMoniker": "game_logic.c",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\game_logic.c",
-              "RelativeToolTip": "game_logic.c",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-11-18T06:28:58.476Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "rendering.h",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.h",
-              "RelativeDocumentMoniker": "rendering.h",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\rendering.h",
-              "RelativeToolTip": "rendering.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-18T06:28:50.602Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "player.h",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.h",
-              "RelativeDocumentMoniker": "player.h",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\player.h",
-              "RelativeToolTip": "player.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-18T06:28:45.283Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "constants.h",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\constants.h",
-              "RelativeDocumentMoniker": "constants.h",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\constants.h",
-              "RelativeToolTip": "constants.h",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAABoAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-18T06:28:31.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "collision.h",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\collision.h",
-              "RelativeDocumentMoniker": "collision.h",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\collision.h",
-              "RelativeToolTip": "collision.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-18T06:28:25.923Z",
+              "WhenOpened": "2024-12-04T19:55:23.724Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "main.c",
-              "DocumentMoniker": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\main.c",
-              "RelativeDocumentMoniker": "main.c",
-              "ToolTip": "C:\\Users\\gabri\\OneDrive\\Documentos\\Projeto-Maldivas\\main.c",
-              "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAaAAAAAAAAAA==",
+              "Title": "event_handling.h",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.h",
+              "RelativeDocumentMoniker": "event_handling.h",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.h",
+              "RelativeToolTip": "event_handling.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-04T19:42:23.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "event_handling.c",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.c",
+              "RelativeDocumentMoniker": "event_handling.c",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\event_handling.c",
+              "RelativeToolTip": "event_handling.c",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAHkAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-11-18T06:28:01.271Z",
+              "WhenOpened": "2024-12-04T02:10:34.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "rendering.c",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.c",
+              "RelativeDocumentMoniker": "rendering.c",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.c",
+              "RelativeToolTip": "rendering.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMBAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-12-04T19:39:53.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "rendering.h",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.h",
+              "RelativeDocumentMoniker": "rendering.h",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\rendering.h",
+              "RelativeToolTip": "rendering.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-04T19:39:32.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "main.c",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\main.c",
+              "RelativeDocumentMoniker": "main.c",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\main.c",
+              "RelativeToolTip": "main.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-12-04T19:33:49.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "resources.c",
+              "DocumentMoniker": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\resources.c",
+              "RelativeDocumentMoniker": "resources.c",
+              "ToolTip": "D:\\dev\\VisualStudio\\Allegro\\vilelakami\\Projeto-Maldivas\\resources.c",
+              "RelativeToolTip": "resources.c",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-12-04T19:33:15.343Z",
               "EditorCaption": ""
             }
           ]

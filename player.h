@@ -1,37 +1,38 @@
-#ifndef PLAYER_H
+ï»¿#ifndef PLAYER_H
 #define PLAYER_H
 
+#include <allegro5/allegro.h>
 #include <stdbool.h>
-#include <allegro5/allegro5.h>
 #include "rect.h"
+#include "interacoes.h"
 
-// Constantes de direção
-#define DIRECAO_BAIXO 4
-#define DIRECAO_ESQUERDA 5
-#define DIRECAO_DIREITA 6
-#define DIRECAO_CIMA 7
+typedef enum {
+    DIRECAO_CIMA = 7,
+    DIRECAO_BAIXO = 4,
+    DIRECAO_ESQUERDA = 5,
+    DIRECAO_DIREITA = 6
+} Direcao;
 
-// Estrutura do jogador
 typedef struct {
+    ALLEGRO_BITMAP* sprite;
     float x, y;
+    float escala;
+    int largura_frame, altura_frame;
     float velocidade;
-    int direcao;
+    Direcao direcao;
     int frame_atual;
     int contador_animacao;
     int velocidade_animacao;
-    float escala;
-    int largura_frame;
-    int altura_frame;
-    int vida_atual;
     int vida_maxima;
+    int vida_atual;
     bool invencivel;
     float tempo_invencibilidade;
-    ALLEGRO_BITMAP* sprite;
+    bool perto_do_obstaculo_2;
+    bool perto_do_obstaculo_3;
 } Player;
 
-// Funções relacionadas ao jogador
 void init_player(Player* player);
-void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles);
+void update_player(Player* player, const bool* teclas, float delta_time, Rect* obstacles, int num_obstacles, Interacoes* interacoes, Rect* proximity_zones);
 void draw_player(Player* player);
 void destroy_player(Player* player);
 
