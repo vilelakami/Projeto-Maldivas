@@ -1,4 +1,4 @@
-ï»¿#ifndef PROJECTILE_H
+#ifndef PROJECTILE_H
 #define PROJECTILE_H
 
 #include <allegro5/allegro5.h>
@@ -18,7 +18,7 @@ typedef struct {
     bool active;
 } Projectile;
 
-// FunÃ§Ãµes de gerenciamento do projetil
+// Funções de gerenciamento do projetil
 void init_projectile(Projectile* proj);
 void update_projectile(Projectile* proj, float delta_time);
 void draw_projectile(const Projectile* proj);
